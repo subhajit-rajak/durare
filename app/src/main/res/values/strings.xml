@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Push Counter</string>
+    <string name="status_ready">Ready to detect push-ups</string>
+    <string name="status_go_up">Go up!</string>
+    <string name="status_great">Great! Go down for next rep</string>
+    <string name="status_ready_pushup">Ready for push-up</string>
+    <string name="status_move_closer">Move closer to camera</string>
+    <string name="status_no_face">No face detected</string>
+    <string name="status_camera_permission">Camera permission required</string>
+    <string name="face_size_format">Face: %d%%</string>
+</resources>
