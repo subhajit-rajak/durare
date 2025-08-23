@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         
         // Sensitivity settings for push-up detection
-        private const val DOWN_THRESHOLD = 50f // Face takes more than 50% of screen = down position
+        private const val DOWN_THRESHOLD = 40f // Face takes more than 50% of screen = down position
         private const val UP_THRESHOLD = 25f   // Face takes more than 25% of screen = up position
         private const val FRAME_THRESHOLD = 3   // Need 3 consecutive frames to confirm position
     }
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
             val preview = Preview.Builder()
                 .build()
                 .also {
-                    it.setSurfaceProvider(viewFinder.surfaceProvider)
+                    it.surfaceProvider = viewFinder.surfaceProvider
                 }
             
             val imageAnalyzer = ImageAnalysis.Builder()

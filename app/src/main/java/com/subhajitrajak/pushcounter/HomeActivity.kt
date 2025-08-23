@@ -1,5 +1,6 @@
 package com.subhajitrajak.pushcounter
 
+import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.widget.TextView
@@ -9,15 +10,18 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.flexbox.FlexboxLayout
+import com.subhajitrajak.pushcounter.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var heatmapLayout: FlexboxLayout
+    private val binding: ActivityHomeBinding by lazy {
+        ActivityHomeBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_home)
+        setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -25,7 +29,10 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-        heatmapLayout = findViewById(R.id.heatmapLayout)
+        binding.startButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
         generateSampleHeatmap()
     }
@@ -57,7 +64,7 @@ class HomeActivity : AppCompatActivity() {
             (drawable as GradientDrawable).setColor(color)
 
             circleView.background = drawable
-            heatmapLayout.addView(circleView)
+            binding.heatmapLayout.addView(circleView)
         }
     }
 
