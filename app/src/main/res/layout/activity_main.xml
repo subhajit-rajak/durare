@@ -8,64 +8,138 @@
     android:background="@color/white"
     tools:context=".MainActivity">
 
-    <!-- Center: Counter + status + actions -->
-    <LinearLayout
-        android:id="@+id/counterContainer"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="24dp"
+        app:cardBackgroundColor="@color/very_light_grey"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/pushUpCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textColor="@color/black"
-            android:textSize="72sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/statusText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/status_ready"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
-            android:gravity="center" />
-
-        <!-- Actions row under status -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="14dp"
+            android:layout_marginVertical="4dp"
             android:gravity="center"
-            android:layout_marginTop="16dp">
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
 
-            <Button
-                android:id="@+id/resetButton"
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/back"
+                android:src="@drawable/arrow_left"
+                app:tint="@color/grey" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reset" />
+                android:fontFamily="@font/special_gothic_medium"
+                android:text="@string/back"
+                android:textColor="@color/grey"
+                android:textSize="16sp" />
 
         </LinearLayout>
-    </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/repCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/special_gothic_expanded_semibold"
+        android:gravity="center"
+        android:text="@string/rep_1"
+        android:textAllCaps="true"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/pushUpCount"
+        app:layout_constraintEnd_toEndOf="@+id/pushUpCount"
+        app:layout_constraintStart_toStartOf="@+id/pushUpCount" />
+
+    <TextView
+        android:id="@+id/pushUpCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/special_gothic_expanded_bold"
+        android:text="@string/_0"
+        android:textColor="@color/dark_grey_85"
+        android:textSize="128sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-16dp"
+        android:fontFamily="@font/special_gothic_semibold"
+        android:gravity="center"
+        android:text="@string/status_ready"
+        android:textColor="@color/light_grey"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/pushUpCount"
+        app:layout_constraintStart_toStartOf="@+id/pushUpCount"
+        app:layout_constraintTop_toBottomOf="@+id/pushUpCount" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/timer_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:cardBackgroundColor="@color/light_grey_85"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statusText">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="10dp"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/timer"
+                android:src="@drawable/timer"
+                app:tint="@color/grey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/special_gothic_medium"
+                android:text="@string/timer_sample_duration"
+                android:textColor="@color/grey"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <!-- Top-right: Camera preview card -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cameraCard"
-        android:layout_width="140dp"
-        android:layout_height="180dp"
-        android:layout_margin="16dp"
+        android:layout_width="116dp"
+        android:layout_height="129dp"
+        android:layout_margin="24dp"
         app:cardCornerRadius="12dp"
-        app:cardElevation="8dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -84,12 +158,12 @@
                 android:id="@+id/faceSizeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#80000000"
-                android:padding="6dp"
-                android:text="Face: 0%"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                android:gravity="center" />
+                android:background="@color/light_grey_85"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="@string/face_0"
+                android:textColor="@color/grey"
+                android:textSize="11sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -98,34 +172,35 @@
         android:id="@+id/toggleContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="vertical"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         android:gravity="center_vertical"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/back_button">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:text="Camera"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:layout_marginEnd="8dp" />
+            android:textSize="14sp" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/cameraToggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:layout_marginEnd="16dp" />
+            android:layout_marginEnd="16dp"
+            android:checked="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:text="Feedback"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:layout_marginEnd="8dp" />
+            android:textSize="14sp" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/feedbackToggle"
@@ -133,5 +208,119 @@
             android:layout_height="wrap_content"
             android:checked="true" />
     </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/totalCountCard"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        app:cardBackgroundColor="@color/very_light_grey"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/resetButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/special_gothic_medium"
+                android:text="Total"
+                android:layout_marginEnd="24dp"
+                android:textAllCaps="true"
+                android:textColor="@color/grey"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/special_gothic_medium"
+                android:text="@string/_0"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/resetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginBottom="32dp"
+        app:cardBackgroundColor="@color/very_light_grey"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/play_pause"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="38dp"
+            android:fontFamily="@font/special_gothic_medium"
+            android:text="@string/reset"
+            android:textAllCaps="true"
+            android:textColor="@color/grey"
+            android:textSize="16sp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/play_pause"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:cardBackgroundColor="@color/light_grey_85"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/resetButton"
+        app:layout_constraintEnd_toStartOf="@+id/done"
+        app:layout_constraintStart_toEndOf="@+id/resetButton"
+        app:layout_constraintTop_toTopOf="@+id/resetButton">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="12dp"
+            android:contentDescription="@string/play_pause"
+            android:src="@drawable/play"
+            app:tint="@color/grey" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/done"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:cardBackgroundColor="@color/black"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/resetButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/play_pause"
+        app:layout_constraintTop_toTopOf="@+id/resetButton">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="12dp"
+            android:contentDescription="@string/finish"
+            android:src="@drawable/check"
+            app:tint="@color/white" />
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

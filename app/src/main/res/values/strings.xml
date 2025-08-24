@@ -34,4 +34,13 @@
     <string name="this_month_count">525</string>
     <string name="so_far_count">2.54k</string>
     <string name="top_bar_title">PUSH-UPS</string>
+    <string name="finish">Finish</string>
+    <string name="play_pause">Play/Pause</string>
+    <string name="reset">Reset</string>
+    <string name="timer">Timer</string>
+    <string name="timer_sample_duration">00:00.00</string>
+    <string name="_0">0</string>
+    <string name="rep_1">Rep 1</string>
+    <string name="face_0">Face: 0%</string>
+    <string name="back">Back</string>
 </resources>

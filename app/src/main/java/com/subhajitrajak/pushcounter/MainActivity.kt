@@ -68,6 +68,10 @@ class MainActivity : AppCompatActivity(), PushUpDetector.Listener {
         // keeps screen on during push-ups
         window.decorView.keepScreenOn = true
 
+        binding.backButton.setOnClickListener {
+            finish()
+        }
+
         // Init helpers
         toneGenerator = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100)
         vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
