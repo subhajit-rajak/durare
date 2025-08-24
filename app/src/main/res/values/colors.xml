@@ -11,7 +11,7 @@
     <color name="very_dark_grey">#1A1A1A</color>
     <color name="primary">#FF690C</color>
 
-    <color name="level_0">#FFFFFF</color>
-    <color name="level_1">#808080</color>
-    <color name="level_2">#414141</color>
+    <color name="level_0">#0DFF690C</color>
+    <color name="level_1">#59FF690C</color>
+    <color name="level_2">#FF690C</color>
 </resources>
