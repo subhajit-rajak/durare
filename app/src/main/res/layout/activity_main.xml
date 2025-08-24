@@ -8,7 +8,7 @@
     android:background="@color/white"
     tools:context=".MainActivity">
 
-    <!-- Push-up counter display -->
+    <!-- Center: Counter + status + actions -->
     <LinearLayout
         android:id="@+id/counterContainer"
         android:layout_width="wrap_content"
@@ -38,16 +38,31 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:gravity="center" />
 
+        <!-- Actions row under status -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/resetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reset" />
+
+        </LinearLayout>
     </LinearLayout>
 
-    <!-- Camera preview card in top right corner -->
+    <!-- Top-right: Camera preview card -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cameraCard"
-        android:layout_width="120dp"
-        android:layout_height="160dp"
+        android:layout_width="140dp"
+        android:layout_height="180dp"
         android:layout_margin="16dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="8dp"
@@ -59,36 +74,32 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!-- Camera Preview -->
             <androidx.camera.view.PreviewView
                 android:id="@+id/viewFinder"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <!-- Face size text at bottom of card -->
             <TextView
                 android:id="@+id/faceSizeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#80000000"
-                android:padding="4dp"
+                android:padding="6dp"
                 android:text="Face: 0%"
                 android:textColor="@android:color/white"
-                android:textSize="11sp"
+                android:textSize="12sp"
                 android:gravity="center" />
-
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 
-    <!-- Toggle switch for camera preview -->
+    <!-- Top-left: Toggles -->
     <LinearLayout
         android:id="@+id/toggleContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -105,8 +116,22 @@
             android:id="@+id/cameraToggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true" />
+            android:checked="true"
+            android:layout_marginEnd="16dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Feedback"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginEnd="8dp" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/feedbackToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
