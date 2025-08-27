@@ -9,7 +9,7 @@
     <string name="status_camera_permission">Camera permission required</string>
     <string name="face_size_format">Face: %d%%</string>
     <string name="settings">settings</string>
-    <string name="ask_ai_bar_hint">ask ai anything...</string>
+    <string name="ask_ai_bar_hint">ask ai anything…</string>
     <string name="ask_ai">Ask Ai</string>
     <string name="person_name_1">Davian Allen</string>
     <string name="person_name_2">Isaac Osborne</string>
@@ -57,4 +57,5 @@
     <string name="privacy_policy">Privacy policy</string>
     <string name="terms_conditions"><![CDATA[Terms & conditions]]></string>
     <string name="logout">logout</string>
+    <string name="personalize1">personalize</string>
 </resources>

@@ -6,18 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.subhajitrajak.pushcounter.databinding.FragmentSettingsBinding
+import com.subhajitrajak.pushcounter.databinding.FragmentPersonalizeBinding
 
-class SettingsFragment : Fragment() {
-    private var _binding: FragmentSettingsBinding? = null
+class PersonalizeFragment : Fragment() {
+    private var _binding: FragmentPersonalizeBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        _binding = FragmentPersonalizeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -26,10 +25,6 @@ class SettingsFragment : Fragment() {
 
         binding.backButton.setOnClickListener {
             handleBackButtonPress()
-        }
-
-        binding.personalize.setOnClickListener {
-            findNavController().navigate(R.id.action_settingsFragment_to_personalizeFragment)
         }
     }
 
