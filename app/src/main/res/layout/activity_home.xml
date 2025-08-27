@@ -36,6 +36,7 @@
                     android:textSize="24sp" />
 
                 <ImageButton
+                    android:id="@+id/settingsButton"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_gravity="center_vertical|end"

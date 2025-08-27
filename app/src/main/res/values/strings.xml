@@ -8,7 +8,7 @@
     <string name="status_no_face">No face detected</string>
     <string name="status_camera_permission">Camera permission required</string>
     <string name="face_size_format">Face: %d%%</string>
-    <string name="settings">Settings</string>
+    <string name="settings">settings</string>
     <string name="ask_ai_bar_hint">ask ai anything...</string>
     <string name="ask_ai">Ask Ai</string>
     <string name="person_name_1">Davian Allen</string>
@@ -43,4 +43,20 @@
     <string name="rep_1">Rep 1</string>
     <string name="face_0">Face: 0%</string>
     <string name="back">Back</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rate_us">Rate us</string>
+    <string name="share_app">Share app</string>
+    <string name="person_email_1">davianallen1997@yahoo.com</string>
+    <string name="general">General</string>
+    <string name="account_information">Account Information</string>
+    <string name="personalize">Personalize</string>
+    <string name="appearance">Appearance</string>
+    <string name="notifications">Notifications</string>
+    <string name="support">Support</string>
+    <string name="report_an_issue">Report an issue</string>
+    <string name="contact_us">Contact us</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="terms_conditions"><![CDATA[Terms & conditions]]></string>
+    <string name="logout">logout</string>
 </resources>

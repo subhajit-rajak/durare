@@ -34,6 +34,19 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.settingsButton.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in_right,
+                    R.anim.fade_out,
+                    R.anim.fade_in,
+                    R.anim.slide_out_right
+                )
+                .replace(android.R.id.content, SettingsFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
         generateSampleHeatmap()
     }
 
