@@ -31,6 +31,9 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
+import com.subhajitrajak.pushcounter.Constants.KEY_COUNTER_FEEDBACK
+import com.subhajitrajak.pushcounter.Constants.KEY_SHOW_CAMERA
+import com.subhajitrajak.pushcounter.Constants.PREFS_NAME
 import com.subhajitrajak.pushcounter.databinding.ActivityMainBinding
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -53,6 +56,9 @@ class MainActivity : AppCompatActivity(), PushUpDetector.Listener {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     }
+
+    private var showCameraCardSwitch: Boolean = false
+    private var counterFeedbackSwitch: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,10 +102,13 @@ class MainActivity : AppCompatActivity(), PushUpDetector.Listener {
         faceDetector = FaceDetection.getClient(options)
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        // Camera toggle
-        binding.cameraToggle.setOnCheckedChangeListener { _, isChecked ->
-            binding.cameraCard.visibility = if (isChecked) View.VISIBLE else View.GONE
-        }
+        // initializing preferences
+        val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        showCameraCardSwitch = prefs.getBoolean(KEY_SHOW_CAMERA, false)
+        counterFeedbackSwitch = prefs.getBoolean(KEY_COUNTER_FEEDBACK, false)
+
+        // Camera card
+        binding.cameraCard.visibility = if (showCameraCardSwitch) View.VISIBLE else View.GONE
 
         binding.resetButton.setOnClickListener { pushUpDetector.reset() }
 
@@ -186,7 +195,7 @@ class MainActivity : AppCompatActivity(), PushUpDetector.Listener {
     }
 
     override fun onPushUpCompleted() {
-        if (!binding.feedbackToggle.isChecked) return
+        if (!counterFeedbackSwitch) return
         try { toneGenerator?.startTone(ToneGenerator.TONE_PROP_ACK, 120) } catch (_: Exception) {}
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

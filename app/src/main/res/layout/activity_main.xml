@@ -167,48 +167,6 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Top-left: Toggles -->
-    <LinearLayout
-        android:id="@+id/toggleContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_button">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Camera"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
-
-        <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/cameraToggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:checked="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Feedback"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
-
-        <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/feedbackToggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true" />
-    </LinearLayout>
-
     <androidx.cardview.widget.CardView
         android:id="@+id/totalCountCard"
         android:layout_width="wrap_content"

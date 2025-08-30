@@ -58,4 +58,8 @@
     <string name="terms_conditions"><![CDATA[Terms & conditions]]></string>
     <string name="logout">logout</string>
     <string name="personalize1">personalize</string>
+    <string name="show_camera_card">Show camera card</string>
+    <string name="a_camera_preview_to_just_n_make_sure_your_pushups_nare_getting_counted_correctly">A camera preview to just\n“make sure” your pushups\nare getting counted correctly.</string>
+    <string name="turn_this_on_to_get_vibration_feedback_on_each_push_up_counts">Turn this “On” to get vibration feedback on each push-up counts</string>
+    <string name="counter_feedback">Counter feedback</string>
 </resources>

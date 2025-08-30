@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".SettingsFragment">
+    tools:context=".PersonalizeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,6 +61,125 @@
             android:text="@string/personalize1"
             android:textColor="@color/black"
             android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/show_camera_card"
+                android:fontFamily="@font/special_gothic_medium"
+                android:textColor="@color/dark_grey"
+                android:textSize="16sp"/>
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/showCameraCardSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:thumbTint="@color/dark_grey"
+                app:trackDecorationTint="@color/dark_grey"
+                app:trackTint="@color/white"/>
+
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/very_light_grey"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="94dp"
+                    android:layout_height="204dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:contentDescription="@string/show_camera_card"
+                    android:src="@drawable/show_camera_card_thumb"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="-28dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="@string/show_camera_card"
+                    android:src="@drawable/show_camera_card_arrow"
+                    app:layout_constraintStart_toEndOf="@+id/imageView3"
+                    app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/special_gothic_regular"
+                    android:text="@string/a_camera_preview_to_just_n_make_sure_your_pushups_nare_getting_counted_correctly"
+                    android:textColor="@color/grey"
+                    android:textSize="11sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView3"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/counter_feedback"
+                    android:fontFamily="@font/special_gothic_medium"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/turn_this_on_to_get_vibration_feedback_on_each_push_up_counts"
+                    android:fontFamily="@font/special_gothic_regular"
+                    android:textColor="@color/grey"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/counterFeedbackSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:thumbTint="@color/dark_grey"
+                android:layout_gravity="top"
+                app:trackDecorationTint="@color/dark_grey"
+                app:trackTint="@color/white"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
