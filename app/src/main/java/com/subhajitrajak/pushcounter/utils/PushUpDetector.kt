@@ -1,4 +1,4 @@
-package com.subhajitrajak.pushcounter.util
+package com.subhajitrajak.pushcounter.utils
 
 import com.subhajitrajak.pushcounter.R
 import kotlin.math.max

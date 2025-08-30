@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import com.subhajitrajak.pushcounter.databinding.FragmentPersonalizeBinding
-import com.subhajitrajak.pushcounter.util.Constants
+import com.subhajitrajak.pushcounter.utils.Constants
 
 class PersonalizeFragment : Fragment() {
     private var _binding: FragmentPersonalizeBinding? = null

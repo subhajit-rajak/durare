@@ -33,8 +33,8 @@ import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.ActivityMainBinding
-import com.subhajitrajak.pushcounter.util.Constants
-import com.subhajitrajak.pushcounter.util.PushUpDetector
+import com.subhajitrajak.pushcounter.utils.Constants
+import com.subhajitrajak.pushcounter.utils.PushUpDetector
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.max

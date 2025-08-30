@@ -37,6 +37,10 @@ class SettingsFragment : Fragment() {
             notifications.setOnClickListener {
                 findNavController().navigate(R.id.action_settingsFragment_to_notificationsFragment)
             }
+
+            appearance.setOnClickListener {
+                findNavController().navigate(R.id.action_settingsFragment_to_appearanceFragment)
+            }
         }
 
         setupAppVersions()

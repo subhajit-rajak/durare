@@ -1,4 +1,4 @@
-package com.subhajitrajak.pushcounter.util
+package com.subhajitrajak.pushcounter.utils
 
 import android.content.Context
 import android.util.Log

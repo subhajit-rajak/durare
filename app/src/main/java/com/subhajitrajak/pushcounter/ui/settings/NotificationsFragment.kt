@@ -15,7 +15,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.subhajitrajak.pushcounter.databinding.FragmentNotificationsBinding
-import com.subhajitrajak.pushcounter.util.showToast
+import com.subhajitrajak.pushcounter.utils.showToast
 
 class NotificationsFragment : Fragment() {
     private var _binding: FragmentNotificationsBinding? = null
