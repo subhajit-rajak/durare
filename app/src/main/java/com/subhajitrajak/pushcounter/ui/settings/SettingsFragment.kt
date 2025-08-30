@@ -25,13 +25,36 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.backButton.setOnClickListener {
-            handleBackButtonPress()
+        binding.apply {
+            backButton.setOnClickListener {
+                handleBackButtonPress()
+            }
+
+            personalize.setOnClickListener {
+                findNavController().navigate(R.id.action_settingsFragment_to_personalizeFragment)
+            }
+
+            notifications.setOnClickListener {
+                findNavController().navigate(R.id.action_settingsFragment_to_notificationsFragment)
+            }
         }
 
-        binding.personalize.setOnClickListener {
-            findNavController().navigate(R.id.action_settingsFragment_to_personalizeFragment)
+        setupAppVersions()
+    }
+
+    private fun setupAppVersions() {
+        val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
+        val versionName = packageInfo.versionName
+
+        @Suppress("DEPRECATION")
+        val versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            packageInfo.longVersionCode
+        } else {
+            packageInfo.versionCode
         }
+
+        val text = "Version - $versionName ($versionCode)"
+        binding.appVersion.text = text
     }
 
     private fun handleBackButtonPress() {

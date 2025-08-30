@@ -239,6 +239,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/notifications"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp">
@@ -400,6 +401,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:rippleColor="@color/dark_grey" />
+
+        <TextView
+            android:id="@+id/app_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/special_gothic_expanded_regular"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
+            android:text="@string/version_x_x_x_x"
+            android:textColor="@color/dark_grey" />
 
     </LinearLayout>
 
