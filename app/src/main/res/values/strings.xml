@@ -62,4 +62,5 @@
     <string name="a_camera_preview_to_just_n_make_sure_your_pushups_nare_getting_counted_correctly">A camera preview to just\n“make sure” your pushups\nare getting counted correctly.</string>
     <string name="turn_this_on_to_get_vibration_feedback_on_each_push_up_counts">Turn this “On” to get vibration feedback on each push-up counts</string>
     <string name="counter_feedback">Counter feedback</string>
+    <string name="total">Total</string>
 </resources>
