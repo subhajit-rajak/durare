@@ -67,8 +67,6 @@
     <string name="all_notifications">All notifications</string>
     <string name="turn_this_on_to_receive_all_types_of_notifications">Turn this “On” to receive all types of notifications</string>
     <string name="version_x_x_x_x">Version - x.x.x(x)</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="appearance1">appearance</string>
     <string name="choose_a_theme">Choose a theme</string>
     <string name="light">Light</string>
