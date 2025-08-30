@@ -1,5 +1,6 @@
-package com.subhajitrajak.pushcounter
+package com.subhajitrajak.pushcounter.util
 
+import com.subhajitrajak.pushcounter.R
 import kotlin.math.max
 import kotlin.math.min
 

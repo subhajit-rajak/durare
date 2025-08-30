@@ -1,4 +1,4 @@
-package com.subhajitrajak.pushcounter
+package com.subhajitrajak.pushcounter.util
 
 object Constants {
     const val PREFS_NAME = "push_counter_prefs"

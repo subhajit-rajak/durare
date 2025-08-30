@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.subhajitrajak.pushcounter.DashboardFragment"
+        android:name="com.subhajitrajak.pushcounter.ui.dashboard.DashboardFragment"
         android:label="Dashboard"
         tools:layout="@layout/fragment_dashboard">
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.subhajitrajak.pushcounter.SettingsFragment"
+        android:name="com.subhajitrajak.pushcounter.ui.settings.SettingsFragment"
         android:label="Settings"
         tools:layout="@layout/fragment_settings">
         <action
@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/personalizeFragment"
-        android:name="com.subhajitrajak.pushcounter.PersonalizeFragment"
+        android:name="com.subhajitrajak.pushcounter.ui.settings.PersonalizeFragment"
         android:label="Personalize"
         tools:layout="@layout/fragment_personalize" />
 </navigation>

@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PushCounter">
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.dashboard.HomeActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.counter.MainActivity"
             android:exported="false"/>
     </application>
 

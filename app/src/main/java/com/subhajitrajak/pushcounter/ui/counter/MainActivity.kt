@@ -1,4 +1,4 @@
-package com.subhajitrajak.pushcounter
+package com.subhajitrajak.pushcounter.ui.counter
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -31,10 +31,10 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
-import com.subhajitrajak.pushcounter.Constants.KEY_COUNTER_FEEDBACK
-import com.subhajitrajak.pushcounter.Constants.KEY_SHOW_CAMERA
-import com.subhajitrajak.pushcounter.Constants.PREFS_NAME
+import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.ActivityMainBinding
+import com.subhajitrajak.pushcounter.util.Constants
+import com.subhajitrajak.pushcounter.util.PushUpDetector
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.max
@@ -103,9 +103,9 @@ class MainActivity : AppCompatActivity(), PushUpDetector.Listener {
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         // initializing preferences
-        val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-        showCameraCardSwitch = prefs.getBoolean(KEY_SHOW_CAMERA, false)
-        counterFeedbackSwitch = prefs.getBoolean(KEY_COUNTER_FEEDBACK, false)
+        val prefs = getSharedPreferences(Constants.PREFS_NAME, MODE_PRIVATE)
+        showCameraCardSwitch = prefs.getBoolean(Constants.KEY_SHOW_CAMERA, false)
+        counterFeedbackSwitch = prefs.getBoolean(Constants.KEY_COUNTER_FEEDBACK, false)
 
         // Camera card
         binding.cameraCard.visibility = if (showCameraCardSwitch) View.VISIBLE else View.GONE
@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity(), PushUpDetector.Listener {
     }
 
     private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+        val cameraProviderFuture = ProcessCameraProvider.Companion.getInstance(this)
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder()
@@ -170,7 +170,10 @@ class MainActivity : AppCompatActivity(), PushUpDetector.Listener {
                     .addOnSuccessListener { faces ->
                         if (faces.isNotEmpty()) {
                             val face = faces[0]
-                            val faceArea = max(0, face.boundingBox.width()) * max(0, face.boundingBox.height())
+                            val faceArea = max(0, face.boundingBox.width()) * max(
+                                0,
+                                face.boundingBox.height()
+                            )
                             val imageArea = max(1, imageProxy.width) * max(1, imageProxy.height)
                             pushUpDetector.process(faceArea, imageArea)
                         } else {

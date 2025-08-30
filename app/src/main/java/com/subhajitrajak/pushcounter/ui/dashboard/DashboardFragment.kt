@@ -1,8 +1,9 @@
-package com.subhajitrajak.pushcounter
+package com.subhajitrajak.pushcounter.ui.dashboard
 
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.flexbox.FlexboxLayout
+import com.subhajitrajak.pushcounter.ui.counter.MainActivity
+import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
@@ -57,7 +60,7 @@ class DashboardFragment : Fragment() {
             circleView.layoutParams = params
 
             circleView.text = ""
-            circleView.gravity = android.view.Gravity.CENTER
+            circleView.gravity = Gravity.CENTER
 
             val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.day_circle)?.mutate()
             val color = when (streaks[day - 1]) {

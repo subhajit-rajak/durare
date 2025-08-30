@@ -1,10 +1,11 @@
-package com.subhajitrajak.pushcounter
+package com.subhajitrajak.pushcounter.ui.dashboard
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
