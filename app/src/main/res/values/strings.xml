@@ -71,4 +71,5 @@
     <string name="choose_a_theme">Choose a theme</string>
     <string name="light">Light</string>
     <string name="dark">Dark</string>
+    <string name="account_information1">account information</string>
 </resources>

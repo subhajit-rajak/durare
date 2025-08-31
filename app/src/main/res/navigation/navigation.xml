@@ -45,6 +45,13 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_accountFragment"
+            app:destination="@id/accountFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -62,4 +69,9 @@
         android:name="com.subhajitrajak.pushcounter.ui.settings.AppearanceFragment"
         android:label="fragment_appearance"
         tools:layout="@layout/fragment_appearance" />
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.subhajitrajak.pushcounter.ui.settings.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" />
 </navigation>

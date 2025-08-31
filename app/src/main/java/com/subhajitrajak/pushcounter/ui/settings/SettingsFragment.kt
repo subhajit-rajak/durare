@@ -41,6 +41,10 @@ class SettingsFragment : Fragment() {
             appearance.setOnClickListener {
                 findNavController().navigate(R.id.action_settingsFragment_to_appearanceFragment)
             }
+
+            accountInformation.setOnClickListener {
+                findNavController().navigate(R.id.action_settingsFragment_to_accountFragment)
+            }
         }
 
         setupAppVersions()

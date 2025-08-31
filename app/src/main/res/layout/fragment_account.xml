@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.settings.AccountFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/very_light_grey"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="14dp"
+                android:layout_marginVertical="4dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@string/back"
+                    android:src="@drawable/arrow_left"
+                    app:tint="@color/grey" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/special_gothic_medium"
+                    android:text="@string/back"
+                    android:textColor="@color/grey"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/special_gothic_expanded_bold"
+            android:text="@string/account_information1"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            android:layout_gravity="center_horizontal"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:backgroundTint="@color/very_light_grey"
+                android:background="@drawable/profile_card">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/person3"
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="24dp"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/special_gothic_expanded_medium"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/person_name_1"
+                    android:layout_marginStart="24dp"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/special_gothic_expanded_bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="24dp"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/special_gothic_expanded_medium"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/person_email_1"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/special_gothic_expanded_bold"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
