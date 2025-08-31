@@ -1,6 +1,5 @@
 package com.subhajitrajak.pushcounter.ui.settings
 
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.subhajitrajak.pushcounter.databinding.FragmentAccountBinding
-import com.subhajitrajak.pushcounter.utils.Constants.KEY_THEME
-import com.subhajitrajak.pushcounter.utils.Constants.PREFS_NAME
-import com.subhajitrajak.pushcounter.utils.ThemeManager
-import com.subhajitrajak.pushcounter.utils.ThemeSwitcher
 
 class AccountFragment : Fragment() {
     private var _binding: FragmentAccountBinding? = null

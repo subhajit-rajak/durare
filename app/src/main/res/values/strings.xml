@@ -72,4 +72,6 @@
     <string name="light">Light</string>
     <string name="dark">Dark</string>
     <string name="account_information1">account information</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
 </resources>

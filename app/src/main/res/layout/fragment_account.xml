@@ -90,7 +90,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name"
+                    android:text="@string/name"
                     android:layout_marginTop="24dp"
                     android:layout_marginStart="24dp"
                     android:textColor="@color/grey"
@@ -109,7 +109,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email"
+                    android:text="@string/email"
                     android:layout_marginTop="16dp"
                     android:layout_marginStart="24dp"
                     android:textColor="@color/grey"
