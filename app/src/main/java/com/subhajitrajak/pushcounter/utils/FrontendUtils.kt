@@ -17,12 +17,12 @@ fun View.fadeView(
 }
 
 fun View.removeWithAnim(){
-    fadeView(from=1f,to=0f, duration = 1000)
+    fadeView(from=1f,to=0f, duration = 100)
     visibility = View.GONE
 
 }
 fun View.showWithAnim(){
-    fadeView(duration = 1000)
+    fadeView(duration = 50)
     visibility = View.VISIBLE
 }
 fun showToast(context: Context, message: String) {

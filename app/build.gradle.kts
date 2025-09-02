@@ -77,5 +77,5 @@ dependencies {
     implementation(libs.circleimageview)
 
     // dots indicator
-    implementation("com.tbuonomo:dotsindicator:5.1.0")
+    implementation(libs.dotsindicator)
 }

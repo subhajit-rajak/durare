@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.FragmentOnBoardingBinding
-import com.subhajitrajak.pushcounter.ui.dashboard.DashboardFragment
 import com.subhajitrajak.pushcounter.utils.log
+import com.subhajitrajak.pushcounter.utils.removeWithAnim
 
 class OnBoardingFragment : Fragment() {
     private var _binding: FragmentOnBoardingBinding? = null
@@ -26,7 +27,7 @@ class OnBoardingFragment : Fragment() {
             OnboardingScreen(
                 title = getString(R.string.onboarding_title_1),
                 body = getString(R.string.onboarding_body_1),
-                imageResId = R.drawable.onboarding_image_1
+                imageResId = R.drawable.onboarding_image_1_1
             ),
             OnboardingScreen(
                 title = getString(R.string.onboarding_title_2),
@@ -41,7 +42,7 @@ class OnBoardingFragment : Fragment() {
             OnboardingScreen(
                 title = getString(R.string.onboarding_title_4),
                 body = getString(R.string.onboarding_body_4),
-                imageResId = R.drawable.onboarding_image_4
+                imageResId = R.drawable.onboarding_image_4_1
             )
         )
     }
@@ -111,7 +112,11 @@ class OnBoardingFragment : Fragment() {
     private fun updateSkipButtonVisibility() {
         val currentItem = binding.viewPager.currentItem
         // Hide skip button on last screen
-        binding.skipButton.visibility = if (currentItem == onboardingScreens.size - 1) View.GONE else View.VISIBLE
+        if (currentItem == onboardingScreens.size - 1) {
+            binding.skipButton.removeWithAnim()
+        } else {
+            binding.skipButton.visibility = View.VISIBLE
+        }
     }
 
     private fun showGoogleSignInBottomSheet() {
@@ -125,7 +130,7 @@ class OnBoardingFragment : Fragment() {
     private fun navigateToDashboard() {
         try {
             val navController = findNavController()
-            val navOptions = androidx.navigation.NavOptions.Builder()
+            val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.onBoardingFragment, true)
                 .build()
 
