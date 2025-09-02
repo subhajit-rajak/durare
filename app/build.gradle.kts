@@ -32,13 +32,13 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain(17)
 }
 
 dependencies {
@@ -75,4 +75,7 @@ dependencies {
 
     // circle image view
     implementation(libs.circleimageview)
+
+    // dots indicator
+    implementation("com.tbuonomo:dotsindicator:5.1.0")
 }

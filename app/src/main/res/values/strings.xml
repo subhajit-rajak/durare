@@ -74,4 +74,17 @@
     <string name="account_information1">account information</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    
+    <!-- Onboarding strings -->
+    <string name="onboarding_title_1">track your push-ups.\nanytime. anywhere.</string>
+    <string name="onboarding_body_1">Build strength and consistency with a\nsmart push-up counter designed to\nkeep you motivated.</string>
+    <string name="onboarding_title_2">stay consistent.\nsmash your goals.</string>
+    <string name="onboarding_body_2">Daily tracking, streaks, and monthly\nstats help you stay accountable\nand crush your fitness journey.</string>
+    <string name="onboarding_title_3">you vs\nthe world.</string>
+    <string name="onboarding_body_3">Compete with friends, climb the\nleaderboard, and join a\nglobal push-up movement.</string>
+    <string name="onboarding_title_4">ready to\nbegin?</string>
+    <string name="onboarding_body_4">Sign in with Google to save your\nprogress and join the community.</string>
+    <string name="continue_with_google">Continue with Google</string>
 </resources>
