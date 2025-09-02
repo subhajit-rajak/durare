@@ -1,5 +1,5 @@
 
-<img width="250" height="250" src="https://github.com/user-attachments/assets/92a10466-9952-4744-b9ed-67b63183bdd9" />
+<img width="200" height="200" src="https://github.com/user-attachments/assets/92a10466-9952-4744-b9ed-67b63183bdd9" />
 
 # Push-Up Counter App
 
