@@ -106,7 +106,7 @@
                 android:padding="16dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/circleImageView"
+                    android:id="@+id/userImage"
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:src="@drawable/person3"
@@ -115,7 +115,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -123,13 +123,13 @@
                     android:text="@string/person_name_1"
                     android:textColor="@color/dark_grey"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toTopOf="@+id/textView2"
-                    app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                    app:layout_constraintBottom_toTopOf="@+id/userEmail"
+                    app:layout_constraintStart_toEndOf="@+id/userImage"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/userEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/special_gothic_regular"
@@ -137,8 +137,8 @@
                     android:textColor="@color/grey"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintStart_toStartOf="@+id/userName"
+                    app:layout_constraintTop_toBottomOf="@+id/userName" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -391,6 +391,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"

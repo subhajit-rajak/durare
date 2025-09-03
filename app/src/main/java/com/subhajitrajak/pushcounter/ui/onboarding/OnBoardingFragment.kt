@@ -1,17 +1,27 @@
 package com.subhajitrajak.pushcounter.ui.onboarding
 
+import android.app.Activity.RESULT_OK
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.gms.auth.api.identity.Identity
 import com.subhajitrajak.pushcounter.R
+import com.subhajitrajak.pushcounter.auth.GoogleAuthUiClient
 import com.subhajitrajak.pushcounter.databinding.FragmentOnBoardingBinding
 import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.removeWithAnim
+import com.subhajitrajak.pushcounter.utils.showToast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class OnBoardingFragment : Fragment() {
     private var _binding: FragmentOnBoardingBinding? = null
@@ -20,8 +30,47 @@ class OnBoardingFragment : Fragment() {
     private lateinit var onboardingAdapter: OnboardingAdapter
     private lateinit var onboardingScreens: List<OnboardingScreen>
 
+    private lateinit var googleAuthUiClient: GoogleAuthUiClient
+    private lateinit var signInViewModel: SignInViewModel
+
+    // Activity result launcher for handling sign-in response
+    private val signInLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            result.data?.let { intent ->
+                CoroutineScope(Dispatchers.Main).launch {
+                    val signInResult = googleAuthUiClient.signInWithIntent(intent)
+                    signInViewModel.onSignInResult(signInResult)
+
+                    if (signInResult.data != null) {
+                        val username = signInResult.data.username
+                        val firstName = username?.substring(0, username.indexOf(' '))
+                        showToast(requireContext(), "Welcome, $firstName")
+                        navigateToDashboard()
+                    } else {
+                        showToast(requireContext(), "Sign-in failed: ${signInResult.errorMessage}")
+                    }
+                }
+            }
+        } else {
+            showToast(requireContext(), "Sign-in cancelled")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize ViewModel
+        signInViewModel = ViewModelProvider(this)[SignInViewModel::class.java]
+
+        // Initialize Google Auth UI Client
+        googleAuthUiClient = GoogleAuthUiClient(
+            context = requireContext(),
+            oneTapClient = Identity.getSignInClient(requireContext())
+        )
+
+        if(googleAuthUiClient.isUserLoggedIn()){
+            navigateToDashboard()
+        }
 
         onboardingScreens = listOf(
             OnboardingScreen(
@@ -122,9 +171,21 @@ class OnBoardingFragment : Fragment() {
     private fun showGoogleSignInBottomSheet() {
         val bottomSheet = GoogleSignInBottomSheet()
         bottomSheet.onGoogleSignInClick = {
-            navigateToDashboard()
+            loginUsingGoogle()
         }
         bottomSheet.show(childFragmentManager, GoogleSignInBottomSheet.TAG)
+    }
+
+    // google login
+    private fun loginUsingGoogle() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val intentSender = googleAuthUiClient.signIn()
+            if (intentSender != null) {
+                signInLauncher.launch(IntentSenderRequest.Builder(intentSender).build())
+            } else {
+                showToast(requireContext(), "Google Sign-In failed")
+            }
+        }
     }
 
     private fun navigateToDashboard() {

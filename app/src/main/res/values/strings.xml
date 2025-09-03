@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Push Counter</string>
+    <string name="default_web_client_id">975598957627-eskfiukf0kj475nafdv2pp70vrdn96tn.apps.googleusercontent.com</string>
     <string name="status_ready">Ready to detect push-ups</string>
     <string name="status_go_up">Go up!</string>
     <string name="status_great">Great! Go down for next rep</string>
