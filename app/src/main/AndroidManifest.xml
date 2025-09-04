@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.counter.MainActivity"
+            android:name=".ui.counter.CounterActivity"
             android:exported="false"/>
     </application>
 

@@ -32,17 +32,17 @@ import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import com.subhajitrajak.pushcounter.R
-import com.subhajitrajak.pushcounter.databinding.ActivityMainBinding
+import com.subhajitrajak.pushcounter.databinding.ActivityCounterBinding
 import com.subhajitrajak.pushcounter.utils.Constants
 import com.subhajitrajak.pushcounter.utils.PushUpDetector
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.max
 
-class MainActivity : AppCompatActivity(), PushUpDetector.Listener {
+class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
 
-    private val binding: ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
+    private val binding: ActivityCounterBinding by lazy {
+        ActivityCounterBinding.inflate(layoutInflater)
     }
 
     private lateinit var cameraExecutor: ExecutorService
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity(), PushUpDetector.Listener {
         counterFeedbackSwitch = prefs.getBoolean(Constants.KEY_COUNTER_FEEDBACK, false)
 
         // Camera card
-        binding.cameraCard.visibility = if (showCameraCardSwitch) View.VISIBLE else View.GONE
+        binding.cameraCard.visibility = if (showCameraCardSwitch) View.VISIBLE else View.INVISIBLE
 
         binding.resetButton.setOnClickListener { pushUpDetector.reset() }
 

@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.flexbox.FlexboxLayout
-import com.subhajitrajak.pushcounter.ui.counter.MainActivity
+import com.subhajitrajak.pushcounter.ui.counter.CounterActivity
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.FragmentDashboardBinding
 
@@ -34,7 +34,7 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.startButton.setOnClickListener {
-            val intent = Intent(requireContext(), MainActivity::class.java)
+            val intent = Intent(requireContext(), CounterActivity::class.java)
             startActivity(intent)
         }
 
