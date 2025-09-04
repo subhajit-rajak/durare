@@ -85,6 +85,12 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
     implementation(libs.play.services.auth)
+    // firestore
+    implementation(libs.firebase.firestore.ktx)
+    // listenable future support
+    implementation(libs.androidx.concurrent.futures)
+    implementation(libs.guava.listenablefuture)
+    implementation(libs.guava.android)
 
     // glide
     implementation(libs.glide)

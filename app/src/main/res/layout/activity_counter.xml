@@ -126,7 +126,8 @@
                 android:fontFamily="@font/special_gothic_medium"
                 android:text="@string/timer_sample_duration"
                 android:textColor="@color/grey"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:id="@+id/timerText" />
 
         </LinearLayout>
 
@@ -203,7 +204,8 @@
                 android:text="@string/_0"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:id="@+id/totalCountText" />
 
         </LinearLayout>
 
