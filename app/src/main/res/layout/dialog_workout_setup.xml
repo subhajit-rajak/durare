@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/very_light_grey">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/special_gothic_expanded_bold"
+            android:text="@string/setup_workout"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Total Reps Input -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/special_gothic_expanded_semibold"
+            android:text="@string/total_reps"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxStrokeColor="@color/text_input_highlight"
+            app:hintTextColor="@color/text_input_highlight">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTotalReps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/special_gothic_expanded_regular"
+                android:hint="@string/enter_total_reps"
+                android:inputType="number"
+                android:textColor="@color/black"
+                android:text="@string/_0"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Rest Time Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/special_gothic_expanded_semibold"
+            android:text="@string/rest_time"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Time Picker Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="24dp">
+
+            <!-- Minutes Picker -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/special_gothic_expanded_medium"
+                    android:text="@string/minutes"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="8dp" />
+
+                <NumberPicker
+                    android:id="@+id/npMinutes"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:value="0" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/special_gothic_expanded_bold"
+                android:text=":"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:layout_marginHorizontal="16dp" />
+
+            <!-- Seconds Picker -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/special_gothic_expanded_medium"
+                    android:text="@string/seconds"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="8dp" />
+
+                <NumberPicker
+                    android:id="@+id/npSeconds"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
+                    android:value="30" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btnCancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/special_gothic_expanded_semibold"
+                android:text="@string/cancel"
+                android:textColor="@color/grey"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnStart"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/primary"
+                android:paddingHorizontal="16dp"
+                android:fontFamily="@font/special_gothic_expanded_semibold"
+                android:text="@string/start_workout"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -88,4 +88,16 @@
     <string name="onboarding_title_4">ready to\nbegin?</string>
     <string name="onboarding_body_4">Sign in with Google to save your\nprogress and join the community.</string>
     <string name="continue_with_google">Continue with Google</string>
+    
+    <!-- Workout Setup Dialog -->
+    <string name="setup_workout">Setup Workout</string>
+    <string name="total_reps">Total Reps</string>
+    <string name="enter_total_reps">Enter total reps</string>
+    <string name="rest_time">Rest Time</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
+    <string name="cancel">Cancel</string>
+    <string name="start_workout">Start Workout</string>
+    <string name="please_enter_total_reps">Please enter total reps</string>
+    <string name="please_enter_valid_reps">Please enter a valid number of reps</string>
 </resources>

@@ -68,7 +68,7 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
     private var counterFeedbackSwitch: Boolean = false
 
     // Session/rep state
-    private val totalReps: Int = 3
+    private var totalReps: Int = 3
     private var currentRep: Int = 1
     private var currentRepCount: Int = 0
     private var completedRepsPushUpsSum: Int = 0
@@ -83,7 +83,7 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
     private var restAccumulatedMs: Long = 0L
     private var lastTickStartMs: Long = 0L
     private var restRemainingMs: Long = 0L
-    private val defaultRestMs: Long = 5000L
+    private var customRestMs: Long = 5000L
     private val tickRunnable = object : Runnable {
         override fun run() {
             val now = System.currentTimeMillis()
@@ -123,6 +123,10 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // Get dynamic values from intent extras
+        totalReps = intent.getIntExtra("totalReps", 3)
+        customRestMs = intent.getLongExtra("restTimeMs", 5000L)
 
         // keeps screen on during push-ups
         window.decorView.keepScreenOn = true
@@ -259,7 +263,7 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
 
     private fun enterRest() {
         isResting = true
-        restRemainingMs = defaultRestMs
+        restRemainingMs = customRestMs
         // Prepare for next rep: freeze counting during rest
         binding.statusText.text = getString(R.string.status_ready)
     }

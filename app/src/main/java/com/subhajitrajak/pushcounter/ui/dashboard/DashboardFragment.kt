@@ -1,5 +1,6 @@
 package com.subhajitrajak.pushcounter.ui.dashboard
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -9,12 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.flexbox.FlexboxLayout
-import com.subhajitrajak.pushcounter.ui.counter.CounterActivity
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.FragmentDashboardBinding
+import com.subhajitrajak.pushcounter.ui.counter.CounterActivity
+import com.subhajitrajak.pushcounter.utils.Constants.KEY_REST_TIME
+import com.subhajitrajak.pushcounter.utils.Constants.KEY_TOTAL_REPS
+import com.subhajitrajak.pushcounter.utils.Constants.PREFS_NAME
 
 class DashboardFragment : Fragment() {
 
@@ -34,8 +39,7 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.startButton.setOnClickListener {
-            val intent = Intent(requireContext(), CounterActivity::class.java)
-            startActivity(intent)
+            showWorkoutSetupDialog()
         }
 
         // Navigate to SettingsFragment
@@ -73,6 +77,33 @@ class DashboardFragment : Fragment() {
             circleView.background = drawable
             binding.heatmapLayout.addView(circleView)
         }
+    }
+
+    // opens the workout setup dialog to set custom rep count and rest time using time pickers
+    private fun showWorkoutSetupDialog() {
+        val dialog = WorkoutSetupDialog()
+        dialog.onStartClick = { totalReps, restTimeMs ->
+            dialog.binding.apply {
+                // set preferences
+                val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                prefs.edit { putInt(KEY_TOTAL_REPS, totalReps) }
+                prefs.edit { putLong(KEY_REST_TIME, restTimeMs) }
+
+                // Start the workout with the specified parameters
+                startWorkout(totalReps, restTimeMs)
+                dialog.dismiss()
+            }
+        }
+        dialog.show(childFragmentManager, WorkoutSetupDialog.TAG)
+    }
+
+    // navigates to the counter activity with the specified parameters
+    private fun startWorkout(totalReps: Int, restTimeMs: Long) {
+        val intent = Intent(requireContext(), CounterActivity::class.java).apply {
+            putExtra("totalReps", totalReps)
+            putExtra("restTimeMs", restTimeMs)
+        }
+        startActivity(intent)
     }
 
     private fun dpToPx(dp: Int): Int {

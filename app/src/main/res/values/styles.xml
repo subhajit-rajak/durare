@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="CustomBottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+    <style name="CustomBottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="android:windowAnimationStyle">@style/CustomBottomSheetAnimation</item>
         <item name="bottomSheetStyle">@style/CustomShapeAppearanceBottomSheet</item>
     </style>
@@ -10,7 +10,7 @@
         <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
     </style>
 
-    <style name="CustomShapeAppearanceBottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
+    <style name="CustomShapeAppearanceBottomSheet" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="android:elevation">0dp</item>
     </style>
