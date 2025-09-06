@@ -36,7 +36,7 @@ class HorizontalStatsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            pushUpCount.text = pushUps.toString()
+            pushUpCount.text = pushUps
             totalTimeCount.text = time
             restTime.text = rest
         }
