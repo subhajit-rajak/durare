@@ -26,6 +26,7 @@
 
         <!-- Total Reps Input -->
         <TextView
+            android:id="@+id/totalRepTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/special_gothic_expanded_semibold"
@@ -35,6 +36,7 @@
             android:layout_marginBottom="8dp" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/totalRepInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
@@ -61,6 +63,7 @@
 
         <!-- Rest Time Section -->
         <TextView
+            android:id="@+id/restTimeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/special_gothic_expanded_semibold"
@@ -71,6 +74,7 @@
 
         <!-- Time Picker Container -->
         <LinearLayout
+            android:id="@+id/restTimeInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -106,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/special_gothic_expanded_bold"
-                android:text=":"
+                android:text="@string/separator"
                 android:layout_marginTop="12dp"
                 android:textColor="@color/black"
                 android:textSize="24sp"

@@ -181,6 +181,94 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/repCountCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_reps"
+                    android:fontFamily="@font/special_gothic_medium"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tap_on_the_number_on_the_right_to_set_the_default_number_of_reps_count"
+                    android:fontFamily="@font/special_gothic_regular"
+                    android:textColor="@color/grey"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/repCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:fontFamily="@font/special_gothic_expanded_medium"
+                android:text="@string/_0"
+                android:textColor="@color/grey"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/restTimeCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rest_time"
+                    android:fontFamily="@font/special_gothic_medium"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tap_on_the_number_on_the_right_to_set_the_default_rest_time_after_each_rep"
+                    android:fontFamily="@font/special_gothic_regular"
+                    android:textColor="@color/grey"
+                    android:textSize="11sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/restTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:fontFamily="@font/special_gothic_expanded_medium"
+                android:text="@string/timer_sample_duration"
+                android:textColor="@color/grey"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

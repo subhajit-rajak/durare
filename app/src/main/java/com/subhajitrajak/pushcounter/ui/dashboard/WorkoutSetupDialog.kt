@@ -14,7 +14,7 @@ import com.subhajitrajak.pushcounter.utils.Constants.PREFS_NAME
 import com.subhajitrajak.pushcounter.utils.formatTwoDigits
 import com.subhajitrajak.pushcounter.utils.showToast
 
-class WorkoutSetupDialog : BottomSheetDialogFragment() {
+class WorkoutSetupDialog(val flag: Int) : BottomSheetDialogFragment() {
     private var _binding: DialogWorkoutSetupBinding? = null
     val binding get() = _binding!!
 
@@ -43,6 +43,16 @@ class WorkoutSetupDialog : BottomSheetDialogFragment() {
 
         binding.btnCancel.setOnClickListener {
             dismiss()
+        }
+
+        if (flag == 1) { // setup total reps
+            binding.restTimeTextView.visibility = View.GONE
+            binding.restTimeInputLayout.visibility = View.GONE
+            binding.btnStart.text = getString(R.string.apply)
+        } else if (flag == 2) { // setup rest time
+            binding.totalRepTextView.visibility = View.GONE
+            binding.totalRepInputLayout.visibility = View.GONE
+            binding.btnStart.text = getString(R.string.apply)
         }
 
         binding.npMinutes.apply {

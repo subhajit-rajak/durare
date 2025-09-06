@@ -81,7 +81,7 @@ class DashboardFragment : Fragment() {
 
     // opens the workout setup dialog to set custom rep count and rest time using time pickers
     private fun showWorkoutSetupDialog() {
-        val dialog = WorkoutSetupDialog()
+        val dialog = WorkoutSetupDialog(0)
         dialog.onStartClick = { totalReps, restTimeMs ->
             dialog.binding.apply {
                 // set preferences
