@@ -4,11 +4,11 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class StatsPagerAdapter(
-    fragment: Fragment,
-    private val pushUps: Int,
+    activity: ShareStatsActivity,
+    private val pushUps: String,
     private val time: String,
     private val rest: String
-) : FragmentStateAdapter(fragment) {
+) : FragmentStateAdapter(activity) {
 
     override fun getItemCount(): Int = 2
 

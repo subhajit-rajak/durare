@@ -18,7 +18,9 @@
             android:id="@+id/ivImage"
             android:layout_width="150dp"
             android:layout_height="80dp"
-            android:src="@drawable/pushup_character"
+            android:layout_marginEnd="12dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/push_up_character"
             app:tint="@color/primary" />
 
         <LinearLayout
@@ -30,7 +32,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Push Ups"
+                android:text="@string/push_ups"
                 android:textSize="12sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/special_gothic_expanded_bold"/>
@@ -39,7 +41,7 @@
                 android:id="@+id/pushUpCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/total_push_ups_today_count"
+                android:text="@string/_0"
                 android:layout_marginTop="-8dp"
                 android:textSize="64sp"
                 android:textColor="@color/black"
@@ -64,7 +66,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time"
+                android:text="@string/time"
                 android:textSize="12sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/special_gothic_expanded_bold"/>
@@ -73,7 +75,7 @@
                 android:id="@+id/totalTimeCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="23m 46s"
+                android:text="@string/_0m_0s"
                 android:textSize="24sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/special_gothic_expanded_bold"/>
@@ -90,7 +92,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rest"
+                android:text="@string/rest"
                 android:textSize="12sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/special_gothic_expanded_bold"/>
@@ -99,7 +101,7 @@
                 android:id="@+id/restTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5m 3s"
+                android:text="@string/_0m_0s"
                 android:textSize="24sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/special_gothic_expanded_bold"/>

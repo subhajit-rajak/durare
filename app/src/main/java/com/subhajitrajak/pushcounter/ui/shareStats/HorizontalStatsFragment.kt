@@ -12,14 +12,14 @@ class HorizontalStatsFragment : Fragment() {
     private var _binding: FragmentHorizontalStatsBinding? = null
     private val binding get() = _binding!!
 
-    private var pushUps: Int = 0
+    private var pushUps: String = "0"
     private var time: String = ""
     private var rest: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            pushUps = it.getInt("pushUps")
+            pushUps = it.getString("pushUps", "")
             time = it.getString("time", "")
             rest = it.getString("rest", "")
         }
@@ -48,10 +48,10 @@ class HorizontalStatsFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(pushUps: Int, time: String, rest: String) =
+        fun newInstance(pushUps: String, time: String, rest: String) =
             HorizontalStatsFragment().apply {
                 arguments = Bundle().apply {
-                    putInt("pushUps", pushUps)
+                    putString("pushUps", pushUps)
                     putString("time", time)
                     putString("rest", rest)
                 }

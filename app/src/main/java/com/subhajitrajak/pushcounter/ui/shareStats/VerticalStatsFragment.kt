@@ -12,14 +12,14 @@ class VerticalStatsFragment : Fragment() {
     private var _binding: FragmentVerticalStatsBinding? = null
     private val binding get() = _binding!!
 
-    private var pushUps: Int = 0
+    private var pushUps: String = ""
     private var time: String = ""
     private var rest: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            pushUps = it.getInt("pushUps")
+            pushUps = it.getString("pushUps", "")
             time = it.getString("time", "")
             rest = it.getString("rest", "")
         }
@@ -36,7 +36,7 @@ class VerticalStatsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            pushUpCount.text = pushUps.toString()
+            pushUpCount.text = pushUps
             totalTimeCount.text = time
             restTime.text = rest
         }
@@ -48,10 +48,10 @@ class VerticalStatsFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(pushUps: Int, time: String, rest: String) =
+        fun newInstance(pushUps: String, time: String, rest: String) =
             VerticalStatsFragment().apply {
                 arguments = Bundle().apply {
-                    putInt("pushUps", pushUps)
+                    putString("pushUps", pushUps)
                     putString("time", time)
                     putString("rest", rest)
                 }

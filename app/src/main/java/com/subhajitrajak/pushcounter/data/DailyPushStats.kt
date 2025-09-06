@@ -8,5 +8,3 @@ data class DailyPushStats(
     val averagePushDurationMs: Long = 0L,
     val totalRestTimeMs: Long = 0L
 )
-
-

@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -24,8 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PushCounter">
         <activity
+            android:name=".ui.shareStats.ShareStatsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.dashboard.HomeActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,7 +37,7 @@
         </activity>
         <activity
             android:name=".ui.counter.CounterActivity"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>

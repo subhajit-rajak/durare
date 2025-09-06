@@ -1,6 +1,7 @@
 package com.subhajitrajak.pushcounter.ui.counter
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.media.ToneGenerator
@@ -43,7 +44,7 @@ import kotlin.math.max
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.RequiresApi
-import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsFragment
+import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsActivity
 import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.showToast
 
@@ -321,16 +322,13 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         val restSeconds = (stats.totalRestTimeMs / 1000) % 60
         val rest = "${restMinutes}m ${restSeconds}s"
 
-        supportFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in_right,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.slide_out_right
-            )
-            .replace(android.R.id.content, ShareStatsFragment.newInstance(pushUps, time, rest))
-            .addToBackStack(null)
-            .commit()
+        val intent = Intent(this, ShareStatsActivity::class.java).apply {
+            putExtra(ShareStatsActivity.EXTRA_PUSH_UPS, pushUps)
+            putExtra(ShareStatsActivity.EXTRA_TIME, time)
+            putExtra(ShareStatsActivity.EXTRA_REST, rest)
+        }
+        startActivity(intent)
+        finish()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
