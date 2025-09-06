@@ -104,4 +104,5 @@
     <string name="tap_on_the_number_on_the_right_to_set_the_default_rest_time_after_each_rep">Tap on the number on the right to set the default rest time after each rep</string>
     <string name="apply">Apply</string>
     <string name="separator">:</string>
+    <string name="dismiss_dialog_box">Dismiss dialog box</string>
 </resources>

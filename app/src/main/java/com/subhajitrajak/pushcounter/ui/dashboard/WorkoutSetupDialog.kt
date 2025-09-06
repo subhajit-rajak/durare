@@ -97,6 +97,10 @@ class WorkoutSetupDialog(val flag: Int) : BottomSheetDialogFragment() {
             onStartClick?.invoke(totalReps, totalRestTimeMs)
             dismiss()
         }
+
+        binding.dismissButton.setOnClickListener {
+            dismiss()
+        }
     }
 
     override fun onDestroyView() {
