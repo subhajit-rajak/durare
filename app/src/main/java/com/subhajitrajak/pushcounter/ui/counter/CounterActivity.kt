@@ -9,9 +9,7 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatActivity
@@ -45,6 +43,8 @@ import kotlin.math.max
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.RequiresApi
+import com.subhajitrajak.pushcounter.utils.log
+import com.subhajitrajak.pushcounter.utils.showToast
 
 class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
 
@@ -59,7 +59,6 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
     private var vibrator: Vibrator? = null
 
     companion object {
-        private const val TAG = "PushCounter"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     }
@@ -207,8 +206,8 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
                     imageAnalyzer
                 )
             } catch (exc: Exception) {
-                Log.e(TAG, "Camera start failed", exc)
-                Toast.makeText(this, "Camera failed to start", Toast.LENGTH_SHORT).show()
+                log("Camera start failed - ${exc.message}")
+                showToast(this, "Camera failed to start")
             }
         }, ContextCompat.getMainExecutor(this))
     }
@@ -296,7 +295,7 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
             totalRestTimeMs = restAccumulatedMs
         )
         if (uid == null) {
-            Toast.makeText(this, getString(R.string.status_camera_permission), Toast.LENGTH_SHORT).show()
+            showToast(this, "Couldn't save stats, please login again.")
             finish()
             return
         }
@@ -305,8 +304,8 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
                 finish()
             }
             .addOnFailureListener { err ->
-                Log.e(TAG, "Failed to save stats", err)
-                Toast.makeText(this, "Failed to save stats", Toast.LENGTH_SHORT).show()
+                log("Failed to save stats - ${err.message}")
+                showToast(this, "Failed to save stats")
                 finish()
             }
     }
