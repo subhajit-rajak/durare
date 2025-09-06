@@ -14,4 +14,6 @@
     <color name="level_0">#0DFF690C</color>
     <color name="level_1">#59FF690C</color>
     <color name="level_2">#FF690C</color>
+
+    <color name="white_fix">#FFFFFF</color>
 </resources>

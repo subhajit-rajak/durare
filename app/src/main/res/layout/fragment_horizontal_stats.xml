@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
+    android:layout_gravity="center"
+    android:padding="32dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.shareStats.HorizontalStatsFragment">
 
@@ -32,20 +34,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/special_gothic_expanded_bold"
                 android:text="@string/push_ups"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/special_gothic_expanded_bold"/>
+                android:textColor="@color/white_fix"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/pushUpCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/_0"
                 android:layout_marginTop="-8dp"
-                android:textSize="64sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/special_gothic_expanded_bold"/>
+                android:fontFamily="@font/special_gothic_expanded_bold"
+                android:text="@string/_0"
+                android:textColor="@color/white_fix"
+                android:textSize="64sp" />
 
         </LinearLayout>
 
@@ -66,19 +68,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/special_gothic_expanded_bold"
                 android:text="@string/time"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/special_gothic_expanded_bold"/>
+                android:textColor="@color/white_fix"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/totalTimeCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/special_gothic_expanded_bold"
                 android:text="@string/_0m_0s"
-                android:textSize="24sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/special_gothic_expanded_bold"/>
+                android:textColor="@color/white_fix"
+                android:textSize="24sp" />
 
         </LinearLayout>
 
@@ -92,19 +94,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/special_gothic_expanded_bold"
                 android:text="@string/rest"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/special_gothic_expanded_bold"/>
+                android:textColor="@color/white_fix"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/restTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/special_gothic_expanded_bold"
                 android:text="@string/_0m_0s"
-                android:textSize="24sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/special_gothic_expanded_bold"/>
+                android:textColor="@color/white_fix"
+                android:textSize="24sp" />
 
         </LinearLayout>
 

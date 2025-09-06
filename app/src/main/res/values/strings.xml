@@ -46,7 +46,7 @@
     <string name="back">Back</string>
     <string name="rate_us">Rate us</string>
     <string name="share_app">Share app</string>
-    <string name="share_stats">Share stats</string>
+    <string name="export_stats">Export stats</string>
     <string name="person_email_1">davianallen1997@yahoo.com</string>
     <string name="general">General</string>
     <string name="account_information">Account Information</string>
@@ -113,4 +113,5 @@
     <string name="time">Time</string>
     <string name="_0m_0s">0m 0s</string>
     <string name="rest">Rest</string>
+    <string name="transparent">Transparent</string>
 </resources>
