@@ -43,6 +43,7 @@ import kotlin.math.max
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.RequiresApi
+import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsFragment
 import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.showToast
 
@@ -301,13 +302,35 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         }
         statsRepository.saveOrAccumulateDaily(uid, dateKey, stats)
             .addOnSuccessListener {
-                finish()
+                navigateToShareStats(stats)
             }
             .addOnFailureListener { err ->
                 log("Failed to save stats - ${err.message}")
                 showToast(this, "Failed to save stats")
                 finish()
             }
+    }
+
+    private fun navigateToShareStats(stats: DailyPushStats) {
+        val pushUps = stats.totalPushups.toString()
+        val timeMinutes = stats.totalActiveTimeMs / 1000 / 60
+        val timeSeconds = (stats.totalActiveTimeMs / 1000) % 60
+        val time = "${timeMinutes}m ${timeSeconds}s"
+
+        val restMinutes = stats.totalRestTimeMs / 1000 / 60
+        val restSeconds = (stats.totalRestTimeMs / 1000) % 60
+        val rest = "${restMinutes}m ${restSeconds}s"
+
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_right,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.slide_out_right
+            )
+            .replace(android.R.id.content, ShareStatsFragment.newInstance(pushUps, time, rest))
+            .addToBackStack(null)
+            .commit()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

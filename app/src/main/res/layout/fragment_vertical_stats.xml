@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.shareStats.VerticalStatsFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Push Ups"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/special_gothic_expanded_bold"/>
+
+    <TextView
+        android:id="@+id/pushUpCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total_push_ups_today_count"
+        android:layout_marginTop="-8dp"
+        android:textSize="64sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/special_gothic_expanded_bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/special_gothic_expanded_bold"/>
+
+    <TextView
+        android:id="@+id/totalTimeCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="23m 46s"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/special_gothic_expanded_bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rest"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/special_gothic_expanded_bold"/>
+
+    <TextView
+        android:id="@+id/restTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5m 3s"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/special_gothic_expanded_bold"/>
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:src="@drawable/pushup_character"
+        app:tint="@color/primary" />
+
+</LinearLayout>

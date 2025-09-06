@@ -46,6 +46,7 @@
     <string name="back">Back</string>
     <string name="rate_us">Rate us</string>
     <string name="share_app">Share app</string>
+    <string name="share_stats">Share stats</string>
     <string name="person_email_1">davianallen1997@yahoo.com</string>
     <string name="general">General</string>
     <string name="account_information">Account Information</string>
@@ -77,7 +78,8 @@
     <string name="email">Email</string>
     <string name="skip">Skip</string>
     <string name="next">Next</string>
-    
+    <string name="home">Home</string>
+
     <!-- Onboarding strings -->
     <string name="onboarding_title_1">track your push-ups.\nanytime. anywhere.</string>
     <string name="onboarding_body_1">Build strength and consistency with a\nsmart push-up counter designed to\nkeep you motivated.</string>
@@ -88,7 +90,7 @@
     <string name="onboarding_title_4">ready to\nbegin?</string>
     <string name="onboarding_body_4">Sign in with Google to save your\nprogress and join the community.</string>
     <string name="continue_with_google">Continue with Google</string>
-    
+
     <!-- Workout Setup Dialog -->
     <string name="setup_workout">Setup Workout</string>
     <string name="total_reps">Total Reps</string>
