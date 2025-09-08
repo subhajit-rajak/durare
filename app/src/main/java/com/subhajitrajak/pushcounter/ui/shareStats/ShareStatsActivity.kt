@@ -162,7 +162,7 @@ class ShareStatsActivity : AppCompatActivity() {
             contentValues.put(MediaStore.Images.Media.IS_PENDING, 0)
             resolver.update(uri, contentValues, null, null)
             return uri
-        } catch (t: Throwable) {
+        } catch (_: Throwable) {
             resolver.delete(uri, null, null)
             return null
         }
