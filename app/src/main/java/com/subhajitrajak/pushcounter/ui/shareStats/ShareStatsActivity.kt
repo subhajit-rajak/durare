@@ -1,13 +1,34 @@
 package com.subhajitrajak.pushcounter.ui.shareStats
 
+import android.Manifest
+import android.content.ContentValues
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.ActivityShareStatsBinding
 import com.subhajitrajak.pushcounter.ui.howToUse.HowToUseFragment
+import com.subhajitrajak.pushcounter.utils.showToast
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import androidx.core.graphics.createBitmap
 
 class ShareStatsActivity : AppCompatActivity() {
 
@@ -37,10 +58,6 @@ class ShareStatsActivity : AppCompatActivity() {
         // setup dots indicator
         binding.dotsIndicator.attachTo(binding.viewPager)
 
-        binding.goHome.setOnClickListener {
-            finish()
-        }
-
         binding.backButton.setOnClickListener {
             finish()
         }
@@ -57,11 +74,141 @@ class ShareStatsActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .commit()
         }
+
+        binding.save.setOnClickListener {
+            exportCurrentStats()
+        }
     }
 
     companion object {
         const val EXTRA_PUSH_UPS = "pushUps"
         const val EXTRA_TIME = "time"
         const val EXTRA_REST = "rest"
+        const val REQUEST_WRITE_STORAGE = 1001
     }
+
+    private fun exportCurrentStats() {
+        val currentFragmentView = findCurrentStatsFragmentView() ?: run {
+            showToast(this, getString(R.string.something_went_wrong))
+            return
+        }
+
+        if (currentFragmentView.width == 0 || currentFragmentView.height == 0) {
+            currentFragmentView.post { exportCurrentStats() }
+            return
+        }
+
+        val bitmap = captureViewAsTransparentBitmap(currentFragmentView)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val uri = saveBitmapToMediaStore(bitmap)
+            showSaveResult(uri != null)
+        } else {
+            // API 24-28: need WRITE_EXTERNAL_STORAGE permission
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_WRITE_STORAGE)
+                // Save will be attempted in onRequestPermissionsResult
+                pendingBitmapForLegacySave = bitmap
+            } else {
+                val ok = saveBitmapToLegacyPictures(bitmap)
+                showSaveResult(ok)
+            }
+        }
+    }
+
+    private fun showSaveResult(success: Boolean) {
+        showToast(this, if (success) getString(R.string.saved_successfully) else getString(R.string.something_went_wrong))
+    }
+
+    private fun captureViewAsTransparentBitmap(view: android.view.View): Bitmap {
+        val bitmap = createBitmap(view.width, view.height)
+        val canvas = Canvas(bitmap)
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+        view.draw(canvas)
+        return bitmap
+    }
+
+    private fun findCurrentStatsFragmentView(): android.view.View? {
+        val fragments = supportFragmentManager.fragments
+        val currentItem = binding.viewPager.currentItem
+        // Prefer the fragment matching current position and visible
+        val candidate = fragments.firstOrNull { fragment ->
+            fragment.isVisible &&
+                ((currentItem == 0 && fragment is VerticalStatsFragment) || (currentItem == 1 && fragment is HorizontalStatsFragment))
+        }
+        return candidate?.view
+            ?: fragments.firstOrNull { it.isVisible && (it is VerticalStatsFragment || it is HorizontalStatsFragment) }?.view
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun saveBitmapToMediaStore(bitmap: Bitmap): Uri? {
+        val filename = generateFilename()
+        val contentValues = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+            put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+            put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + File.separator + getString(R.string.app_name))
+            put(MediaStore.Images.Media.IS_PENDING, 1)
+        }
+
+        val resolver = contentResolver
+        val collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+        val uri = resolver.insert(collection, contentValues) ?: return null
+
+        try {
+            resolver.openOutputStream(uri)?.use { outputStream ->
+                writeBitmapPng(bitmap, outputStream)
+            }
+            contentValues.clear()
+            contentValues.put(MediaStore.Images.Media.IS_PENDING, 0)
+            resolver.update(uri, contentValues, null, null)
+            return uri
+        } catch (t: Throwable) {
+            resolver.delete(uri, null, null)
+            return null
+        }
+    }
+
+    private fun saveBitmapToLegacyPictures(bitmap: Bitmap): Boolean {
+        return try {
+            val picturesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            val targetDir = File(picturesDir, getString(R.string.app_name))
+            if (!targetDir.exists()) {
+                targetDir.mkdirs()
+            }
+            val outFile = File(targetDir, generateFilename())
+            FileOutputStream(outFile).use { fos ->
+                writeBitmapPng(bitmap, fos)
+            }
+            true
+        } catch (_: Throwable) {
+            false
+        }
+    }
+
+    private fun writeBitmapPng(bitmap: Bitmap, outputStream: OutputStream) {
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        outputStream.flush()
+    }
+
+    private fun generateFilename(): String {
+        val ts = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        return "PushUp_${ts}.png"
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_WRITE_STORAGE) {
+            val granted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            val bitmap = pendingBitmapForLegacySave
+            pendingBitmapForLegacySave = null
+            if (granted && bitmap != null) {
+                val ok = saveBitmapToLegacyPictures(bitmap)
+                showSaveResult(ok)
+            } else if (!granted) {
+                showToast(this, getString(R.string.permission_denied))
+            }
+        }
+    }
+
+    private var pendingBitmapForLegacySave: Bitmap? = null
 }

@@ -135,7 +135,7 @@
         app:selectedDotColor="@color/dark_grey_85" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/goHome"
+        android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginBottom="32dp"
@@ -153,7 +153,7 @@
             android:layout_gravity="center"
             android:layout_marginHorizontal="38dp"
             android:fontFamily="@font/special_gothic_medium"
-            android:text="@string/home"
+            android:text="@string/save"
             android:textAllCaps="true"
             android:textColor="@color/grey"
             android:textSize="16sp" />
@@ -168,10 +168,10 @@
         app:cardBackgroundColor="@color/very_light_grey"
         app:cardCornerRadius="32dp"
         app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/goHome"
+        app:layout_constraintBottom_toBottomOf="@+id/save"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/goHome"
-        app:layout_constraintTop_toTopOf="@+id/goHome">
+        app:layout_constraintStart_toEndOf="@+id/save"
+        app:layout_constraintTop_toTopOf="@+id/save">
 
         <ImageView
             android:layout_width="match_parent"
