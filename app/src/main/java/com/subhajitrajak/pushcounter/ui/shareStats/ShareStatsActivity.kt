@@ -76,7 +76,7 @@ class ShareStatsActivity : AppCompatActivity() {
         }
 
         binding.save.setOnClickListener {
-            exportCurrentStats()
+            saveCurrentStats()
         }
     }
 
@@ -87,14 +87,14 @@ class ShareStatsActivity : AppCompatActivity() {
         const val REQUEST_WRITE_STORAGE = 1001
     }
 
-    private fun exportCurrentStats() {
+    private fun saveCurrentStats() {
         val currentFragmentView = findCurrentStatsFragmentView() ?: run {
             showToast(this, getString(R.string.something_went_wrong))
             return
         }
 
         if (currentFragmentView.width == 0 || currentFragmentView.height == 0) {
-            currentFragmentView.post { exportCurrentStats() }
+            currentFragmentView.post { saveCurrentStats() }
             return
         }
 
