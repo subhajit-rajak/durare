@@ -7,6 +7,70 @@
     android:background="@color/white"
     tools:context=".ui.shareStats.ShareStatsActivity">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/very_light_grey"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        android:layout_margin="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="14dp"
+            android:layout_marginVertical="4dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/back"
+                android:src="@drawable/arrow_left"
+                app:tint="@color/grey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/special_gothic_medium"
+                android:text="@string/back"
+                android:textColor="@color/grey"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/howToUse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        app:cardBackgroundColor="@color/very_light_grey"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/special_gothic_medium"
+            android:text="@string/how_to_use"
+            android:layout_marginHorizontal="14dp"
+            android:layout_marginVertical="4dp"
+            android:gravity="center"
+            android:textColor="@color/grey"
+            android:textSize="14sp" />
+
+    </androidx.cardview.widget.CardView>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/stats"
         android:layout_width="wrap_content"
@@ -79,7 +143,7 @@
         app:cardCornerRadius="24dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/share"
+        app:layout_constraintEnd_toStartOf="@+id/export"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -97,7 +161,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/share"
+        android:id="@+id/export"
         android:layout_width="50dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"

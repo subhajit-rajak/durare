@@ -5,7 +5,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.ActivityShareStatsBinding
+import com.subhajitrajak.pushcounter.ui.howToUse.HowToUseFragment
 
 class ShareStatsActivity : AppCompatActivity() {
 
@@ -37,6 +39,23 @@ class ShareStatsActivity : AppCompatActivity() {
 
         binding.goHome.setOnClickListener {
             finish()
+        }
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
+
+        binding.howToUse.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in_right,
+                    R.anim.fade_out,
+                    R.anim.fade_in,
+                    R.anim.slide_out_right
+                )
+                .replace(android.R.id.content, HowToUseFragment())
+                .addToBackStack(null)
+                .commit()
         }
     }
 
