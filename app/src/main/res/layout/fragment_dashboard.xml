@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="16dp"
             android:paddingHorizontal="24dp"
+            android:paddingTop="16dp"
             android:paddingBottom="128dp">
 
             <LinearLayout
@@ -28,8 +28,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:fontFamily="@font/special_gothic_expanded_bold"
                     android:text="@string/top_bar_title"
                     android:textColor="@color/black"
@@ -67,7 +67,7 @@
                         android:layout_height="24dp"
                         android:contentDescription="@string/ask_ai"
                         android:src="@drawable/ai_icon"
-                        app:tint="@color/black"/>
+                        app:tint="@color/black" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -75,8 +75,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:fontFamily="@font/special_gothic_expanded_regular"
-                        android:text="@string/ask_ai_bar_hint"
                         android:paddingHorizontal="16dp"
+                        android:text="@string/ask_ai_bar_hint"
                         android:textColor="@color/light_grey"
                         tools:ignore="TextContrastCheck" />
 
@@ -294,8 +294,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="24dp"
                     android:layout_gravity="center"
+                    android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="18dp"
                     android:layout_marginBottom="14dp"
                     android:orientation="vertical">
@@ -312,16 +312,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="13dp"
                         android:baselineAligned="false"
-                        android:orientation="horizontal"
                         android:gravity="center"
+                        android:orientation="horizontal"
                         android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:orientation="horizontal"
                             tools:ignore="UseCompoundDrawables">
 
                             <TextView
@@ -345,9 +345,9 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:orientation="horizontal"
                             tools:ignore="UseCompoundDrawables">
 
                             <TextView
@@ -581,11 +581,28 @@
         android:backgroundTint="@color/primary"
         android:fontFamily="@font/special_gothic_expanded_semibold"
         android:text="@string/start"
-        android:textSize="20sp"
         android:textAllCaps="true"
-        android:textColor="@color/very_light_grey"
+        android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/stats"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/stats"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/export_stats"
+        android:scaleType="centerCrop"
+        android:layout_marginStart="8dp"
+        android:padding="12dp"
+        android:backgroundTint="@android:color/transparent"
+        android:src="@drawable/share_stats"
+        app:layout_constraintBottom_toBottomOf="@+id/startButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/startButton"
+        app:layout_constraintTop_toTopOf="@+id/startButton"
+        app:tint="@color/grey" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

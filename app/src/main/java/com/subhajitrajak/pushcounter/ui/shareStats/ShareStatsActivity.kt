@@ -2,6 +2,7 @@ package com.subhajitrajak.pushcounter.ui.shareStats
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -16,6 +17,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.subhajitrajak.pushcounter.R
@@ -78,6 +80,10 @@ class ShareStatsActivity : AppCompatActivity() {
         binding.save.setOnClickListener {
             saveCurrentStats()
         }
+
+        binding.export.setOnClickListener {
+            shareCurrentStats()
+        }
     }
 
     companion object {
@@ -118,6 +124,49 @@ class ShareStatsActivity : AppCompatActivity() {
 
     private fun showSaveResult(success: Boolean) {
         showToast(this, if (success) getString(R.string.saved_successfully) else getString(R.string.something_went_wrong))
+    }
+
+    private fun shareCurrentStats() {
+        val currentFragmentView = findCurrentStatsFragmentView() ?: run {
+            showToast(this, getString(R.string.something_went_wrong))
+            return
+        }
+
+        if (currentFragmentView.width == 0 || currentFragmentView.height == 0) {
+            currentFragmentView.post { shareCurrentStats() }
+            return
+        }
+
+        val bitmap = captureViewAsTransparentBitmap(currentFragmentView)
+        shareBitmap(bitmap)
+    }
+
+    private fun shareBitmap(bitmap: Bitmap) {
+        try {
+            val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                saveBitmapToMediaStore(bitmap)
+            } else {
+                // For API 24-28, save to cache directory for sharing
+                saveBitmapToCache(bitmap)
+            }
+
+            if (uri != null) {
+                val shareIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    type = "image/png"
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                    putExtra(Intent.EXTRA_TEXT, "Check out my push-up stats! 💪")
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+
+                val chooserIntent = Intent.createChooser(shareIntent, "Share your push-up stats")
+                startActivity(chooserIntent)
+            } else {
+                showToast(this, getString(R.string.something_went_wrong))
+            }
+        } catch (_: Exception) {
+            showToast(this, getString(R.string.something_went_wrong))
+        }
     }
 
     private fun captureViewAsTransparentBitmap(view: android.view.View): Bitmap {
@@ -182,6 +231,22 @@ class ShareStatsActivity : AppCompatActivity() {
             true
         } catch (_: Throwable) {
             false
+        }
+    }
+
+    private fun saveBitmapToCache(bitmap: Bitmap): Uri? {
+        return try {
+            val cacheDir = File(cacheDir, "shared_images")
+            if (!cacheDir.exists()) {
+                cacheDir.mkdirs()
+            }
+            val imageFile = File(cacheDir, generateFilename())
+            FileOutputStream(imageFile).use { fos ->
+                writeBitmapPng(bitmap, fos)
+            }
+            FileProvider.getUriForFile(this, "${packageName}.fileprovider", imageFile)
+        } catch (_: Throwable) {
+            null
         }
     }
 

@@ -17,6 +17,7 @@ import com.google.android.flexbox.FlexboxLayout
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.FragmentDashboardBinding
 import com.subhajitrajak.pushcounter.ui.counter.CounterActivity
+import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsActivity
 import com.subhajitrajak.pushcounter.utils.Constants.KEY_REST_TIME
 import com.subhajitrajak.pushcounter.utils.Constants.KEY_TOTAL_REPS
 import com.subhajitrajak.pushcounter.utils.Constants.PREFS_NAME
@@ -40,6 +41,10 @@ class DashboardFragment : Fragment() {
 
         binding.startButton.setOnClickListener {
             showWorkoutSetupDialog()
+        }
+
+        binding.stats.setOnClickListener {
+            navigateToShareStats()
         }
 
         // Navigate to SettingsFragment
@@ -103,6 +108,12 @@ class DashboardFragment : Fragment() {
             putExtra("totalReps", totalReps)
             putExtra("restTimeMs", restTimeMs)
         }
+        startActivity(intent)
+    }
+
+    // navigates to the counter activity with the specified parameters
+    private fun navigateToShareStats() {
+        val intent = Intent(requireContext(), ShareStatsActivity::class.java)
         startActivity(intent)
     }
 
