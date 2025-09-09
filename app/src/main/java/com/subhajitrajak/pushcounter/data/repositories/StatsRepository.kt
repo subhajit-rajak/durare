@@ -1,18 +1,17 @@
-package com.subhajitrajak.pushcounter.data
+package com.subhajitrajak.pushcounter.data.repositories
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.subhajitrajak.pushcounter.utils.Constants.DAILY_PUSHUP_STATS
-import com.subhajitrajak.pushcounter.utils.Constants.LIFETIME_TOTAL_PUSHUPS
-import com.subhajitrajak.pushcounter.utils.Constants.USERS
+import com.subhajitrajak.pushcounter.data.models.DailyPushStats
+import com.subhajitrajak.pushcounter.utils.Constants
 
 class StatsRepository {
     private val db: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
 
     fun saveOrAccumulateDaily(uid: String, date: String, stats: DailyPushStats): Task<Void> {
-        val userDoc = db.collection(USERS).document(uid)
-        val docRef = userDoc.collection(DAILY_PUSHUP_STATS).document(date)
+        val userDoc = db.collection(Constants.USERS).document(uid)
+        val docRef = userDoc.collection(Constants.DAILY_PUSHUP_STATS).document(date)
 
         return db.runTransaction { txn ->
             // Read everything first
@@ -41,9 +40,9 @@ class StatsRepository {
 
             // Handle lifetime stats
             if (userSnap.exists()) {
-                txn.update(userDoc, LIFETIME_TOTAL_PUSHUPS, FieldValue.increment(pushupIncrement.toLong()))
+                txn.update(userDoc, Constants.LIFETIME_TOTAL_PUSHUPS, FieldValue.increment(pushupIncrement.toLong()))
             } else {
-                txn.set(userDoc, mapOf(LIFETIME_TOTAL_PUSHUPS to pushupIncrement))
+                txn.set(userDoc, mapOf(Constants.LIFETIME_TOTAL_PUSHUPS to pushupIncrement))
             }
 
             null

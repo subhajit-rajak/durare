@@ -1,4 +1,4 @@
-package com.subhajitrajak.pushcounter.data
+package com.subhajitrajak.pushcounter.data.models
 
 data class DailyPushStats(
     val date: String = "",

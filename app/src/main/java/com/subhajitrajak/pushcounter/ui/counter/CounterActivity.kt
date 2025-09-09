@@ -35,8 +35,8 @@ import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import com.subhajitrajak.pushcounter.R
-import com.subhajitrajak.pushcounter.data.DailyPushStats
-import com.subhajitrajak.pushcounter.data.StatsRepository
+import com.subhajitrajak.pushcounter.data.models.DailyPushStats
+import com.subhajitrajak.pushcounter.data.repositories.StatsRepository
 import com.subhajitrajak.pushcounter.databinding.ActivityCounterBinding
 import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsActivity
 import com.subhajitrajak.pushcounter.utils.Constants

@@ -1,7 +1,7 @@
 package com.subhajitrajak.pushcounter.ui.dashboard
 
 import androidx.lifecycle.*
-import com.subhajitrajak.pushcounter.data.DailyPushStats
+import com.subhajitrajak.pushcounter.data.models.DailyPushStats
 import com.subhajitrajak.pushcounter.data.models.DashboardStats
 import com.subhajitrajak.pushcounter.data.repositories.DashboardRepository
 import kotlinx.coroutines.launch

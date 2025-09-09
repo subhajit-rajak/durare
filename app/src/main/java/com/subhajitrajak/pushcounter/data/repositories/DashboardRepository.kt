@@ -3,7 +3,7 @@ package com.subhajitrajak.pushcounter.data.repositories
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.subhajitrajak.pushcounter.data.DailyPushStats
+import com.subhajitrajak.pushcounter.data.models.DailyPushStats
 import com.subhajitrajak.pushcounter.data.models.DashboardStats
 import com.subhajitrajak.pushcounter.utils.Constants.DAILY_PUSHUP_STATS
 import com.subhajitrajak.pushcounter.utils.Constants.DATE

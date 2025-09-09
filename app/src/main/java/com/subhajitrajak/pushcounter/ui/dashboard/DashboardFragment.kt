@@ -16,7 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.flexbox.FlexboxLayout
 import com.subhajitrajak.pushcounter.R
-import com.subhajitrajak.pushcounter.data.DailyPushStats
+import com.subhajitrajak.pushcounter.data.models.DailyPushStats
 import com.subhajitrajak.pushcounter.databinding.FragmentDashboardBinding
 import com.subhajitrajak.pushcounter.ui.counter.CounterActivity
 import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsActivity
