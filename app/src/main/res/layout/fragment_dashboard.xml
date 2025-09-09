@@ -94,6 +94,7 @@
                             android:fontFamily="@font/special_gothic_expanded_regular"
                             android:paddingHorizontal="16dp"
                             android:text="@string/ask_ai_bar_hint"
+                            android:textSize="18sp"
                             android:textColor="@color/light_grey"
                             tools:ignore="TextContrastCheck" />
 

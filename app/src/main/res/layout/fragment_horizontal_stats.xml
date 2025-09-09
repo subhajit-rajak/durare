@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/ivImage"
-            android:layout_width="150dp"
-            android:layout_height="80dp"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
             android:layout_marginEnd="12dp"
             android:importantForAccessibility="no"
             android:src="@drawable/push_up_character"

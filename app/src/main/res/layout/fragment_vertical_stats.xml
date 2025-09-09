@@ -65,7 +65,7 @@
 
     <ImageView
         android:id="@+id/ivImage"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:layout_height="100dp"
         android:importantForAccessibility="no"
         android:src="@drawable/push_up_character"
