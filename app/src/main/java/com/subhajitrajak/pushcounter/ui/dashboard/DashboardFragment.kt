@@ -63,7 +63,7 @@ class DashboardFragment : Fragment() {
         }
 
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
-//            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding.swipeRefresh.isRefreshing = isLoading
         }
 
         viewModel.error.observe(viewLifecycleOwner) { errorMsg ->
@@ -88,6 +88,16 @@ class DashboardFragment : Fragment() {
             settingsButton.setOnClickListener {
                 findNavController().navigate(R.id.action_dashboardFragment_to_settingsFragment)
             }
+
+            swipeRefresh.setOnRefreshListener {
+                viewModel.loadDashboardStats()
+            }
+
+            swipeRefresh.setProgressBackgroundColorSchemeResource(R.color.primary)
+            swipeRefresh.setColorSchemeResources(
+                R.color.white,
+                R.color.black
+            )
         }
 
         // Generate heatmap

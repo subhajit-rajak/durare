@@ -94,4 +94,7 @@ dependencies {
 
     // glide
     implementation(libs.glide)
+
+    // swipe to refresh layout
+    implementation(libs.androidx.swiperefreshlayout)
 }
