@@ -110,6 +110,7 @@
                         android:paddingHorizontal="24dp">
 
                         <TextView
+                            android:id="@+id/todayText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/special_gothic_expanded_bold"
@@ -147,6 +148,7 @@
                         android:paddingHorizontal="16dp">
 
                         <TextView
+                            android:id="@+id/last7Text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/special_gothic_expanded_semibold"
@@ -187,6 +189,7 @@
                         android:paddingHorizontal="16dp">
 
                         <TextView
+                            android:id="@+id/last30Text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/special_gothic_expanded_semibold"
@@ -228,6 +231,7 @@
                         android:paddingHorizontal="16dp">
 
                         <TextView
+                            android:id="@+id/lifetimeText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/special_gothic_expanded_semibold"
@@ -557,6 +561,7 @@
                     android:layout_marginVertical="13dp">
 
                     <TextView
+                        android:id="@+id/allUsersText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"

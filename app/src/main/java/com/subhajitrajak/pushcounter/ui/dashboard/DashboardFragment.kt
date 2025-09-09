@@ -12,20 +12,28 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.flexbox.FlexboxLayout
 import com.subhajitrajak.pushcounter.R
+import com.subhajitrajak.pushcounter.data.DailyPushStats
 import com.subhajitrajak.pushcounter.databinding.FragmentDashboardBinding
 import com.subhajitrajak.pushcounter.ui.counter.CounterActivity
 import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsActivity
 import com.subhajitrajak.pushcounter.utils.Constants.KEY_REST_TIME
 import com.subhajitrajak.pushcounter.utils.Constants.KEY_TOTAL_REPS
 import com.subhajitrajak.pushcounter.utils.Constants.PREFS_NAME
+import com.subhajitrajak.pushcounter.utils.log
+import com.subhajitrajak.pushcounter.utils.showToast
 
 class DashboardFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: DashboardViewModel by viewModels {
+        DashboardViewModelFactory(requireContext().applicationContext)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,17 +47,47 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.startButton.setOnClickListener {
-            showWorkoutSetupDialog()
+        viewModel.dailyStats.observe(viewLifecycleOwner) { stats ->
+            navigateToShareStats(stats)
         }
 
-        binding.stats.setOnClickListener {
-            navigateToShareStats()
+        viewModel.dashboardStats.observe(viewLifecycleOwner) { stats ->
+            // update UI
+            binding.apply {
+                todayText.text = stats.todayPushups.toString()
+                last7Text.text = stats.last7Pushups.toString()
+                last30Text.text = stats.last30Pushups.toString()
+                lifetimeText.text = stats.lifetimePushups.toString()
+                allUsersText.text = stats.allUsersTotal.toString()
+            }
         }
 
-        // Navigate to SettingsFragment
-        binding.settingsButton.setOnClickListener {
-            findNavController().navigate(R.id.action_dashboardFragment_to_settingsFragment)
+        viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
+//            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { errorMsg ->
+            if (errorMsg != null) {
+                log(errorMsg)
+                showToast(requireContext(), errorMsg)
+            }
+        }
+
+        // Trigger loading
+        viewModel.loadDashboardStats()
+
+        binding.apply {
+            startButton.setOnClickListener {
+                showWorkoutSetupDialog()
+            }
+
+            stats.setOnClickListener {
+                viewModel.loadDailyStats()
+            }
+
+            settingsButton.setOnClickListener {
+                findNavController().navigate(R.id.action_dashboardFragment_to_settingsFragment)
+            }
         }
 
         // Generate heatmap
@@ -105,15 +143,28 @@ class DashboardFragment : Fragment() {
     // navigates to the counter activity with the specified parameters
     private fun startWorkout(totalReps: Int, restTimeMs: Long) {
         val intent = Intent(requireContext(), CounterActivity::class.java).apply {
-            putExtra("totalReps", totalReps)
-            putExtra("restTimeMs", restTimeMs)
+            putExtra(CounterActivity.TOTAL_REPS, totalReps)
+            putExtra(CounterActivity.REST_TIME, restTimeMs)
         }
         startActivity(intent)
     }
 
     // navigates to the counter activity with the specified parameters
-    private fun navigateToShareStats() {
-        val intent = Intent(requireContext(), ShareStatsActivity::class.java)
+    private fun navigateToShareStats(stats: DailyPushStats) {
+        val pushUps = stats.totalPushups.toString()
+        val timeMinutes = stats.totalActiveTimeMs / 1000 / 60
+        val timeSeconds = (stats.totalActiveTimeMs / 1000) % 60
+        val time = "${timeMinutes}m ${timeSeconds}s"
+
+        val restMinutes = stats.totalRestTimeMs / 1000 / 60
+        val restSeconds = (stats.totalRestTimeMs / 1000) % 60
+        val rest = "${restMinutes}m ${restSeconds}s"
+
+        val intent = Intent(requireContext(), ShareStatsActivity::class.java).apply {
+            putExtra(ShareStatsActivity.EXTRA_PUSH_UPS, pushUps)
+            putExtra(ShareStatsActivity.EXTRA_TIME, time)
+            putExtra(ShareStatsActivity.EXTRA_REST, rest)
+        }
         startActivity(intent)
     }
 
@@ -124,5 +175,10 @@ class DashboardFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadDashboardStats()
     }
 }

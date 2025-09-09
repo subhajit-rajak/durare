@@ -7,6 +7,8 @@ import android.media.AudioManager
 import android.media.ToneGenerator
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
@@ -14,12 +16,13 @@ import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.AspectRatio
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
+import androidx.camera.core.resolutionselector.AspectRatioStrategy
+import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -32,21 +35,21 @@ import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import com.subhajitrajak.pushcounter.R
-import com.subhajitrajak.pushcounter.databinding.ActivityCounterBinding
-import com.subhajitrajak.pushcounter.utils.Constants
-import com.subhajitrajak.pushcounter.utils.PushUpDetector
 import com.subhajitrajak.pushcounter.data.DailyPushStats
 import com.subhajitrajak.pushcounter.data.StatsRepository
+import com.subhajitrajak.pushcounter.databinding.ActivityCounterBinding
+import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsActivity
+import com.subhajitrajak.pushcounter.utils.Constants
+import com.subhajitrajak.pushcounter.utils.Constants.DATE_FORMAT
+import com.subhajitrajak.pushcounter.utils.PushUpDetector
+import com.subhajitrajak.pushcounter.utils.log
+import com.subhajitrajak.pushcounter.utils.showToast
 import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.max
-import android.os.Handler
-import android.os.Looper
-import androidx.annotation.RequiresApi
-import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsActivity
-import com.subhajitrajak.pushcounter.utils.log
-import com.subhajitrajak.pushcounter.utils.showToast
 
 class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
 
@@ -63,6 +66,8 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        const val REST_TIME = "restTimeMs"
+        const val TOTAL_REPS = "totalReps"
     }
 
     private var showCameraCardSwitch: Boolean = false
@@ -113,7 +118,6 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
     // Repo
     private val statsRepository: StatsRepository by lazy { StatsRepository() }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -185,18 +189,21 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         startUiTicker()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+
             val preview = Preview.Builder()
-                .setTargetAspectRatio(AspectRatio.RATIO_4_3)
                 .build().also { it.surfaceProvider = binding.viewFinder.surfaceProvider }
+
+            val resolutionSelector = ResolutionSelector.Builder()
+                .setAspectRatioStrategy(AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY)
+                .build()
 
             val imageAnalyzer = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .setTargetAspectRatio(AspectRatio.RATIO_4_3)
+                .setResolutionSelector(resolutionSelector)
                 .build().also { it.setAnalyzer(cameraExecutor, FaceAnalyzer()) }
 
             try {
@@ -248,13 +255,17 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         val totalSeconds = (ms / 1000L).toInt()
         val minutes = totalSeconds / 60
         val seconds = totalSeconds % 60
-        return String.format("%02d:%02d", minutes, seconds)
+        return String.format(Locale.US, "%02d:%02d", minutes, seconds)
     }
 
     private fun onDoneClicked() {
         if (isResting) return
-        // Finish current rep
+        // Finish current rep: move currentRepCount into completed sum, then reset per-rep counter
         completedRepsPushUpsSum += currentRepCount
+        currentRepCount = 0
+        binding.pushUpCount.text = currentRepCount.toString()
+        updateTotalCount()
+
         if (currentRep >= totalReps) {
             completeSessionAndExit()
         } else {
@@ -286,7 +297,7 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
     private fun completeSessionAndExit() {
         // Persist stats
         val uid = FirebaseAuth.getInstance().currentUser?.uid
-        val dateKey = SimpleDateFormat("yyyy-MM-dd").format(java.util.Date())
+        val dateKey = SimpleDateFormat(DATE_FORMAT, Locale.US).format(Date())
         val avgPushDuration = if (totalPushUps > 0) cumulativePushDurationMs / totalPushUps else 0L
         val stats = DailyPushStats(
             date = dateKey,
@@ -331,7 +342,6 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         finish()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS && allPermissionsGranted()) {
@@ -391,12 +401,7 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         if (!counterFeedbackSwitch) return
         try { toneGenerator?.startTone(ToneGenerator.TONE_PROP_ACK, 120) } catch (_: Exception) {}
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator?.vibrate(VibrationEffect.createOneShot(60, VibrationEffect.DEFAULT_AMPLITUDE))
-            } else {
-                @Suppress("DEPRECATION")
-                vibrator?.vibrate(60)
-            }
+            vibrator?.vibrate(VibrationEffect.createOneShot(60, VibrationEffect.DEFAULT_AMPLITUDE))
         } catch (_: Exception) {}
     }
 

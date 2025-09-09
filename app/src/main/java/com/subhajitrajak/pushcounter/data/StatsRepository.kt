@@ -1,19 +1,28 @@
 package com.subhajitrajak.pushcounter.data
 
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.subhajitrajak.pushcounter.utils.Constants.DAILY_PUSHUP_STATS
+import com.subhajitrajak.pushcounter.utils.Constants.LIFETIME_TOTAL_PUSHUPS
+import com.subhajitrajak.pushcounter.utils.Constants.USERS
 
 class StatsRepository {
     private val db: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
 
     fun saveOrAccumulateDaily(uid: String, date: String, stats: DailyPushStats): Task<Void> {
-        val docRef = db.collection("users").document(uid)
-            .collection("dailyPushStats").document(date)
+        val userDoc = db.collection(USERS).document(uid)
+        val docRef = userDoc.collection(DAILY_PUSHUP_STATS).document(date)
 
         return db.runTransaction { txn ->
-            val snapshot = txn.get(docRef)
-            if (snapshot.exists()) {
-                val existing = snapshot.toObject(DailyPushStats::class.java)
+            // Read everything first
+            val dailySnap = txn.get(docRef)
+            val userSnap = txn.get(userDoc)
+            var pushupIncrement: Int
+
+            // Handle daily stats
+            if (dailySnap.exists()) {
+                val existing = dailySnap.toObject(DailyPushStats::class.java)
                 val merged = existing?.copy(
                     totalReps = existing.totalReps + stats.totalReps,
                     totalPushups = existing.totalPushups + stats.totalPushups,
@@ -22,15 +31,22 @@ class StatsRepository {
                         ((existing.averagePushDurationMs * existing.totalPushups) + (stats.averagePushDurationMs * stats.totalPushups)) / (existing.totalPushups + stats.totalPushups)
                     else 0L,
                     totalRestTimeMs = existing.totalRestTimeMs + stats.totalRestTimeMs
-                )
-                    ?: stats
+                ) ?: stats
                 txn.set(docRef, merged)
+                pushupIncrement = merged.totalPushups - existing!!.totalPushups
             } else {
                 txn.set(docRef, stats)
+                pushupIncrement = stats.totalPushups
             }
+
+            // Handle lifetime stats
+            if (userSnap.exists()) {
+                txn.update(userDoc, LIFETIME_TOTAL_PUSHUPS, FieldValue.increment(pushupIncrement.toLong()))
+            } else {
+                txn.set(userDoc, mapOf(LIFETIME_TOTAL_PUSHUPS to pushupIncrement))
+            }
+
             null
         }
     }
 }
-
-

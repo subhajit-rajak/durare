@@ -7,4 +7,11 @@ object Constants {
     const val KEY_THEME = "app_theme"
     const val KEY_TOTAL_REPS = "total_reps"
     const val KEY_REST_TIME = "rest_time"
+
+    // firestore
+    const val DAILY_PUSHUP_STATS = "dailyPushStats"
+    const val USERS = "users"
+    const val LIFETIME_TOTAL_PUSHUPS = "lifetimeTotalPushups"
+    const val DATE = "date"
+    const val DATE_FORMAT = "yyyy-MM-dd"
 }
