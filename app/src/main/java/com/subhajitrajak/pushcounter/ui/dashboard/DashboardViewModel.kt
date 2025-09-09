@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.subhajitrajak.pushcounter.data.models.DailyPushStats
 import com.subhajitrajak.pushcounter.data.models.DashboardStats
 import com.subhajitrajak.pushcounter.data.repositories.DashboardRepository
+import com.subhajitrajak.pushcounter.utils.Event
 import kotlinx.coroutines.launch
 
 class DashboardViewModel(private val repository: DashboardRepository) : ViewModel() {
@@ -11,8 +12,8 @@ class DashboardViewModel(private val repository: DashboardRepository) : ViewMode
     private val _dashboardStats = MutableLiveData<DashboardStats>()
     val dashboardStats: LiveData<DashboardStats> get() = _dashboardStats
 
-    private val _dailyStats = MutableLiveData<DailyPushStats>()
-    val dailyStats: LiveData<DailyPushStats> get() = _dailyStats
+    private val _dailyStats = MutableLiveData<Event<DailyPushStats>>()
+    val dailyStats: LiveData<Event<DailyPushStats>> get() = _dailyStats
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> get() = _loading
@@ -39,7 +40,7 @@ class DashboardViewModel(private val repository: DashboardRepository) : ViewMode
         viewModelScope.launch {
             try {
                 val stats = repository.fetchDailyStats()
-                _dailyStats.value = stats
+                _dailyStats.value = Event(stats)
                 _error.value = null
             } catch (e: Exception) {
                 _error.value = e.message

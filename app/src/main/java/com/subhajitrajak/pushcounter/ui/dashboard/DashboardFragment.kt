@@ -24,7 +24,9 @@ import com.subhajitrajak.pushcounter.utils.Constants.KEY_REST_TIME
 import com.subhajitrajak.pushcounter.utils.Constants.KEY_TOTAL_REPS
 import com.subhajitrajak.pushcounter.utils.Constants.PREFS_NAME
 import com.subhajitrajak.pushcounter.utils.log
+import com.subhajitrajak.pushcounter.utils.removeWithAnim
 import com.subhajitrajak.pushcounter.utils.showToast
+import com.subhajitrajak.pushcounter.utils.showWithAnim
 
 class DashboardFragment : Fragment() {
 
@@ -47,8 +49,10 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.dailyStats.observe(viewLifecycleOwner) { stats ->
-            navigateToShareStats(stats)
+        viewModel.dailyStats.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { stats ->
+                navigateToShareStats(stats)
+            }
         }
 
         viewModel.dashboardStats.observe(viewLifecycleOwner) { stats ->
@@ -63,10 +67,15 @@ class DashboardFragment : Fragment() {
         }
 
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
-            binding.swipeRefresh.isRefreshing = isLoading
+            if (isLoading) {
+                binding.loadingIndicator.showWithAnim()
+            } else {
+                binding.loadingIndicator.removeWithAnim()
+            }
         }
 
         viewModel.error.observe(viewLifecycleOwner) { errorMsg ->
+            binding.loadingIndicator.removeWithAnim()
             if (errorMsg != null) {
                 log(errorMsg)
                 showToast(requireContext(), errorMsg)
@@ -82,6 +91,7 @@ class DashboardFragment : Fragment() {
             }
 
             stats.setOnClickListener {
+                loadingIndicator.showWithAnim()
                 viewModel.loadDailyStats()
             }
 
@@ -91,6 +101,7 @@ class DashboardFragment : Fragment() {
 
             swipeRefresh.setOnRefreshListener {
                 viewModel.loadDashboardStats()
+                swipeRefresh.isRefreshing = false
             }
 
             swipeRefresh.setProgressBackgroundColorSchemeResource(R.color.primary)
@@ -176,6 +187,7 @@ class DashboardFragment : Fragment() {
             putExtra(ShareStatsActivity.EXTRA_REST, rest)
         }
         startActivity(intent)
+        binding.loadingIndicator.removeWithAnim()
     }
 
     private fun dpToPx(dp: Int): Int {

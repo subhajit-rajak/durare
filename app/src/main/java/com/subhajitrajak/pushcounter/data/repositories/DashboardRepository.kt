@@ -22,7 +22,7 @@ class DashboardRepository(context: Context) {
     suspend fun fetchDashboardStats(): DashboardStats {
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
 
-        // ---- Date boundaries ----
+        // Date boundaries
         val today = dateFormat.format(Date())
 
         val cal = Calendar.getInstance()
