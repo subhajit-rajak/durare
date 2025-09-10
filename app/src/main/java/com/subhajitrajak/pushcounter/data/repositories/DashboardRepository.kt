@@ -19,12 +19,15 @@ class DashboardRepository(context: Context) {
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val dateFormat = SimpleDateFormat(DATE_FORMAT, Locale.US)
 
+    private fun dailyStatsRef(uid: String) =
+        db.collection(USERS).document(uid).collection(DAILY_PUSHUP_STATS)
+
+    private fun todayString() = dateFormat.format(Date())
+
     suspend fun fetchDashboardStats(): DashboardStats {
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
 
-        // Date boundaries
-        val today = dateFormat.format(Date())
-
+        val today = todayString()
         val cal = Calendar.getInstance()
         val now = cal.time
 
@@ -36,43 +39,23 @@ class DashboardRepository(context: Context) {
         cal.add(Calendar.DAY_OF_YEAR, -29) // last 30 days
         val last30Date = dateFormat.format(cal.time)
 
-        // today's pushups
-        val todayDoc = db.collection(USERS).document(uid)
-            .collection(DAILY_PUSHUP_STATS).document(today)
-            .get().await()
-        val todayPushups = todayDoc.toObject(DailyPushStats::class.java)?.totalPushups ?: 0
+        // Fetch all user docs once
+        val allDocs = dailyStatsRef(uid).get().await()
+        val statsByDate = allDocs.documents.mapNotNull { doc ->
+            val dateStr = doc.getString(DATE)
+            val stats = doc.toObject(DailyPushStats::class.java)
+            if (dateStr != null && stats != null) dateStr to stats.totalPushups else null
+        }.toMap()
 
-        // last 7 days
-        val last7Query = db.collection(USERS).document(uid)
-            .collection(DAILY_PUSHUP_STATS)
-            .whereGreaterThanOrEqualTo(DATE, last7Date)
-            .get().await()
-        val last7Pushups = last7Query.documents.sumOf {
-            it.toObject(DailyPushStats::class.java)?.totalPushups ?: 0
-        }
+        val todayPushups = statsByDate[today] ?: 0
 
-        // last 30 days
-        val last30Query = db.collection(USERS).document(uid)
-            .collection(DAILY_PUSHUP_STATS)
-            .whereGreaterThanOrEqualTo(DATE, last30Date)
-            .get().await()
-        val last30Pushups = last30Query.documents.sumOf {
-            it.toObject(DailyPushStats::class.java)?.totalPushups ?: 0
-        }
+        val last7Pushups = statsByDate.filterKeys { it >= last7Date }.values.sum()
+        val last30Pushups = statsByDate.filterKeys { it >= last30Date }.values.sum()
+        val lifetimePushups = statsByDate.values.sum()
 
-        // lifetime (all time)
-        val allDocs = db.collection(USERS).document(uid)
-            .collection(DAILY_PUSHUP_STATS)
-            .get().await()
-        val lifetimePushups = allDocs.documents.sumOf {
-            it.toObject(DailyPushStats::class.java)?.totalPushups ?: 0
-        }
-
-        // pushups of all users
-        val allUsers = db.collection(USERS).get().await()
-        val allUsersTotal = allUsers.documents.sumOf {
-            it.getLong(LIFETIME_TOTAL_PUSHUPS)?.toInt() ?: 0
-        }
+        // For all users lifetime (optional optimization: store this separately)
+        val allUsersTotal = db.collection(USERS).get().await()
+            .documents.sumOf { it.getLong(LIFETIME_TOTAL_PUSHUPS)?.toInt() ?: 0 }
 
         return DashboardStats(
             todayPushups,
@@ -85,69 +68,49 @@ class DashboardRepository(context: Context) {
 
     suspend fun fetchDailyStats(): DailyPushStats {
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
-        
-        val today = dateFormat.format(Date())
-        val todayDoc = db.collection(USERS).document(uid)
-            .collection(DAILY_PUSHUP_STATS).document(today)
-            .get().await()
-        return todayDoc.toObject(DailyPushStats::class.java) ?: throw Exception("No stats found for today")
+        val today = todayString()
+        val todayDoc = dailyStatsRef(uid).document(today).get().await()
+        return todayDoc.toObject(DailyPushStats::class.java) ?: DailyPushStats(today, 0)
     }
 
     suspend fun fetchThisMonthPushupCounts(): List<Int> {
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
 
         val cal = Calendar.getInstance()
-        val now = cal.time
-        cal.time = now
+        val daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-        // First day of this month
         cal.set(Calendar.DAY_OF_MONTH, 1)
         val startOfMonth = dateFormat.format(cal.time)
 
-        // Last day of this month
-        val daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
         cal.set(Calendar.DAY_OF_MONTH, daysInMonth)
         val endOfMonth = dateFormat.format(cal.time)
 
-        // Query all docs within this month
-        val query = db.collection(USERS).document(uid)
-            .collection(DAILY_PUSHUP_STATS)
+        val query = dailyStatsRef(uid)
             .whereGreaterThanOrEqualTo(DATE, startOfMonth)
             .whereLessThanOrEqualTo(DATE, endOfMonth)
             .get().await()
 
-        // Initialize list of zeros for all days
-        val pushupCounts = MutableList(daysInMonth) { 0 }
-
-        for (doc in query.documents) {
+        val pushupMap = query.documents.mapNotNull { doc ->
+            val dateStr = doc.getString(DATE)
             val stats = doc.toObject(DailyPushStats::class.java)
-            if (stats != null) {
-                // Assuming DATE field is stored as a string matching dateFormat (e.g. "yyyy-MM-dd")
-                val docDate = dateFormat.parse(doc.getString(DATE)!!)
-                val dayOfMonth = Calendar.getInstance().apply {
-                    if (docDate != null) {
-                        time = docDate
-                    }
-                }.get(Calendar.DAY_OF_MONTH)
+            if (dateStr != null && stats != null) dateStr to stats.totalPushups else null
+        }.toMap()
 
-                pushupCounts[dayOfMonth - 1] = stats.totalPushups
-            }
+        val result = MutableList(daysInMonth) { 0 }
+        for (day in 1..daysInMonth) {
+            cal.set(Calendar.DAY_OF_MONTH, day)
+            val key = dateFormat.format(cal.time)
+            result[day - 1] = pushupMap[key] ?: 0
         }
-        return pushupCounts
+        return result
     }
 
-    // fetch current and highest streak of all time
     suspend fun fetchStreak(): Pair<Int, Int> {
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
 
-        // Get all daily pushup docs
-        val allDocs = db.collection(USERS).document(uid)
-            .collection(DAILY_PUSHUP_STATS)
-            .get().await()
+        val allDocs = dailyStatsRef(uid).get().await()
+        if (allDocs.isEmpty) return 0 to 0
 
-        if (allDocs.isEmpty) return Pair(0, 0)
-
-        // Parse docs into list of (Date, pushups)
         val datePushups = allDocs.documents.mapNotNull { doc ->
             val dateStr = doc.getString(DATE)
             val stats = doc.toObject(DailyPushStats::class.java)
@@ -157,44 +120,35 @@ class DashboardRepository(context: Context) {
             } else null
         }.sortedBy { it.first }
 
-        if (datePushups.isEmpty()) return Pair(0, 0)
+        if (datePushups.isEmpty()) return 0 to 0
 
-        // For quick lookup: Map<String, Int>
         val dateMap = datePushups.associate { dateFormat.format(it.first) to it.second }
 
-        // Calculate highest streak
+        // Highest streak
         var highestStreak = 0
         var tempStreak = 0
         val calPrev = Calendar.getInstance()
-
         for ((i, entry) in datePushups.withIndex()) {
             val (date, pushups) = entry
             if (pushups > 0) {
-                if (i == 0) {
-                    tempStreak = 1
-                } else {
+                if (i > 0) {
                     val prevDate = datePushups[i - 1].first
                     calPrev.time = prevDate
-
                     val calCurr = Calendar.getInstance().apply { time = date }
-
                     calPrev.add(Calendar.DAY_OF_YEAR, 1)
                     if (calPrev.get(Calendar.YEAR) == calCurr.get(Calendar.YEAR) &&
-                        calPrev.get(Calendar.DAY_OF_YEAR) == calCurr.get(Calendar.DAY_OF_YEAR)) {
-                        // consecutive
+                        calPrev.get(Calendar.DAY_OF_YEAR) == calCurr.get(Calendar.DAY_OF_YEAR)
+                    ) {
                         tempStreak++
                     } else {
-                        // reset streak
                         tempStreak = 1
                     }
-                }
+                } else tempStreak = 1
                 highestStreak = maxOf(highestStreak, tempStreak)
-            } else {
-                tempStreak = 0
-            }
+            } else tempStreak = 0
         }
 
-        // Calculate current streak (backwards from today)
+        // Current streak
         val cal = Calendar.getInstance()
         var currentStreak = 0
         while (true) {
@@ -206,6 +160,6 @@ class DashboardRepository(context: Context) {
             } else break
         }
 
-        return Pair(currentStreak, highestStreak)
+        return currentStreak to highestStreak
     }
 }
