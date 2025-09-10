@@ -92,4 +92,66 @@ class DashboardRepository(context: Context) {
             .get().await()
         return todayDoc.toObject(DailyPushStats::class.java) ?: throw Exception("No stats found for today")
     }
+
+    suspend fun fetchThisMonthPushupCounts2(): List<Int> {
+        val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
+
+        val cal = Calendar.getInstance()
+        val now = cal.time
+        cal.time = now
+        cal.set(Calendar.DAY_OF_MONTH, 1)
+        val startOfMonth = dateFormat.format(cal.time)
+        cal.add(Calendar.MONTH, 1)
+        cal.add(Calendar.DAY_OF_MONTH, -1)
+        val endOfMonth = dateFormat.format(cal.time)
+
+        val query = db.collection(USERS).document(uid)
+            .collection(DAILY_PUSHUP_STATS)
+            .whereGreaterThanOrEqualTo(DATE, startOfMonth)
+            .whereLessThanOrEqualTo(DATE, endOfMonth)
+            .get().await()
+
+        return query.documents.map {
+            it.toObject(DailyPushStats::class.java)?.totalPushups ?: 0
+        }
+    }
+
+    suspend fun fetchThisMonthPushupCounts(): List<Int> {
+        val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
+
+        val cal = Calendar.getInstance()
+        val now = cal.time
+        cal.time = now
+
+        // First day of this month
+        cal.set(Calendar.DAY_OF_MONTH, 1)
+        val startOfMonth = dateFormat.format(cal.time)
+
+        // Last day of this month
+        val daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+        cal.set(Calendar.DAY_OF_MONTH, daysInMonth)
+        val endOfMonth = dateFormat.format(cal.time)
+
+        // Query all docs within this month
+        val query = db.collection(USERS).document(uid)
+            .collection(DAILY_PUSHUP_STATS)
+            .whereGreaterThanOrEqualTo(DATE, startOfMonth)
+            .whereLessThanOrEqualTo(DATE, endOfMonth)
+            .get().await()
+
+        // Initialize list of zeros for all days
+        val pushupCounts = MutableList(daysInMonth) { 0 }
+
+        for (doc in query.documents) {
+            val stats = doc.toObject(DailyPushStats::class.java)
+            if (stats != null) {
+                // Assuming DATE field is stored as a string matching dateFormat (e.g. "yyyy-MM-dd")
+                val docDate = dateFormat.parse(doc.getString(DATE)!!)
+                val dayOfMonth = Calendar.getInstance().apply { time = docDate }.get(Calendar.DAY_OF_MONTH)
+
+                pushupCounts[dayOfMonth - 1] = stats.totalPushups
+            }
+        }
+        return pushupCounts
+    }
 }

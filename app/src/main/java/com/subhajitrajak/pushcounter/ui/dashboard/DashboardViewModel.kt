@@ -15,6 +15,9 @@ class DashboardViewModel(private val repository: DashboardRepository) : ViewMode
     private val _dailyStats = MutableLiveData<Event<DailyPushStats>>()
     val dailyStats: LiveData<Event<DailyPushStats>> get() = _dailyStats
 
+    private val _thisMonthPushupCounts = MutableLiveData<List<Int>>()
+    val thisMonthPushupCounts: LiveData<List<Int>> get() = _thisMonthPushupCounts
+
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> get() = _loading
 
@@ -41,6 +44,18 @@ class DashboardViewModel(private val repository: DashboardRepository) : ViewMode
             try {
                 val stats = repository.fetchDailyStats()
                 _dailyStats.value = Event(stats)
+                _error.value = null
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
+    }
+
+    fun loadThisMonthPushupCounts() {
+        viewModelScope.launch {
+            try {
+                val counts = repository.fetchThisMonthPushupCounts()
+                _thisMonthPushupCounts.value = counts
                 _error.value = null
             } catch (e: Exception) {
                 _error.value = e.message

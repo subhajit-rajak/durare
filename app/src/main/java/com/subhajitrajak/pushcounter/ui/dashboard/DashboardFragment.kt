@@ -66,6 +66,10 @@ class DashboardFragment : Fragment() {
             }
         }
 
+        viewModel.thisMonthPushupCounts.observe(viewLifecycleOwner) { counts ->
+            generateThisMonthHeatmap(counts)
+        }
+
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
                 binding.loadingIndicator.showWithAnim()
@@ -84,6 +88,7 @@ class DashboardFragment : Fragment() {
 
         // Trigger loading
         viewModel.loadDashboardStats()
+        viewModel.loadThisMonthPushupCounts()
 
         binding.apply {
             startButton.setOnClickListener {
@@ -101,6 +106,7 @@ class DashboardFragment : Fragment() {
 
             swipeRefresh.setOnRefreshListener {
                 viewModel.loadDashboardStats()
+                viewModel.loadThisMonthPushupCounts()
                 swipeRefresh.isRefreshing = false
             }
 
@@ -110,15 +116,14 @@ class DashboardFragment : Fragment() {
                 R.color.black
             )
         }
-
-        // Generate heatmap
-        generateSampleHeatmap()
     }
 
-    private fun generateSampleHeatmap() {
-        val daysInMonth = 30
-        val streaks = (1..daysInMonth).map { (0..2).random() }
+    private fun generateThisMonthHeatmap(streaks: List<Int>) {
+        val daysInMonth = streaks.size
+        val maxValue = streaks.maxOrNull() ?: 0
+        val levels = 5
 
+        binding.heatmapLayout.removeAllViews()
         for (day in 1..daysInMonth) {
             val circleView = TextView(requireContext())
 
@@ -131,12 +136,28 @@ class DashboardFragment : Fragment() {
             circleView.gravity = Gravity.CENTER
 
             val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.day_circle)?.mutate()
-            val color = when (streaks[day - 1]) {
-                0 -> requireContext().getColor(R.color.level_0)
-                1 -> requireContext().getColor(R.color.level_1)
-                else -> requireContext().getColor(R.color.level_2)
+
+            val value = streaks[day - 1]
+            // determine level (0–4)
+            val level = when {
+                value == 0 -> 0
+                maxValue == 0 -> 0
+                else -> {
+                    // scale contributions relative to maxValue
+                    val ratio = value.toFloat() / maxValue
+                    (ratio * (levels - 1)).toInt().coerceIn(1, levels - 1)
+                }
             }
-            (drawable as GradientDrawable).setColor(color)
+
+            // map level → color
+            val colorRes = when (level) {
+                0 -> R.color.level_0
+                1 -> R.color.level_1
+                2 -> R.color.level_2
+                3 -> R.color.level_3
+                else -> R.color.level_4
+            }
+            (drawable as GradientDrawable).setColor(requireContext().getColor(colorRes))
 
             circleView.background = drawable
             binding.heatmapLayout.addView(circleView)
@@ -202,5 +223,6 @@ class DashboardFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.loadDashboardStats()
+        viewModel.loadThisMonthPushupCounts()
     }
 }
