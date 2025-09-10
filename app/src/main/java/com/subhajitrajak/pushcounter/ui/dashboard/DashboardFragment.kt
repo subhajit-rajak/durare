@@ -70,6 +70,12 @@ class DashboardFragment : Fragment() {
             generateThisMonthHeatmap(counts)
         }
 
+        viewModel.currentStreak.observe(viewLifecycleOwner) { streak ->
+            binding.streakText.text = streak.first.toString()
+            binding.currentStreakText.text = getString(R.string.current, streak.first)
+            binding.highestStreakText.text = getString(R.string.highest, streak.second)
+        }
+
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
                 binding.loadingIndicator.showWithAnim()
@@ -89,6 +95,7 @@ class DashboardFragment : Fragment() {
         // Trigger loading
         viewModel.loadDashboardStats()
         viewModel.loadThisMonthPushupCounts()
+        viewModel.loadCurrentStreak()
 
         binding.apply {
             startButton.setOnClickListener {
@@ -224,5 +231,6 @@ class DashboardFragment : Fragment() {
         super.onResume()
         viewModel.loadDashboardStats()
         viewModel.loadThisMonthPushupCounts()
+        viewModel.loadCurrentStreak()
     }
 }

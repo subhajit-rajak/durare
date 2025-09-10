@@ -296,6 +296,7 @@
                         app:tint="@color/black" />
 
                     <TextView
+                        android:id="@+id/streakText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/special_gothic_expanded_bold"
@@ -347,6 +348,7 @@
                                 tools:ignore="UseCompoundDrawables">
 
                                 <TextView
+                                    android:id="@+id/currentStreakText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/special_gothic_expanded_regular"
@@ -373,6 +375,7 @@
                                 tools:ignore="UseCompoundDrawables">
 
                                 <TextView
+                                    android:id="@+id/highestStreakText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/special_gothic_expanded_regular"

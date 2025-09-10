@@ -135,4 +135,77 @@ class DashboardRepository(context: Context) {
         }
         return pushupCounts
     }
+
+    // fetch current and highest streak of all time
+    suspend fun fetchStreak(): Pair<Int, Int> {
+        val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
+
+        // Get all daily pushup docs
+        val allDocs = db.collection(USERS).document(uid)
+            .collection(DAILY_PUSHUP_STATS)
+            .get().await()
+
+        if (allDocs.isEmpty) return Pair(0, 0)
+
+        // Parse docs into list of (Date, pushups)
+        val datePushups = allDocs.documents.mapNotNull { doc ->
+            val dateStr = doc.getString(DATE)
+            val stats = doc.toObject(DailyPushStats::class.java)
+            if (dateStr != null && stats != null) {
+                val date = dateFormat.parse(dateStr)
+                if (date != null) date to stats.totalPushups else null
+            } else null
+        }.sortedBy { it.first }
+
+        if (datePushups.isEmpty()) return Pair(0, 0)
+
+        // For quick lookup: Map<String, Int>
+        val dateMap = datePushups.associate { dateFormat.format(it.first) to it.second }
+
+        // Calculate highest streak
+        var highestStreak = 0
+        var tempStreak = 0
+        val calPrev = Calendar.getInstance()
+
+        for ((i, entry) in datePushups.withIndex()) {
+            val (date, pushups) = entry
+            if (pushups > 0) {
+                if (i == 0) {
+                    tempStreak = 1
+                } else {
+                    val prevDate = datePushups[i - 1].first
+                    calPrev.time = prevDate
+
+                    val calCurr = Calendar.getInstance().apply { time = date }
+
+                    calPrev.add(Calendar.DAY_OF_YEAR, 1)
+                    if (calPrev.get(Calendar.YEAR) == calCurr.get(Calendar.YEAR) &&
+                        calPrev.get(Calendar.DAY_OF_YEAR) == calCurr.get(Calendar.DAY_OF_YEAR)) {
+                        // consecutive
+                        tempStreak++
+                    } else {
+                        // reset streak
+                        tempStreak = 1
+                    }
+                }
+                highestStreak = maxOf(highestStreak, tempStreak)
+            } else {
+                tempStreak = 0
+            }
+        }
+
+        // Calculate current streak (backwards from today)
+        val cal = Calendar.getInstance()
+        var currentStreak = 0
+        while (true) {
+            val dateStr = dateFormat.format(cal.time)
+            val pushups = dateMap[dateStr] ?: 0
+            if (pushups > 0) {
+                currentStreak++
+                cal.add(Calendar.DAY_OF_YEAR, -1)
+            } else break
+        }
+
+        return Pair(currentStreak, highestStreak)
+    }
 }
