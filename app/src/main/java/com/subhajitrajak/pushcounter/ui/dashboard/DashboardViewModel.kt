@@ -3,6 +3,7 @@ package com.subhajitrajak.pushcounter.ui.dashboard
 import androidx.lifecycle.*
 import com.subhajitrajak.pushcounter.data.models.DailyPushStats
 import com.subhajitrajak.pushcounter.data.models.DashboardStats
+import com.subhajitrajak.pushcounter.data.models.User
 import com.subhajitrajak.pushcounter.data.repositories.DashboardRepository
 import com.subhajitrajak.pushcounter.utils.Event
 import kotlinx.coroutines.launch
@@ -20,6 +21,9 @@ class DashboardViewModel(private val repository: DashboardRepository) : ViewMode
 
     private val _currentStreak = MutableLiveData<Pair<Int, Int>>()
     val currentStreak: LiveData<Pair<Int, Int>> get() = _currentStreak
+
+    private val _leaderboard = MutableLiveData<List<User>>()
+    val leaderboard: LiveData<List<User>> get() = _leaderboard
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> get() = _loading
@@ -71,6 +75,18 @@ class DashboardViewModel(private val repository: DashboardRepository) : ViewMode
             try {
                 val streak = repository.fetchStreak()
                 _currentStreak.value = streak
+                _error.value = null
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
+    }
+
+    fun loadLeaderboard() {
+        viewModelScope.launch {
+            try {
+                val users = repository.fetchLeaderboard()
+                _leaderboard.value = users
                 _error.value = null
             } catch (e: Exception) {
                 _error.value = e.message

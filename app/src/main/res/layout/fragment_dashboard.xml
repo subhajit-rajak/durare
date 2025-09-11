@@ -446,11 +446,13 @@
                             android:orientation="horizontal">
 
                             <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/firstImage"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:src="@drawable/person1" />
 
                             <TextView
+                                android:id="@+id/firstName"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -462,6 +464,7 @@
                                 android:textSize="16sp" />
 
                             <TextView
+                                android:id="@+id/firstCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -479,11 +482,13 @@
                             android:orientation="horizontal">
 
                             <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/secondImage"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:src="@drawable/person2" />
 
                             <TextView
+                                android:id="@+id/secondName"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -495,6 +500,7 @@
                                 android:textSize="16sp" />
 
                             <TextView
+                                android:id="@+id/secondCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -511,11 +517,13 @@
                             android:orientation="horizontal">
 
                             <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/thirdImage"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:src="@drawable/person3" />
 
                             <TextView
+                                android:id="@+id/thirdName"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -527,6 +535,7 @@
                                 android:textSize="16sp" />
 
                             <TextView
+                                android:id="@+id/thirdCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"

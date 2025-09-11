@@ -14,9 +14,11 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayout
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.data.models.DailyPushStats
+import com.subhajitrajak.pushcounter.data.models.User
 import com.subhajitrajak.pushcounter.databinding.FragmentDashboardBinding
 import com.subhajitrajak.pushcounter.ui.counter.CounterActivity
 import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsActivity
@@ -76,6 +78,10 @@ class DashboardFragment : Fragment() {
             binding.highestStreakText.text = getString(R.string.highest, streak.second)
         }
 
+        viewModel.leaderboard.observe(viewLifecycleOwner) { users ->
+            updateLeaderboard(users)
+        }
+
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
                 binding.loadingIndicator.showWithAnim()
@@ -96,6 +102,7 @@ class DashboardFragment : Fragment() {
         viewModel.loadDashboardStats()
         viewModel.loadThisMonthPushupCounts()
         viewModel.loadCurrentStreak()
+        viewModel.loadLeaderboard()
 
         binding.apply {
             startButton.setOnClickListener {
@@ -122,6 +129,27 @@ class DashboardFragment : Fragment() {
                 R.color.white,
                 R.color.black
             )
+        }
+    }
+
+    private fun updateLeaderboard(users: List<User>) {
+        binding.apply {
+            val positions = listOf(
+                Triple(firstName, firstCount, firstImage),
+                Triple(secondName, secondCount, secondImage),
+                Triple(thirdName, thirdCount, thirdImage)
+            )
+
+            positions.zip(users.take(3)).forEach { (views, user) ->
+                val (nameView, countView, imageView) = views
+
+                nameView.text = user.userData.username
+                countView.text = user.pushups.toString()
+
+                Glide.with(requireContext())
+                    .load(user.userData.profilePictureUrl)
+                    .into(imageView)
+            }
         }
     }
 

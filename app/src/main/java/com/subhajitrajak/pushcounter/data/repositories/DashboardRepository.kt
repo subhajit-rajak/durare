@@ -3,13 +3,17 @@ package com.subhajitrajak.pushcounter.data.repositories
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.subhajitrajak.pushcounter.auth.UserData
 import com.subhajitrajak.pushcounter.data.models.DailyPushStats
 import com.subhajitrajak.pushcounter.data.models.DashboardStats
+import com.subhajitrajak.pushcounter.data.models.User
 import com.subhajitrajak.pushcounter.utils.Constants.DAILY_PUSHUP_STATS
 import com.subhajitrajak.pushcounter.utils.Constants.DATE
 import com.subhajitrajak.pushcounter.utils.Constants.DATE_FORMAT
 import com.subhajitrajak.pushcounter.utils.Constants.LIFETIME_TOTAL_PUSHUPS
+import com.subhajitrajak.pushcounter.utils.Constants.PROFILE
 import com.subhajitrajak.pushcounter.utils.Constants.USERS
+import com.subhajitrajak.pushcounter.utils.Constants.USER_DATA
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.*
@@ -161,5 +165,23 @@ class DashboardRepository(context: Context) {
         }
 
         return currentStreak to highestStreak
+    }
+
+    // fetch all users for leaderboard
+    suspend fun fetchLeaderboard(): List<User> {
+        val docRef = db.collection(USERS)
+
+        val querySnapshot = docRef.get().await()
+        val users = mutableListOf<User>()
+        for (document in querySnapshot.documents) {
+            val uid = document.id
+            val userDataDocRef = docRef.document(uid).collection(USER_DATA).document(PROFILE)
+            val userDataDoc = userDataDocRef.get().await()
+            val userData = userDataDoc.toObject(UserData::class.java) ?: continue
+            val pushups = document.getLong(LIFETIME_TOTAL_PUSHUPS) ?: 0L
+
+            users.add(User(uid, userData, pushups))
+        }
+        return users.sortedByDescending { it.pushups }
     }
 }

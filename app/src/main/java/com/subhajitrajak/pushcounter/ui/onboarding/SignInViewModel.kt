@@ -8,7 +8,6 @@ import com.subhajitrajak.pushcounter.auth.SignInResult
 import com.subhajitrajak.pushcounter.auth.SignInState
 import com.subhajitrajak.pushcounter.auth.UserData
 import com.subhajitrajak.pushcounter.data.repositories.OnBoardingRepository
-import kotlinx.coroutines.tasks.await
 
 class SignInViewModel(
     private val repository: OnBoardingRepository = OnBoardingRepository()
