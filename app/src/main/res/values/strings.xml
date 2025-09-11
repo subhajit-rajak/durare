@@ -120,4 +120,9 @@
     <string name="save">Save</string>
     <string name="current">current - %1$d</string>
     <string name="highest">highest - %1$d</string>
+
+    <!-- Leaderboard -->
+    <string name="rankSampleText">You are at #-</string>
+    <string name="almost_there">Almost there</string>
+    <string name="hyphen">-</string>
 </resources>

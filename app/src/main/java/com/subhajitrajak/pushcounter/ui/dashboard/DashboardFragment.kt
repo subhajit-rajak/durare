@@ -129,6 +129,10 @@ class DashboardFragment : Fragment() {
                 R.color.white,
                 R.color.black
             )
+
+            leaderboard.setOnClickListener {
+                findNavController().navigate(R.id.action_dashboardFragment_to_leaderboardFragment)
+            }
         }
     }
 
@@ -257,8 +261,11 @@ class DashboardFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadDashboardStats()
-        viewModel.loadThisMonthPushupCounts()
-        viewModel.loadCurrentStreak()
+        viewModel.apply {
+            loadDashboardStats()
+            loadThisMonthPushupCounts()
+            loadCurrentStreak()
+            loadLeaderboard()
+        }
     }
 }
