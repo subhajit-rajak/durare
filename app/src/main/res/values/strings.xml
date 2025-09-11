@@ -125,4 +125,5 @@
     <string name="rankSampleText">You are at #-</string>
     <string name="almost_there">Almost there</string>
     <string name="hyphen">-</string>
+    <string name="you_are_at_rank">You are at #%1$d</string>
 </resources>

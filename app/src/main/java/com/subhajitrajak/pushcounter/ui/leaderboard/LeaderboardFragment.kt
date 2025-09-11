@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.subhajitrajak.pushcounter.data.models.User
+import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.FragmentLeaderboardBinding
 import com.subhajitrajak.pushcounter.ui.dashboard.DashboardViewModel
 import com.subhajitrajak.pushcounter.ui.dashboard.DashboardViewModelFactory
@@ -51,7 +51,7 @@ class LeaderboardFragment : Fragment() {
             if (rank > 0) {
                 val currentUser = newUsers[rank - 1]
 
-                binding.userRankText.text = "You are at #$rank"
+                binding.userRankText.text = getString(R.string.you_are_at_rank, rank)
                 binding.rankComment.text = getRankComment(rank)
                 binding.userRankScore.text = currentUser.pushups.toString()
             }
@@ -60,10 +60,10 @@ class LeaderboardFragment : Fragment() {
 
     private fun getRankComment(rank: Int): String {
         return when (rank) {
-            1 -> "You’re on top!"
-            in 2..5 -> "Almost there!"
-            in 6..10 -> "Keep pushing!"
-            else -> "Stay consistent!"
+            1 -> "🏆 You’re on top!"
+            in 2..5 -> "🔥 Almost there!"
+            in 6..10 -> "💪 Keep pushing!"
+            else -> "👏 Stay consistent!"
         }
     }
 
