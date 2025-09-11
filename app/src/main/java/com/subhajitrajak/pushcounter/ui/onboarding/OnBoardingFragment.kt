@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -31,7 +32,7 @@ class OnBoardingFragment : Fragment() {
     private lateinit var onboardingScreens: List<OnboardingScreen>
 
     private lateinit var googleAuthUiClient: GoogleAuthUiClient
-    private lateinit var signInViewModel: SignInViewModel
+    private val signInViewModel: SignInViewModel by viewModels()
 
     // Activity result launcher for handling sign-in response
     private val signInLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
@@ -42,10 +43,18 @@ class OnBoardingFragment : Fragment() {
                     signInViewModel.onSignInResult(signInResult)
 
                     if (signInResult.data != null) {
-                        val username = signInResult.data.username
-                        val firstName = username?.substring(0, username.indexOf(' '))
-                        showToast(requireContext(), "Welcome, $firstName")
-                        navigateToDashboard()
+                        signInViewModel.saveUserData(signInResult.data).observe(viewLifecycleOwner,
+                            Observer { result ->
+                                result.onSuccess {
+                                    val username = signInResult.data.username
+                                    val firstName = username?.substring(0, username.indexOf(' '))
+                                    showToast(requireContext(), "Welcome, $firstName")
+                                    navigateToDashboard()
+                                }
+                                result.onFailure { e ->
+                                    showToast(requireContext(), "Sign-in failed: ${e.message}")
+                                }
+                            })
                     } else {
                         showToast(requireContext(), "Sign-in failed: ${signInResult.errorMessage}")
                     }
@@ -58,9 +67,6 @@ class OnBoardingFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Initialize ViewModel
-        signInViewModel = ViewModelProvider(this)[SignInViewModel::class.java]
 
         // Initialize Google Auth UI Client
         googleAuthUiClient = GoogleAuthUiClient(
