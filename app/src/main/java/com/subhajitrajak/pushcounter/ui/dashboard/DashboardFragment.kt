@@ -105,9 +105,6 @@ class DashboardFragment : Fragment() {
         viewModel.loadLeaderboard()
 
         binding.apply {
-            startButton.setOnClickListener {
-                showWorkoutSetupDialog()
-            }
 
             stats.setOnClickListener {
                 loadingIndicator.showWithAnim()
@@ -201,33 +198,6 @@ class DashboardFragment : Fragment() {
             circleView.background = drawable
             binding.heatmapLayout.addView(circleView)
         }
-    }
-
-    // opens the workout setup dialog to set custom rep count and rest time using time pickers
-    private fun showWorkoutSetupDialog() {
-        val dialog = WorkoutSetupDialog(0)
-        dialog.onStartClick = { totalReps, restTimeMs ->
-            dialog.binding.apply {
-                // set preferences
-                val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-                prefs.edit { putInt(KEY_TOTAL_REPS, totalReps) }
-                prefs.edit { putLong(KEY_REST_TIME, restTimeMs) }
-
-                // Start the workout with the specified parameters
-                startWorkout(totalReps, restTimeMs)
-                dialog.dismiss()
-            }
-        }
-        dialog.show(childFragmentManager, WorkoutSetupDialog.TAG)
-    }
-
-    // navigates to the counter activity with the specified parameters
-    private fun startWorkout(totalReps: Int, restTimeMs: Long) {
-        val intent = Intent(requireContext(), CounterActivity::class.java).apply {
-            putExtra(CounterActivity.TOTAL_REPS, totalReps)
-            putExtra(CounterActivity.REST_TIME, restTimeMs)
-        }
-        startActivity(intent)
     }
 
     // navigates to the counter activity with the specified parameters

@@ -50,7 +50,7 @@
                     <View
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <ImageButton
                         android:id="@+id/settingsButton"
@@ -94,8 +94,8 @@
                             android:fontFamily="@font/special_gothic_expanded_regular"
                             android:paddingHorizontal="16dp"
                             android:text="@string/ask_ai_bar_hint"
-                            android:textSize="18sp"
                             android:textColor="@color/light_grey"
+                            android:textSize="18sp"
                             tools:ignore="TextContrastCheck" />
 
                     </LinearLayout>
@@ -417,11 +417,11 @@
                         android:id="@+id/leaderboard"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_gravity="center_vertical"
                         android:fontFamily="@font/special_gothic_semibold"
+                        android:gravity="center"
                         android:text="@string/view_more"
-                        android:textColor="@color/primary"
+                        android:textColor="@color/grey"
                         android:textSize="12sp"
                         app:tint="@color/black" />
 
@@ -612,36 +612,20 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:backgroundTint="@color/primary"
-        android:fontFamily="@font/special_gothic_expanded_semibold"
-        android:text="@string/start"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/stats"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ImageButton
         android:id="@+id/stats"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
+        android:visibility="gone"
         android:backgroundTint="@android:color/transparent"
         android:contentDescription="@string/export_stats"
         android:padding="12dp"
         android:scaleType="centerCrop"
         android:src="@drawable/share_stats"
-        app:layout_constraintBottom_toBottomOf="@+id/startButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/startButton"
-        app:layout_constraintTop_toTopOf="@+id/startButton"
+        app:layout_constraintStart_toStartOf="parent"
         app:tint="@color/grey" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,7 @@
     <color name="very_light_grey">#1A1A1A</color>
     <color name="primary">#FF690C</color>
 
-    <color name="level_0">#2C1A0F</color> <!-- very dark brownish (empty) -->
+    <color name="level_0">#000000</color> <!-- very dark brownish (empty) -->
     <color name="level_1">#4A2C12</color> <!-- dark amber -->
     <color name="level_2">#804014</color> <!-- medium warm orange-brown -->
     <color name="level_3">#CC5210</color> <!-- bright orange -->

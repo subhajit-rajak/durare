@@ -11,7 +11,7 @@
     <color name="very_dark_grey">#1A1A1A</color>
     <color name="primary">#FF690C</color>
 
-    <color name="level_0">#FFF3E8</color> <!-- very light tint -->
+    <color name="level_0">#FFFFFF</color> <!-- very light tint -->
     <color name="level_1">#FFD1B2</color> <!-- light orange -->
     <color name="level_2">#FFAA66</color> <!-- medium orange -->
     <color name="level_3">#FF8533</color> <!-- strong orange -->
