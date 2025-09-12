@@ -33,7 +33,7 @@ fun log(message: String) {
     Log.e("Personal", message)
 }
 
-fun View.showWithAnimSpecial(){
-    fadeView(duration = 500)
+fun View.showWithAnimSpecial(duration: Long = 500){
+    fadeView(duration = duration)
     visibility = View.VISIBLE
 }

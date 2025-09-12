@@ -61,6 +61,10 @@ class DashboardFragment : Fragment() {
                 lifetimeText.text = stats.lifetimePushups.toString()
                 allUsersText.text = stats.allUsersTotal.toString()
             }
+
+            binding.statsCard.showWithAnimSpecial()
+            binding.globalCard.showWithAnimSpecial()
+            binding.globalCardHeader.showWithAnimSpecial()
         }
 
         viewModel.thisMonthPushupCounts.observe(viewLifecycleOwner) { counts ->
@@ -145,11 +149,10 @@ class DashboardFragment : Fragment() {
                 Glide.with(requireContext())
                     .load(user.userData.profilePictureUrl)
                     .into(imageView)
-
-                imageView.showWithAnimSpecial()
-                nameView.showWithAnimSpecial()
-                countView.showWithAnimSpecial()
             }
+
+            leaderboardCardHeader.showWithAnimSpecial()
+            leaderboardCard.showWithAnimSpecial()
         }
     }
 
@@ -197,6 +200,9 @@ class DashboardFragment : Fragment() {
             circleView.background = drawable
             binding.heatmapLayout.addView(circleView)
         }
+
+        binding.thisMonthCard.showWithAnimSpecial()
+        binding.thisMonthCardHeader.showWithAnimSpecial()
     }
 
     // navigates to the counter activity with the specified parameters
