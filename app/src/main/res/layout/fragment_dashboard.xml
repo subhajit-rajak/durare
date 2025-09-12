@@ -451,7 +451,8 @@
                                 android:id="@+id/firstImage"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                android:src="@drawable/person1" />
+                                android:src="@drawable/person1"
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/firstName"
@@ -463,7 +464,8 @@
                                 android:paddingHorizontal="11dp"
                                 android:text="@string/person_name_1"
                                 android:textColor="@color/dark_grey"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/firstCount"
@@ -473,7 +475,8 @@
                                 android:fontFamily="@font/special_gothic_expanded_semibold"
                                 android:text="@string/score_1"
                                 android:textColor="@color/dark_grey_85"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:visibility="invisible" />
 
                         </LinearLayout>
 
@@ -487,7 +490,8 @@
                                 android:id="@+id/secondImage"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                android:src="@drawable/person2" />
+                                android:src="@drawable/person2"
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/secondName"
@@ -499,7 +503,8 @@
                                 android:paddingHorizontal="11dp"
                                 android:text="@string/person_name_2"
                                 android:textColor="@color/dark_grey"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/secondCount"
@@ -509,7 +514,8 @@
                                 android:fontFamily="@font/special_gothic_expanded_semibold"
                                 android:text="@string/score_2"
                                 android:textColor="@color/dark_grey_85"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:visibility="invisible" />
 
                         </LinearLayout>
 
@@ -522,7 +528,8 @@
                                 android:id="@+id/thirdImage"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                android:src="@drawable/person3" />
+                                android:src="@drawable/person3"
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/thirdName"
@@ -534,7 +541,8 @@
                                 android:paddingHorizontal="11dp"
                                 android:text="@string/person_name_3"
                                 android:textColor="@color/dark_grey"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/thirdCount"
@@ -544,7 +552,8 @@
                                 android:fontFamily="@font/special_gothic_expanded_semibold"
                                 android:text="@string/score_3"
                                 android:textColor="@color/dark_grey_85"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:visibility="invisible" />
 
                         </LinearLayout>
 

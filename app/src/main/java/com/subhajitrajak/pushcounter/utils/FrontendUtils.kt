@@ -32,3 +32,8 @@ fun showToast(context: Context, message: String) {
 fun log(message: String) {
     Log.e("Personal", message)
 }
+
+fun View.showWithAnimSpecial(){
+    fadeView(duration = 500)
+    visibility = View.VISIBLE
+}

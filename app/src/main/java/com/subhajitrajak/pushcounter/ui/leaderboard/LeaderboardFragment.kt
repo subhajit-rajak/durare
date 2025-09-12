@@ -11,6 +11,11 @@ import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.FragmentLeaderboardBinding
 import com.subhajitrajak.pushcounter.ui.dashboard.DashboardViewModel
 import com.subhajitrajak.pushcounter.ui.dashboard.DashboardViewModelFactory
+import com.subhajitrajak.pushcounter.utils.log
+import com.subhajitrajak.pushcounter.utils.removeWithAnim
+import com.subhajitrajak.pushcounter.utils.showToast
+import com.subhajitrajak.pushcounter.utils.showWithAnim
+import com.subhajitrajak.pushcounter.utils.showWithAnimSpecial
 
 class LeaderboardFragment : Fragment() {
 
@@ -49,6 +54,24 @@ class LeaderboardFragment : Fragment() {
                 binding.userRankText.text = getString(R.string.you_are_at_rank, rank)
                 binding.rankComment.text = getRankComment(rank)
                 binding.userRankScore.text = currentUser.pushups.toString()
+            }
+
+            binding.cardView.showWithAnimSpecial()
+        }
+
+        viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                binding.loadingIndicator.showWithAnim()
+            } else {
+                binding.loadingIndicator.removeWithAnim()
+            }
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { errorMsg ->
+            binding.loadingIndicator.removeWithAnim()
+            if (errorMsg != null) {
+                log(errorMsg)
+                showToast(requireContext(), errorMsg)
             }
         }
     }

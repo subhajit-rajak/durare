@@ -23,6 +23,7 @@ import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.removeWithAnim
 import com.subhajitrajak.pushcounter.utils.showToast
 import com.subhajitrajak.pushcounter.utils.showWithAnim
+import com.subhajitrajak.pushcounter.utils.showWithAnimSpecial
 
 class DashboardFragment : Fragment() {
 
@@ -144,6 +145,10 @@ class DashboardFragment : Fragment() {
                 Glide.with(requireContext())
                     .load(user.userData.profilePictureUrl)
                     .into(imageView)
+
+                imageView.showWithAnimSpecial()
+                nameView.showWithAnimSpecial()
+                countView.showWithAnimSpecial()
             }
         }
     }
