@@ -126,4 +126,6 @@
     <string name="almost_there">Almost there</string>
     <string name="hyphen">-</string>
     <string name="you_are_at_rank">You are at #%1$d</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

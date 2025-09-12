@@ -106,4 +106,9 @@
         android:name="com.subhajitrajak.pushcounter.ui.leaderboard.LeaderboardFragment"
         android:label="fragment_leaderboard"
         tools:layout="@layout/fragment_leaderboard" />
+    <fragment
+        android:id="@+id/dailyStatsFragment"
+        android:name="com.subhajitrajak.pushcounter.ui.dailyStats.DailyStatsFragment"
+        android:label="fragment_daily_stats"
+        tools:layout="@layout/fragment_daily_stats" />
 </navigation>

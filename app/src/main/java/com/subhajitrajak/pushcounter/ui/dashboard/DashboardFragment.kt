@@ -1,6 +1,5 @@
 package com.subhajitrajak.pushcounter.ui.dashboard
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -10,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,11 +18,7 @@ import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.data.models.DailyPushStats
 import com.subhajitrajak.pushcounter.data.models.User
 import com.subhajitrajak.pushcounter.databinding.FragmentDashboardBinding
-import com.subhajitrajak.pushcounter.ui.counter.CounterActivity
 import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsActivity
-import com.subhajitrajak.pushcounter.utils.Constants.KEY_REST_TIME
-import com.subhajitrajak.pushcounter.utils.Constants.KEY_TOTAL_REPS
-import com.subhajitrajak.pushcounter.utils.Constants.PREFS_NAME
 import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.removeWithAnim
 import com.subhajitrajak.pushcounter.utils.showToast

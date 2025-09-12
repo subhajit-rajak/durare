@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.data.models.User
 import com.subhajitrajak.pushcounter.databinding.ItemLeaderboardBinding
 
@@ -25,6 +27,11 @@ class LeaderboardAdapter(
                 Glide.with(context)
                     .load(model.userData.profilePictureUrl)
                     .into(userImageView)
+
+                val uid = FirebaseAuth.getInstance().currentUser?.uid
+                if (model.userData.userId == uid) {
+                    root.setCardBackgroundColor(context.getColorStateList(R.color.very_light_grey))
+                }
             }
         }
     }
