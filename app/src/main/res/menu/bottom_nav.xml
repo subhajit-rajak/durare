@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/dashboardFragment"
-        android:title="Home"
+        android:title="@string/home"
         android:icon="@drawable/home" />
 
     <item
         android:id="@+id/dailyStatsFragment"
-        android:title="Daily Stats"
+        android:title="@string/daily_stats"
         android:icon="@drawable/timer" />
 
     <item
         android:id="@+id/leaderboardFragment"
-        android:title="Leaderboard"
+        android:title="@string/leaderboard1"
         android:icon="@drawable/leaderboard" />
 </menu>

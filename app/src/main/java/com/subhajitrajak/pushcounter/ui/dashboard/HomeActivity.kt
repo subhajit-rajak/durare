@@ -1,6 +1,5 @@
 package com.subhajitrajak.pushcounter.ui.dashboard
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -57,7 +56,7 @@ class HomeActivity : AppCompatActivity() {
         dialog.onStartClick = { totalReps, restTimeMs ->
             dialog.binding.apply {
                 // set preferences
-                val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
                 prefs.edit { putInt(KEY_TOTAL_REPS, totalReps) }
                 prefs.edit { putLong(KEY_REST_TIME, restTimeMs) }
 

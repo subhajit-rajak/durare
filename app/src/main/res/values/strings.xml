@@ -79,6 +79,7 @@
     <string name="skip">Skip</string>
     <string name="next">Next</string>
     <string name="records">records</string>
+    <string name="home">Home</string>
 
     <!-- Onboarding strings -->
     <string name="onboarding_title_1">track your push-ups.\nanytime. anywhere.</string>
@@ -127,4 +128,6 @@
     <string name="almost_there">Almost there</string>
     <string name="hyphen">-</string>
     <string name="you_are_at_rank">You are at #%1$d</string>
+    <string name="daily_stats">Daily Stats</string>
+    <string name="leaderboard1">Leaderboard</string>
 </resources>
