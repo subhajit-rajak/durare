@@ -1,6 +1,5 @@
 package com.subhajitrajak.pushcounter.ui.dashboard
 
-import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.Gravity
@@ -15,10 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayout
 import com.subhajitrajak.pushcounter.R
-import com.subhajitrajak.pushcounter.data.models.DailyPushStats
 import com.subhajitrajak.pushcounter.data.models.User
 import com.subhajitrajak.pushcounter.databinding.FragmentDashboardBinding
-import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsActivity
 import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.removeWithAnim
 import com.subhajitrajak.pushcounter.utils.showToast
@@ -45,12 +42,6 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.dailyStats.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let { stats ->
-                navigateToShareStats(stats)
-            }
-        }
 
         viewModel.dashboardStats.observe(viewLifecycleOwner) { stats ->
             // update UI
@@ -105,11 +96,6 @@ class DashboardFragment : Fragment() {
 
         binding.apply {
 
-            stats.setOnClickListener {
-                loadingIndicator.showWithAnim()
-                viewModel.loadDailyStats()
-            }
-
             settingsButton.setOnClickListener {
                 findNavController().navigate(R.id.action_dashboardFragment_to_settingsFragment)
             }
@@ -117,6 +103,8 @@ class DashboardFragment : Fragment() {
             swipeRefresh.setOnRefreshListener {
                 viewModel.loadDashboardStats()
                 viewModel.loadThisMonthPushupCounts()
+                viewModel.loadLeaderboard()
+                viewModel.loadCurrentStreak()
                 swipeRefresh.isRefreshing = false
             }
 
@@ -203,26 +191,6 @@ class DashboardFragment : Fragment() {
 
         binding.thisMonthCard.showWithAnimSpecial()
         binding.thisMonthCardHeader.showWithAnimSpecial()
-    }
-
-    // navigates to the counter activity with the specified parameters
-    private fun navigateToShareStats(stats: DailyPushStats) {
-        val pushUps = stats.totalPushups.toString()
-        val timeMinutes = stats.totalActiveTimeMs / 1000 / 60
-        val timeSeconds = (stats.totalActiveTimeMs / 1000) % 60
-        val time = "${timeMinutes}m ${timeSeconds}s"
-
-        val restMinutes = stats.totalRestTimeMs / 1000 / 60
-        val restSeconds = (stats.totalRestTimeMs / 1000) % 60
-        val rest = "${restMinutes}m ${restSeconds}s"
-
-        val intent = Intent(requireContext(), ShareStatsActivity::class.java).apply {
-            putExtra(ShareStatsActivity.EXTRA_PUSH_UPS, pushUps)
-            putExtra(ShareStatsActivity.EXTRA_TIME, time)
-            putExtra(ShareStatsActivity.EXTRA_REST, rest)
-        }
-        startActivity(intent)
-        binding.loadingIndicator.removeWithAnim()
     }
 
     private fun dpToPx(dp: Int): Int {

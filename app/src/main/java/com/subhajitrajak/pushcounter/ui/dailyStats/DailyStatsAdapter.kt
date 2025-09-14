@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.subhajitrajak.pushcounter.data.models.DailyPushStats
 import com.subhajitrajak.pushcounter.databinding.ItemRecordsBinding
 
-class DailyStatsAdapter() : ListAdapter<DailyPushStats, DailyStatsAdapter.ViewHolder>(DiffCallback) {
+class DailyStatsAdapter(
+    private val navigateToShareStats: (DailyPushStats) -> Unit
+) : ListAdapter<DailyPushStats, DailyStatsAdapter.ViewHolder>(DiffCallback) {
 
-    class ViewHolder(val binding: ItemRecordsBinding) :
+    inner class ViewHolder(val binding: ItemRecordsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(model: DailyPushStats) {
             binding.apply {
@@ -25,6 +27,10 @@ class DailyStatsAdapter() : ListAdapter<DailyPushStats, DailyStatsAdapter.ViewHo
                 dateTextView.text = model.date
                 timeTextView.text = time
                 countTextView.text = model.totalPushups.toString()
+
+                root.setOnClickListener {
+                    navigateToShareStats(model)
+                }
             }
         }
     }

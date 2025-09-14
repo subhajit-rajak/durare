@@ -70,13 +70,6 @@ class DashboardRepository(context: Context) {
         )
     }
 
-    suspend fun fetchDailyStats(): DailyPushStats {
-        val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
-        val today = todayString()
-        val todayDoc = dailyStatsRef(uid).document(today).get().await()
-        return todayDoc.toObject(DailyPushStats::class.java) ?: DailyPushStats(today, 0)
-    }
-
     suspend fun fetchThisMonthPushupCounts(): List<Int> {
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
 

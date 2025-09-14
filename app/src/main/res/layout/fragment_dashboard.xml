@@ -1,654 +1,631 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/swipeRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ui.dashboard.DashboardFragment">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefresh"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="128dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingHorizontal="24dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="128dp">
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/special_gothic_expanded_bold"
+                    android:text="@string/top_bar_title"
+                    android:textColor="@color/black"
+                    android:textSize="24sp" />
+
+                <com.google.android.material.loadingindicator.LoadingIndicator
+                    android:id="@+id/loadingIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    app:indicatorColor="@color/primary" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/settingsButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/settings"
+                    android:src="@drawable/settings"
+                    app:tint="@color/black" />
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/very_light_grey"
+                app:cardCornerRadius="32dp"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/ask_ai"
+                        android:src="@drawable/ai_icon"
+                        app:tint="@color/black" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:fontFamily="@font/special_gothic_expanded_bold"
-                        android:text="@string/top_bar_title"
-                        android:textColor="@color/black"
-                        android:textSize="24sp" />
-
-                    <com.google.android.material.loadingindicator.LoadingIndicator
-                        android:id="@+id/loadingIndicator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="8dp"
-                        app:indicatorColor="@color/primary" />
-
-                    <View
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <ImageButton
-                        android:id="@+id/settingsButton"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_gravity="center_vertical|end"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="@string/settings"
-                        android:src="@drawable/settings"
-                        app:tint="@color/black" />
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/special_gothic_expanded_regular"
+                        android:paddingHorizontal="16dp"
+                        android:text="@string/ask_ai_bar_hint"
+                        android:textColor="@color/light_grey"
+                        android:textSize="18sp"
+                        tools:ignore="TextContrastCheck" />
 
                 </LinearLayout>
 
+            </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/statsCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:visibility="invisible">
+
                 <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:id="@+id/cardView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
                     app:cardBackgroundColor="@color/very_light_grey"
-                    app:cardCornerRadius="32dp"
-                    app:cardElevation="0dp">
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/cardView4"
+                    app:layout_constraintEnd_toStartOf="@+id/cardView3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/cardView2">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="16dp"
-                        tools:ignore="UseCompoundDrawables">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@string/ask_ai"
-                            android:src="@drawable/ai_icon"
-                            app:tint="@color/black" />
+                        android:layout_gravity="center_vertical|start"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="24dp">
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:id="@+id/todayText"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/special_gothic_expanded_regular"
-                            android:paddingHorizontal="16dp"
-                            android:text="@string/ask_ai_bar_hint"
-                            android:textColor="@color/light_grey"
-                            android:textSize="18sp"
+                            android:fontFamily="@font/special_gothic_expanded_bold"
+                            android:text="@string/total_push_ups_today_count"
+                            android:textColor="@color/black"
+                            android:textSize="72sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/special_gothic_expanded_semibold"
+                            android:text="@string/total_push_ups_today"
+                            android:textColor="@color/grey"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
+                    android:layout_width="120dp"
+                    android:layout_height="55dp"
+                    app:cardBackgroundColor="@color/very_light_grey"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="16dp">
+
+                        <TextView
+                            android:id="@+id/last7Text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/special_gothic_expanded_semibold"
+                            android:text="@string/this_week_count"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/special_gothic_expanded_medium"
+                            android:text="@string/this_week"
+                            android:textColor="@color/grey"
+                            android:textSize="11sp"
                             tools:ignore="TextContrastCheck" />
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/statsCard"
-                    android:visibility="invisible"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView3"
+                    android:layout_width="120dp"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="8dp"
+                    app:cardBackgroundColor="@color/very_light_grey"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="@+id/cardView2"
+                    app:layout_constraintStart_toStartOf="@+id/cardView2"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="8dp"
-                        app:cardBackgroundColor="@color/very_light_grey"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/cardView4"
-                        app:layout_constraintEnd_toStartOf="@+id/cardView3"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/cardView2">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical|start"
-                            android:orientation="vertical"
-                            android:paddingHorizontal="24dp">
-
-                            <TextView
-                                android:id="@+id/todayText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/special_gothic_expanded_bold"
-                                android:text="@string/total_push_ups_today_count"
-                                android:textColor="@color/black"
-                                android:textSize="72sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/special_gothic_expanded_semibold"
-                                android:text="@string/total_push_ups_today"
-                                android:textColor="@color/grey"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView2"
-                        android:layout_width="120dp"
-                        android:layout_height="55dp"
-                        app:cardBackgroundColor="@color/very_light_grey"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical|start"
-                            android:orientation="vertical"
-                            android:paddingHorizontal="16dp">
-
-                            <TextView
-                                android:id="@+id/last7Text"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/special_gothic_expanded_semibold"
-                                android:text="@string/this_week_count"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/special_gothic_expanded_medium"
-                                android:text="@string/this_week"
-                                android:textColor="@color/grey"
-                                android:textSize="11sp"
-                                tools:ignore="TextContrastCheck" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView3"
-                        android:layout_width="120dp"
-                        android:layout_height="55dp"
-                        android:layout_marginTop="8dp"
-                        app:cardBackgroundColor="@color/very_light_grey"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintEnd_toEndOf="@+id/cardView2"
-                        app:layout_constraintStart_toStartOf="@+id/cardView2"
-                        app:layout_constraintTop_toBottomOf="@+id/cardView2">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical|start"
-                            android:orientation="vertical"
-                            android:paddingHorizontal="16dp">
-
-                            <TextView
-                                android:id="@+id/last30Text"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/special_gothic_expanded_semibold"
-                                android:text="@string/this_month_count"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/special_gothic_expanded_medium"
-                                android:text="@string/this_month"
-                                android:textColor="@color/grey"
-                                android:textSize="11sp"
-                                tools:ignore="TextContrastCheck" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView4"
-                        android:layout_width="120dp"
-                        android:layout_height="55dp"
-                        android:layout_marginTop="8dp"
-                        app:cardBackgroundColor="@color/very_light_grey"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/cardView3"
-                        app:layout_constraintStart_toStartOf="@+id/cardView3"
-                        app:layout_constraintTop_toBottomOf="@+id/cardView3">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical|start"
-                            android:orientation="vertical"
-                            android:paddingHorizontal="16dp">
-
-                            <TextView
-                                android:id="@+id/lifetimeText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/special_gothic_expanded_semibold"
-                                android:text="@string/so_far_count"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/special_gothic_expanded_medium"
-                                android:text="@string/so_far"
-                                android:textColor="@color/grey"
-                                android:textSize="11sp"
-                                tools:ignore="TextContrastCheck" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <LinearLayout
-                    android:id="@+id/thisMonthCardHeader"
-                    android:visibility="invisible"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/special_gothic_expanded_bold"
-                        android:text="@string/this_month"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center_vertical|end"
-                        android:contentDescription="@string/current_streak_text"
-                        android:src="@drawable/fire_primary"
-                        app:tint="@color/black" />
-
-                    <TextView
-                        android:id="@+id/streakText"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/special_gothic_expanded_bold"
-                        android:text="@string/current_streak_number"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/thisMonthCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    android:layout_marginTop="12dp"
-                    app:cardBackgroundColor="@color/very_light_grey"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="24dp"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginBottom="14dp"
-                        android:orientation="vertical">
-
-                        <com.google.android.flexbox.FlexboxLayout
-                            android:id="@+id/heatmapLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:flexWrap="wrap"
-                            app:justifyContent="flex_start" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="13dp"
-                            android:baselineAligned="false"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="horizontal"
-                                tools:ignore="UseCompoundDrawables">
-
-                                <TextView
-                                    android:id="@+id/currentStreakText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/special_gothic_expanded_regular"
-                                    android:text="@string/current_streak_text"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp" />
-
-                                <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:importantForAccessibility="no"
-                                    android:src="@drawable/fire_secondary"
-                                    app:tint="@color/primary"
-                                    tools:ignore="ImageContrastCheck" />
-                            </LinearLayout>
-
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="horizontal"
-                                tools:ignore="UseCompoundDrawables">
-
-                                <TextView
-                                    android:id="@+id/highestStreakText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/special_gothic_expanded_regular"
-                                    android:text="@string/highest_streak_text"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp" />
-
-                                <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:importantForAccessibility="no"
-                                    android:src="@drawable/fire_secondary"
-                                    app:tint="@color/primary"
-                                    tools:ignore="ImageContrastCheck" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <LinearLayout
-                    android:id="@+id/leaderboardCardHeader"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/special_gothic_expanded_bold"
-                        android:text="@string/leaderboard"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/leaderboard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:fontFamily="@font/special_gothic_semibold"
-                        android:gravity="center"
-                        android:text="@string/view_more"
-                        android:textColor="@color/grey"
-                        android:textSize="12sp"
-                        app:tint="@color/black" />
-
-                </LinearLayout>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/leaderboardCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:visibility="invisible"
-                    app:cardBackgroundColor="@color/very_light_grey"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="24dp"
-                        android:layout_marginVertical="20dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/firstImage"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/person1"
-                                android:visibility="visible" />
-
-                            <TextView
-                                android:id="@+id/firstName"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/special_gothic_semibold"
-                                android:paddingHorizontal="11dp"
-                                android:text="@string/person_name_1"
-                                android:textColor="@color/dark_grey"
-                                android:textSize="16sp"
-                                android:visibility="visible" />
-
-                            <TextView
-                                android:id="@+id/firstCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/special_gothic_expanded_semibold"
-                                android:text="@string/score_1"
-                                android:textColor="@color/dark_grey_85"
-                                android:textSize="16sp"
-                                android:visibility="visible" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="8dp"
-                            android:orientation="horizontal">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/secondImage"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/person2"
-                                android:visibility="visible" />
-
-                            <TextView
-                                android:id="@+id/secondName"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/special_gothic_semibold"
-                                android:paddingHorizontal="11dp"
-                                android:text="@string/person_name_2"
-                                android:textColor="@color/dark_grey"
-                                android:textSize="16sp"
-                                android:visibility="visible" />
-
-                            <TextView
-                                android:id="@+id/secondCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/special_gothic_expanded_semibold"
-                                android:text="@string/score_2"
-                                android:textColor="@color/dark_grey_85"
-                                android:textSize="16sp"
-                                android:visibility="visible" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/thirdImage"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/person3"
-                                android:visibility="visible" />
-
-                            <TextView
-                                android:id="@+id/thirdName"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/special_gothic_semibold"
-                                android:paddingHorizontal="11dp"
-                                android:text="@string/person_name_3"
-                                android:textColor="@color/dark_grey"
-                                android:textSize="16sp"
-                                android:visibility="visible" />
-
-                            <TextView
-                                android:id="@+id/thirdCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:fontFamily="@font/special_gothic_expanded_semibold"
-                                android:text="@string/score_3"
-                                android:textColor="@color/dark_grey_85"
-                                android:textSize="16sp"
-                                android:visibility="visible" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <LinearLayout
-                    android:id="@+id/globalCardHeader"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/special_gothic_expanded_bold"
-                        android:text="@string/global_push_ups"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center_vertical|end"
-                        android:contentDescription="@string/global_push_ups"
-                        android:src="@drawable/global"
-                        app:tint="@color/black" />
-
-                </LinearLayout>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/globalCard"
-                    android:visibility="invisible"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    app:cardBackgroundColor="@color/very_light_grey"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="24dp"
-                        android:layout_marginVertical="13dp">
+                        android:layout_gravity="center_vertical|start"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="16dp">
 
                         <TextView
-                            android:id="@+id/allUsersText"
-                            android:layout_width="match_parent"
+                            android:id="@+id/last30Text"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:fontFamily="@font/special_gothic_expanded_bold"
-                            android:text="@string/global_push_ups_count"
+                            android:fontFamily="@font/special_gothic_expanded_semibold"
+                            android:text="@string/this_month_count"
                             android:textColor="@color/black"
-                            android:textSize="40sp" />
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/special_gothic_expanded_medium"
+                            android:text="@string/this_month"
+                            android:textColor="@color/grey"
+                            android:textSize="11sp"
+                            tools:ignore="TextContrastCheck" />
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView4"
+                    android:layout_width="120dp"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="8dp"
+                    app:cardBackgroundColor="@color/very_light_grey"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/cardView3"
+                    app:layout_constraintStart_toStartOf="@+id/cardView3"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView3">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="16dp">
+
+                        <TextView
+                            android:id="@+id/lifetimeText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/special_gothic_expanded_semibold"
+                            android:text="@string/so_far_count"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/special_gothic_expanded_medium"
+                            android:text="@string/so_far"
+                            android:textColor="@color/grey"
+                            android:textSize="11sp"
+                            tools:ignore="TextContrastCheck" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/thisMonthCardHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/special_gothic_expanded_bold"
+                    android:text="@string/this_month"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:contentDescription="@string/current_streak_text"
+                    android:src="@drawable/fire_primary"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:id="@+id/streakText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/special_gothic_expanded_bold"
+                    android:text="@string/current_streak_number"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/thisMonthCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:visibility="invisible"
+                app:cardBackgroundColor="@color/very_light_grey"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="14dp"
+                    android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/stats"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:visibility="gone"
-        android:backgroundTint="@android:color/transparent"
-        android:contentDescription="@string/export_stats"
-        android:padding="12dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/share_stats"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tint="@color/grey" />
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/heatmapLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:flexWrap="wrap"
+                        app:justifyContent="flex_start" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:baselineAligned="false"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <TextView
+                                android:id="@+id/currentStreakText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/special_gothic_expanded_regular"
+                                android:text="@string/current_streak_text"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/fire_secondary"
+                                app:tint="@color/primary"
+                                tools:ignore="ImageContrastCheck" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <TextView
+                                android:id="@+id/highestStreakText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/special_gothic_expanded_regular"
+                                android:text="@string/highest_streak_text"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/fire_secondary"
+                                app:tint="@color/primary"
+                                tools:ignore="ImageContrastCheck" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/leaderboardCardHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/special_gothic_expanded_bold"
+                    android:text="@string/leaderboard"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/leaderboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/special_gothic_semibold"
+                    android:gravity="center"
+                    android:text="@string/view_more"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp"
+                    app:tint="@color/black" />
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/leaderboardCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:visibility="invisible"
+                app:cardBackgroundColor="@color/very_light_grey"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginVertical="20dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/firstImage"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/person1"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/firstName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/special_gothic_semibold"
+                            android:paddingHorizontal="11dp"
+                            android:text="@string/person_name_1"
+                            android:textColor="@color/dark_grey"
+                            android:textSize="16sp"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/firstCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:fontFamily="@font/special_gothic_expanded_semibold"
+                            android:text="@string/score_1"
+                            android:textColor="@color/dark_grey_85"
+                            android:textSize="16sp"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/secondImage"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/person2"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/secondName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/special_gothic_semibold"
+                            android:paddingHorizontal="11dp"
+                            android:text="@string/person_name_2"
+                            android:textColor="@color/dark_grey"
+                            android:textSize="16sp"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/secondCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:fontFamily="@font/special_gothic_expanded_semibold"
+                            android:text="@string/score_2"
+                            android:textColor="@color/dark_grey_85"
+                            android:textSize="16sp"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/thirdImage"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/person3"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/thirdName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/special_gothic_semibold"
+                            android:paddingHorizontal="11dp"
+                            android:text="@string/person_name_3"
+                            android:textColor="@color/dark_grey"
+                            android:textSize="16sp"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/thirdCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:fontFamily="@font/special_gothic_expanded_semibold"
+                            android:text="@string/score_3"
+                            android:textColor="@color/dark_grey_85"
+                            android:textSize="16sp"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/globalCardHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:visibility="invisible"
+                tools:ignore="UseCompoundDrawables">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/special_gothic_expanded_bold"
+                    android:text="@string/global_push_ups"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:contentDescription="@string/global_push_ups"
+                    android:src="@drawable/global"
+                    app:tint="@color/black" />
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/globalCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:visibility="invisible"
+                app:cardBackgroundColor="@color/very_light_grey"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginVertical="13dp">
+
+                    <TextView
+                        android:id="@+id/allUsersText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/special_gothic_expanded_bold"
+                        android:text="@string/global_push_ups_count"
+                        android:textColor="@color/black"
+                        android:textSize="40sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
