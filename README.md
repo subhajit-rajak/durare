@@ -65,7 +65,7 @@ The app uses the following logic to detect push-ups:
 
 ## Customization
 
-You can adjust the sensitivity by modifying these constants in `MainActivity.kt`:
+You can adjust the sensitivity by modifying these constants in `utils/PushUpDetector.kt/companion object`:
 
 ```kotlin
 private const val DOWN_THRESHOLD = 50f  // Adjust for down position sensitivity
