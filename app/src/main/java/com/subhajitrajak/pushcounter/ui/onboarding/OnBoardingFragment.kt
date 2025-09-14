@@ -20,6 +20,7 @@ import com.subhajitrajak.pushcounter.databinding.FragmentOnBoardingBinding
 import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.removeWithAnim
 import com.subhajitrajak.pushcounter.utils.showToast
+import com.subhajitrajak.pushcounter.utils.showWithAnimSpecial
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -52,15 +53,18 @@ class OnBoardingFragment : Fragment() {
                                     navigateToDashboard()
                                 }
                                 result.onFailure { e ->
+                                    binding.loadingIndicator.removeWithAnim()
                                     showToast(requireContext(), "Sign-in failed: ${e.message}")
                                 }
                             })
                     } else {
+                        binding.loadingIndicator.removeWithAnim()
                         showToast(requireContext(), "Sign-in failed: ${signInResult.errorMessage}")
                     }
                 }
             }
         } else {
+            binding.loadingIndicator.removeWithAnim()
             showToast(requireContext(), "Sign-in cancelled")
         }
     }
@@ -184,6 +188,7 @@ class OnBoardingFragment : Fragment() {
 
     // google login
     private fun loginUsingGoogle() {
+        binding.loadingIndicator.showWithAnimSpecial(1000)
         CoroutineScope(Dispatchers.Main).launch {
             val intentSender = googleAuthUiClient.signIn()
             if (intentSender != null) {
@@ -208,6 +213,8 @@ class OnBoardingFragment : Fragment() {
             )
         } catch (e: Exception) {
             log(e.message.toString())
+        } finally {
+            binding.loadingIndicator.removeWithAnim()
         }
     }
 
