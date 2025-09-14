@@ -1,11 +1,12 @@
 package com.subhajitrajak.pushcounter.ui.dashboard
 
-import androidx.lifecycle.*
-import com.subhajitrajak.pushcounter.data.models.DailyPushStats
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.subhajitrajak.pushcounter.data.models.DashboardStats
 import com.subhajitrajak.pushcounter.data.models.User
 import com.subhajitrajak.pushcounter.data.repositories.DashboardRepository
-import com.subhajitrajak.pushcounter.utils.Event
 import kotlinx.coroutines.launch
 
 class DashboardViewModel(private val repository: DashboardRepository) : ViewModel() {
