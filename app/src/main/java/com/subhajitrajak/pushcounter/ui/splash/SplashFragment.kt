@@ -43,10 +43,13 @@ class SplashFragment : Fragment() {
 
         binding.lottieAnimationView.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationEnd(animation: Animator) {
-                // check if user is logged in
-                val isLoggedIn = googleAuthUiClient.isUserLoggedIn()
-                // navigate to the dashboard or on boarding screen based on the login status
-                navigateToNextScreen(isLoggedIn)
+                // slight delay before navigation to prevent overlap
+                view.postDelayed({
+                    // check if user is logged in
+                    val isLoggedIn = googleAuthUiClient.isUserLoggedIn()
+                    // navigate to the dashboard or on boarding screen based on the login status
+                    navigateToNextScreen(isLoggedIn)
+                }, 300)
             }
 
             override fun onAnimationStart(animation: Animator) {}
