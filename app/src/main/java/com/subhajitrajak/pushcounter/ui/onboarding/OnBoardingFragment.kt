@@ -20,7 +20,7 @@ import com.subhajitrajak.pushcounter.databinding.FragmentOnBoardingBinding
 import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.removeWithAnim
 import com.subhajitrajak.pushcounter.utils.showToast
-import com.subhajitrajak.pushcounter.utils.showWithAnimSpecial
+import com.subhajitrajak.pushcounter.utils.showWithAnim
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -185,7 +185,7 @@ class OnBoardingFragment : Fragment() {
 
     // google login
     private fun loginUsingGoogle() {
-        binding.loadingIndicator.showWithAnimSpecial(1000)
+        binding.loadingIndicator.showWithAnim(1000)
         CoroutineScope(Dispatchers.Main).launch {
             val intentSender = googleAuthUiClient.signIn()
             if (intentSender != null) {

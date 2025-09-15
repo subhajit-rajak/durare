@@ -13,7 +13,7 @@ import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsActivity
 import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.removeWithAnim
 import com.subhajitrajak.pushcounter.utils.showToast
-import com.subhajitrajak.pushcounter.utils.showWithAnim
+import com.subhajitrajak.pushcounter.utils.showWithAnim50ms
 
 class DailyStatsFragment : Fragment() {
     private var _binding: FragmentDailyStatsBinding? = null
@@ -37,7 +37,7 @@ class DailyStatsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = DailyStatsAdapter { stats ->
-            binding.loadingIndicator.showWithAnim()
+            binding.loadingIndicator.showWithAnim50ms()
             navigateToShareStats(stats)
         }
         binding.recordsRv.adapter = adapter
@@ -49,7 +49,7 @@ class DailyStatsFragment : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                binding.loadingIndicator.showWithAnim()
+                binding.loadingIndicator.showWithAnim50ms()
             } else {
                 binding.loadingIndicator.removeWithAnim()
             }

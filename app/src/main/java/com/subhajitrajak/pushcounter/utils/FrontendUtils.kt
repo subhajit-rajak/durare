@@ -3,7 +3,6 @@ package com.subhajitrajak.pushcounter.utils
 import android.content.Context
 import android.util.Log
 import android.view.View
-import android.view.animation.AlphaAnimation
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 
@@ -12,20 +11,24 @@ fun View.fadeView(
     from: Float = 0f,
     to: Float = 1f,
 ) {
-    val anim = AlphaAnimation(from, to)
-    anim.duration = duration
-    startAnimation(anim)
+    alpha = from
+    animate()
+        .alpha(to)
+        .setDuration(duration)
+        .setInterpolator(DecelerateInterpolator())
+        .start()
 }
 
-fun View.removeWithAnim(){
-    fadeView(from=1f,to=0f, duration = 100)
+fun View.removeWithAnim() {
     visibility = View.GONE
+    fadeView(from = 1f, to = 0f, duration = 100)
+}
 
-}
-fun View.showWithAnim(){
-    fadeView(duration = 50)
+fun View.showWithAnim50ms() {
     visibility = View.VISIBLE
+    fadeView(duration = 50)
 }
+
 fun showToast(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
@@ -34,17 +37,7 @@ fun log(message: String) {
     Log.e("Personal", message)
 }
 
-fun View.showWithAnimSpecial(duration: Long = 500){
+fun View.showWithAnim(duration: Long = 500) {
+    visibility = View.VISIBLE
     fadeView(duration = duration)
-    visibility = View.VISIBLE
-}
-
-fun View.showCard() {
-    alpha = 0f
-    visibility = View.VISIBLE
-    animate()
-        .alpha(1f)
-        .setDuration(300)
-        .setInterpolator(DecelerateInterpolator())
-        .start()
 }

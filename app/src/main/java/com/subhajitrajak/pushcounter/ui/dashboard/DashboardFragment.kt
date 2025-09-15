@@ -21,8 +21,8 @@ import com.subhajitrajak.pushcounter.databinding.FragmentDashboardBinding
 import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.removeWithAnim
 import com.subhajitrajak.pushcounter.utils.showToast
+import com.subhajitrajak.pushcounter.utils.showWithAnim50ms
 import com.subhajitrajak.pushcounter.utils.showWithAnim
-import com.subhajitrajak.pushcounter.utils.showCard
 
 class DashboardFragment : Fragment() {
 
@@ -51,7 +51,7 @@ class DashboardFragment : Fragment() {
             enableTransitionType(LayoutTransition.CHANGE_APPEARING)
 
             // Optional: tweak timings for smooth ease-out
-            setDuration(300)
+            setDuration(500)
             setInterpolator(LayoutTransition.APPEARING, DecelerateInterpolator())
             setInterpolator(LayoutTransition.CHANGE_APPEARING, DecelerateInterpolator())
         }
@@ -67,9 +67,9 @@ class DashboardFragment : Fragment() {
                 allUsersText.text = stats.allUsersTotal.toString()
             }
 
-            binding.statsCard.showCard()
-            binding.globalCard.showCard()
-            binding.globalCardHeader.showCard()
+            binding.statsCard.showWithAnim()
+            binding.globalCard.showWithAnim()
+            binding.globalCardHeader.showWithAnim()
         }
 
         viewModel.thisMonthPushupCounts.observe(viewLifecycleOwner) { counts ->
@@ -88,7 +88,7 @@ class DashboardFragment : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                binding.loadingIndicator.showWithAnim()
+                binding.loadingIndicator.showWithAnim50ms()
             } else {
                 binding.loadingIndicator.removeWithAnim()
             }
@@ -153,8 +153,8 @@ class DashboardFragment : Fragment() {
                     .into(imageView)
             }
 
-            leaderboardCardHeader.showCard()
-            leaderboardCard.showCard()
+            leaderboardCardHeader.showWithAnim()
+            leaderboardCard.showWithAnim()
         }
     }
 
@@ -203,8 +203,8 @@ class DashboardFragment : Fragment() {
             binding.heatmapLayout.addView(circleView)
         }
 
-        binding.thisMonthCard.showCard()
-        binding.thisMonthCardHeader.showCard()
+        binding.thisMonthCard.showWithAnim()
+        binding.thisMonthCardHeader.showWithAnim()
     }
 
     private fun dpToPx(dp: Int): Int {
