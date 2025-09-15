@@ -13,6 +13,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/parentLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -102,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:visibility="invisible">
+                android:visibility="gone">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
@@ -275,7 +276,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
-                android:visibility="invisible">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="0dp"
@@ -310,7 +311,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/very_light_grey"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">
@@ -405,7 +406,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
-                android:visibility="invisible">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="0dp"
@@ -435,7 +436,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/very_light_grey"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">
@@ -572,7 +573,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
-                android:visibility="invisible"
+                android:visibility="gone"
                 tools:ignore="UseCompoundDrawables">
 
                 <TextView
@@ -599,7 +600,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/very_light_grey"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 
 fun View.fadeView(
@@ -36,4 +37,14 @@ fun log(message: String) {
 fun View.showWithAnimSpecial(duration: Long = 500){
     fadeView(duration = duration)
     visibility = View.VISIBLE
+}
+
+fun View.showCard() {
+    alpha = 0f
+    visibility = View.VISIBLE
+    animate()
+        .alpha(1f)
+        .setDuration(300)
+        .setInterpolator(DecelerateInterpolator())
+        .start()
 }
