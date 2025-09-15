@@ -127,10 +127,6 @@ class DashboardFragment : Fragment() {
                 R.color.white,
                 R.color.black
             )
-
-            leaderboard.setOnClickListener {
-                findNavController().navigate(R.id.action_dashboardFragment_to_leaderboardFragment)
-            }
         }
     }
 
