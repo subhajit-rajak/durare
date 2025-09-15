@@ -195,6 +195,7 @@ class OnBoardingFragment : Fragment() {
             if (intentSender != null) {
                 signInLauncher.launch(IntentSenderRequest.Builder(intentSender).build())
             } else {
+                binding.loadingIndicator.removeWithAnim()
                 showToast(requireContext(), "Google Sign-In failed")
             }
         }
