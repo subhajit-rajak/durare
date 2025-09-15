@@ -78,10 +78,6 @@ class OnBoardingFragment : Fragment() {
             oneTapClient = Identity.getSignInClient(requireContext())
         )
 
-        if(googleAuthUiClient.isUserLoggedIn()){
-            navigateToDashboard()
-        }
-
         onboardingScreens = listOf(
             OnboardingScreen(
                 title = getString(R.string.onboarding_title_1),
@@ -116,6 +112,11 @@ class OnBoardingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if(googleAuthUiClient.isUserLoggedIn()){
+            navigateToDashboard()
+        }
+
         setupViewPager()
         setupNavigation()
         updateSkipButtonVisibility()
@@ -214,7 +215,7 @@ class OnBoardingFragment : Fragment() {
         } catch (e: Exception) {
             log(e.message.toString())
         } finally {
-            binding.loadingIndicator.removeWithAnim()
+            _binding?.loadingIndicator?.removeWithAnim()
         }
     }
 
