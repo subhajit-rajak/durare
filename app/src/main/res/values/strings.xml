@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Push Counter</string>
+    <string name="app_name">Durare</string>
     <string name="default_web_client_id">975598957627-eskfiukf0kj475nafdv2pp70vrdn96tn.apps.googleusercontent.com</string>
     <string name="status_ready">Ready to detect push-ups</string>
     <string name="status_go_up">Go up!</string>
@@ -34,7 +34,6 @@
     <string name="this_week_count">125</string>
     <string name="this_month_count">525</string>
     <string name="so_far_count">2.54k</string>
-    <string name="top_bar_title">PUSH-UPS</string>
     <string name="finish">Finish</string>
     <string name="play_pause">Play/Pause</string>
     <string name="reset">Reset</string>
