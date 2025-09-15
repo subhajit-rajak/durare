@@ -172,13 +172,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="@string/account_information" />
+                android:text="@string/account_information"
+                android:textColor="@color/dark_grey" />
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/account_information"
-                android:src="@drawable/arrow_right" />
+                android:src="@drawable/arrow_right"
+                app:tint="@color/dark_grey" />
 
         </LinearLayout>
 
@@ -201,13 +203,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="@string/personalize" />
+                android:text="@string/personalize"
+                android:textColor="@color/dark_grey" />
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/personalize"
-                android:src="@drawable/arrow_right" />
+                android:src="@drawable/arrow_right"
+                app:tint="@color/dark_grey" />
 
         </LinearLayout>
 
@@ -230,13 +234,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="@string/appearance" />
+                android:text="@string/appearance"
+                android:textColor="@color/dark_grey" />
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/appearance"
-                android:src="@drawable/arrow_right" />
+                android:src="@drawable/arrow_right"
+                app:tint="@color/dark_grey" />
 
         </LinearLayout>
 
@@ -259,13 +265,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="@string/notifications" />
+                android:text="@string/notifications"
+                android:textColor="@color/dark_grey" />
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/notifications"
-                android:src="@drawable/arrow_right" />
+                android:src="@drawable/arrow_right"
+                app:tint="@color/dark_grey" />
 
         </LinearLayout>
 
@@ -296,13 +304,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="@string/report_an_issue" />
+                android:text="@string/report_an_issue"
+                android:textColor="@color/dark_grey" />
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/report_an_issue"
-                android:src="@drawable/arrow_right" />
+                android:src="@drawable/arrow_right"
+                app:tint="@color/dark_grey" />
 
         </LinearLayout>
 
@@ -324,13 +334,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="@string/contact_us" />
+                android:text="@string/contact_us"
+                android:textColor="@color/dark_grey" />
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/contact_us"
-                android:src="@drawable/arrow_right" />
+                android:src="@drawable/arrow_right"
+                app:tint="@color/dark_grey" />
 
         </LinearLayout>
 
@@ -352,13 +364,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="@string/privacy_policy" />
+                android:text="@string/privacy_policy"
+                android:textColor="@color/dark_grey" />
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/privacy_policy"
-                android:src="@drawable/arrow_right" />
+                android:src="@drawable/arrow_right"
+                app:tint="@color/dark_grey" />
 
         </LinearLayout>
 
@@ -380,13 +394,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="@string/terms_conditions" />
+                android:text="@string/terms_conditions"
+                android:textColor="@color/dark_grey" />
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/terms_conditions"
-                android:src="@drawable/arrow_right" />
+                android:src="@drawable/arrow_right"
+                app:tint="@color/dark_grey" />
 
         </LinearLayout>
 

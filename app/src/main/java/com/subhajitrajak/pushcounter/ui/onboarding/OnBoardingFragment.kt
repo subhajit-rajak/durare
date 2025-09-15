@@ -113,10 +113,6 @@ class OnBoardingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(googleAuthUiClient.isUserLoggedIn()){
-            navigateToDashboard()
-        }
-
         setupViewPager()
         setupNavigation()
         updateSkipButtonVisibility()
