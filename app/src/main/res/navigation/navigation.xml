@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/onBoardingFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/dashboardFragment"
@@ -111,4 +111,13 @@
         android:name="com.subhajitrajak.pushcounter.ui.dailyStats.DailyStatsFragment"
         android:label="fragment_daily_stats"
         tools:layout="@layout/fragment_daily_stats" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.subhajitrajak.pushcounter.ui.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_onBoardingFragment"
+            app:destination="@id/onBoardingFragment" />
+    </fragment>
 </navigation>

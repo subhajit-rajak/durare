@@ -39,7 +39,8 @@
             android:exported="false"/>
         <activity
             android:name=".ui.dashboard.HomeActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.EmptySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
