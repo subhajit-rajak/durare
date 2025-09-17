@@ -1,6 +1,5 @@
 package com.subhajitrajak.pushcounter.ui.dashboard
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +7,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.DialogWorkoutSetupBinding
-import com.subhajitrajak.pushcounter.utils.Constants.KEY_REST_TIME
-import com.subhajitrajak.pushcounter.utils.Constants.KEY_TOTAL_REPS
-import com.subhajitrajak.pushcounter.utils.Constants.PREFS_NAME
+import com.subhajitrajak.pushcounter.utils.Preferences
 import com.subhajitrajak.pushcounter.utils.formatTwoDigits
 import com.subhajitrajak.pushcounter.utils.showToast
 
@@ -34,9 +31,9 @@ class WorkoutSetupDialog(val flag: Int) : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val totalReps = prefs.getInt(KEY_TOTAL_REPS, 3)
-        val restTime = prefs.getLong(KEY_REST_TIME, 0)
+        val prefs = Preferences.getInstance(requireContext())
+        val totalReps = prefs.getTotalReps()
+        val restTime = prefs.getRestTime()
 
         val restMinutes = (restTime / 1000 / 60).toInt()
         val restSeconds = ((restTime / 1000) % 60).toInt()

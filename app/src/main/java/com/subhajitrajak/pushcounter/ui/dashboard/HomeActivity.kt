@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -14,9 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.ActivityHomeBinding
 import com.subhajitrajak.pushcounter.ui.counter.CounterActivity
-import com.subhajitrajak.pushcounter.utils.Constants.KEY_REST_TIME
-import com.subhajitrajak.pushcounter.utils.Constants.KEY_TOTAL_REPS
-import com.subhajitrajak.pushcounter.utils.Constants.PREFS_NAME
+import com.subhajitrajak.pushcounter.utils.Preferences
 
 class HomeActivity : AppCompatActivity() {
 
@@ -58,9 +55,9 @@ class HomeActivity : AppCompatActivity() {
         dialog.onStartClick = { totalReps, restTimeMs ->
             dialog.binding.apply {
                 // set preferences
-                val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-                prefs.edit { putInt(KEY_TOTAL_REPS, totalReps) }
-                prefs.edit { putLong(KEY_REST_TIME, restTimeMs) }
+                val prefs = Preferences.getInstance(this@HomeActivity)
+                prefs.setTotalReps(totalReps)
+                prefs.setRestTime(restTimeMs)
 
                 // Start the workout with the specified parameters
                 startWorkout(totalReps, restTimeMs)

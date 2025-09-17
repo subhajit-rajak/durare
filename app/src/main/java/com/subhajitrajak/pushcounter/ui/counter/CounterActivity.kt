@@ -39,8 +39,8 @@ import com.subhajitrajak.pushcounter.data.models.DailyPushStats
 import com.subhajitrajak.pushcounter.data.repositories.StatsRepository
 import com.subhajitrajak.pushcounter.databinding.ActivityCounterBinding
 import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsActivity
-import com.subhajitrajak.pushcounter.utils.Constants
 import com.subhajitrajak.pushcounter.utils.Constants.DATE_FORMAT
+import com.subhajitrajak.pushcounter.utils.Preferences
 import com.subhajitrajak.pushcounter.utils.PushUpDetector
 import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.showToast
@@ -165,9 +165,9 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         // initializing preferences
-        val prefs = getSharedPreferences(Constants.PREFS_NAME, MODE_PRIVATE)
-        showCameraCardSwitch = prefs.getBoolean(Constants.KEY_SHOW_CAMERA, false)
-        counterFeedbackSwitch = prefs.getBoolean(Constants.KEY_COUNTER_FEEDBACK, false)
+        val prefs = Preferences.getInstance(this)
+        showCameraCardSwitch = prefs.isCameraCardEnabled()
+        counterFeedbackSwitch = prefs.isCounterFeedbackEnabled()
 
         // Camera card
         binding.cameraCard.visibility = if (showCameraCardSwitch) View.VISIBLE else View.INVISIBLE
