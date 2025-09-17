@@ -23,6 +23,7 @@ import com.subhajitrajak.pushcounter.utils.removeWithAnim
 import com.subhajitrajak.pushcounter.utils.showToast
 import com.subhajitrajak.pushcounter.utils.showWithAnim50ms
 import com.subhajitrajak.pushcounter.utils.showWithAnim
+import java.time.LocalDate
 
 class DashboardFragment : Fragment() {
 
@@ -194,6 +195,11 @@ class DashboardFragment : Fragment() {
                 else -> R.color.level_4
             }
             (drawable as GradientDrawable).setColor(requireContext().getColor(colorRes))
+
+            val today = LocalDate.now().dayOfMonth
+            if (day == today) {
+                drawable.setStroke(dpToPx(1), requireContext().getColor(R.color.black))
+            }
 
             circleView.background = drawable
             binding.heatmapLayout.addView(circleView)
