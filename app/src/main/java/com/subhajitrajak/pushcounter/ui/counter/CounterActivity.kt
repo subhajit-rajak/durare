@@ -66,8 +66,6 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-        const val REST_TIME = "restTimeMs"
-        const val TOTAL_REPS = "totalReps"
     }
 
     private var showCameraCardSwitch: Boolean = false
@@ -130,8 +128,8 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         }
 
         // Get dynamic values from intent extras
-        totalReps = intent.getIntExtra("totalReps", 3)
-        customRestMs = intent.getLongExtra("restTimeMs", 5000L)
+        totalReps = intent.getIntExtra(Preferences.KEY_TOTAL_REPS, 3)
+        customRestMs = intent.getLongExtra(Preferences.KEY_REST_TIME, 5000L)
 
         // keeps screen on during push-ups
         window.decorView.keepScreenOn = true

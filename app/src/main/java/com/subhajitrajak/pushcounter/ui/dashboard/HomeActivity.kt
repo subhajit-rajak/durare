@@ -70,8 +70,8 @@ class HomeActivity : AppCompatActivity() {
     // navigates to the counter activity with the specified parameters
     private fun startWorkout(totalReps: Int, restTimeMs: Long) {
         val intent = Intent(this, CounterActivity::class.java).apply {
-            putExtra(CounterActivity.TOTAL_REPS, totalReps)
-            putExtra(CounterActivity.REST_TIME, restTimeMs)
+            putExtra(Preferences.KEY_TOTAL_REPS, totalReps)
+            putExtra(Preferences.KEY_REST_TIME, restTimeMs)
         }
         startActivity(intent)
     }
