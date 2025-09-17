@@ -129,4 +129,17 @@
     <string name="you_are_at_rank">You are at #%1$d</string>
     <string name="daily_stats">Daily Stats</string>
     <string name="leaderboard1">Leaderboard</string>
+
+    <!-- Camera access -->
+    <string name="this_tracks_your_face_nto_count_pushups">This tracks your face\nto count pushups.</string>
+    <string name="skip_button_title">Skip for now</string>
+    <string name="allow_camera_button_title">Allow Camera Access</string>
+    <string name="camera_access_description">We use your camera to count pushups automatically.\nYour video is never saved or shared.</string>
+    <string name="camera_access">Camera Access</string>
+    <string name="this_app_requires_camera_access_to_function_properly">This app requires camera access to function properly.</string>
+    <string name="camera_permission_needed">Camera Permission Needed</string>
+    <string name="ok">OK</string>
+    <string name="permission_required">Permission Required</string>
+    <string name="camera_permission_has_been_permanently_denied_please_enable_it_in_app_settings">Camera permission has been permanently denied. Please enable it in app settings.</string>
+    <string name="go_to_settings">Go to Settings</string>
 </resources>

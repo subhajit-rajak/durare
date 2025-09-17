@@ -205,7 +205,7 @@ class OnBoardingFragment : Fragment() {
                 .build()
 
             navController.navigate(
-                R.id.action_onBoardingFragment_to_dashboardFragment,
+                R.id.action_onBoardingFragment_to_cameraAccessFragment,
                 null,
                 navOptions
             )

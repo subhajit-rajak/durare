@@ -94,8 +94,8 @@
         android:label="fragment_on_boarding"
         tools:layout="@layout/fragment_on_boarding" >
         <action
-            android:id="@+id/action_onBoardingFragment_to_dashboardFragment"
-            app:destination="@id/dashboardFragment"
+            android:id="@+id/action_onBoardingFragment_to_cameraAccessFragment"
+            app:destination="@id/cameraAccessFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
@@ -120,7 +120,24 @@
             android:id="@+id/action_splashFragment_to_onBoardingFragment"
             app:destination="@id/onBoardingFragment" />
         <action
-            android:id="@+id/action_splashFragment_to_dashboardFragment"
-            app:destination="@id/dashboardFragment" />
+            android:id="@+id/action_splashFragment_to_cameraAccessFragment"
+            app:destination="@id/cameraAccessFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraAccessFragment"
+        android:name="com.subhajitrajak.pushcounter.ui.cameraAccess.CameraAccessFragment"
+        android:label="fragment_camera_access"
+        tools:layout="@layout/fragment_camera_access" >
+        <action
+            android:id="@+id/action_cameraAccessFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>
