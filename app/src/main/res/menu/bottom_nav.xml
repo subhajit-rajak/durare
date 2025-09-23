@@ -8,7 +8,7 @@
     <item
         android:id="@+id/dailyStatsFragment"
         android:title="@string/daily_stats"
-        android:icon="@drawable/timer" />
+        android:icon="@drawable/analytics" />
 
     <item
         android:id="@+id/leaderboardFragment"
