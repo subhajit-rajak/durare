@@ -16,15 +16,20 @@ import androidx.core.graphics.createBitmap
 
 object ThemeSwitcher {
 
+    private var isAnimating = false
     private var currentReveal: Animator? = null
     private var currentFade: Animator? = null
 
     fun switchThemeWithAnimation(activity: Activity, isDark: Boolean) {
+        if (isAnimating) return
+
         val rootView = activity.window.decorView.findViewById<ViewGroup>(android.R.id.content)
 
         // Cancel any running animations
         currentReveal?.cancel()
         currentFade?.cancel()
+
+        isAnimating = true
 
         // Remove leftover overlays if any
         (0 until rootView.childCount)
@@ -73,12 +78,14 @@ object ThemeSwitcher {
                     rootView.removeView(oldOverlay)
                     currentReveal = null
                     currentFade = null
+                    isAnimating = false
                 }
                 override fun onAnimationCancel(animation: Animator) {
                     rootView.removeView(newOverlay)
                     rootView.removeView(oldOverlay)
                     currentReveal = null
                     currentFade = null
+                    isAnimating = false
                 }
             })
         }

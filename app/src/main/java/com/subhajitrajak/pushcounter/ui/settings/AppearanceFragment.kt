@@ -39,6 +39,7 @@ class AppearanceFragment : Fragment() {
 
             // Listener for Light mode
             lightMode.setOnClickListener {
+                if (!isDark) return@setOnClickListener
                 ThemeManager.setDarkMode(requireContext(), false)
                 ThemeSwitcher.switchThemeWithAnimation(requireActivity(), false)
                 lightMode.isChecked = true
@@ -47,6 +48,7 @@ class AppearanceFragment : Fragment() {
 
             // Listener for Dark mode
             darkMode.setOnClickListener {
+                if (isDark) return@setOnClickListener
                 ThemeManager.setDarkMode(requireContext(), true)
                 ThemeSwitcher.switchThemeWithAnimation(requireActivity(), true)
                 darkMode.isChecked = true
