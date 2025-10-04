@@ -274,7 +274,8 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         isResting = true
         restRemainingMs = customRestMs
         // Prepare for next rep: freeze counting during rest
-        binding.statusText.text = getString(R.string.status_ready)
+        binding.statusText.text = getString(R.string.resting)
+        binding.repCount.text = getString(R.string.rest_time)
     }
 
     private fun exitRestAndStartNextRep() {
