@@ -232,8 +232,7 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
     private fun togglePause() {
         isPaused = !isPaused
         val iconRes = if (isPaused) R.drawable.play else R.drawable.pause
-        val iv = (binding.playPause.getChildAt(0))
-        if (iv is android.widget.ImageView) iv.setImageResource(iconRes)
+        binding.playPauseIcon.setImageResource(iconRes)
     }
 
     private fun updateRepTitle() {

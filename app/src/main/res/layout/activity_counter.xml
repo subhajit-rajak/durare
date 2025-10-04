@@ -251,6 +251,7 @@
         app:layout_constraintTop_toTopOf="@+id/resetButton">
 
         <ImageView
+            android:id="@+id/play_pause_icon"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="12dp"
