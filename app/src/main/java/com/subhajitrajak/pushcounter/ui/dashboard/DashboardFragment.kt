@@ -1,13 +1,11 @@
 package com.subhajitrajak.pushcounter.ui.dashboard
 
-import android.animation.LayoutTransition
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -20,9 +18,9 @@ import com.subhajitrajak.pushcounter.data.models.User
 import com.subhajitrajak.pushcounter.databinding.FragmentDashboardBinding
 import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.removeWithAnim
+import com.subhajitrajak.pushcounter.utils.show
 import com.subhajitrajak.pushcounter.utils.showToast
 import com.subhajitrajak.pushcounter.utils.showWithAnim50ms
-import com.subhajitrajak.pushcounter.utils.showWithAnim
 import java.time.LocalDate
 
 class DashboardFragment : Fragment() {
@@ -46,18 +44,6 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Enable layout transition (animates position changes)
-        val transition = LayoutTransition().apply {
-            enableTransitionType(LayoutTransition.APPEARING)
-            enableTransitionType(LayoutTransition.CHANGE_APPEARING)
-
-            // Optional: tweak timings for smooth ease-out
-            setDuration(500)
-            setInterpolator(LayoutTransition.APPEARING, DecelerateInterpolator())
-            setInterpolator(LayoutTransition.CHANGE_APPEARING, DecelerateInterpolator())
-        }
-        binding.parentLinearLayout.layoutTransition = transition
-
         viewModel.dashboardStats.observe(viewLifecycleOwner) { stats ->
             // update UI
             binding.apply {
@@ -68,9 +54,9 @@ class DashboardFragment : Fragment() {
                 allUsersText.text = stats.allUsersTotal.toString()
             }
 
-            binding.statsCard.showWithAnim()
-            binding.globalCard.showWithAnim()
-            binding.globalCardHeader.showWithAnim()
+            binding.statsCard.show()
+            binding.globalCard.show()
+            binding.globalCardHeader.show()
         }
 
         viewModel.thisMonthPushupCounts.observe(viewLifecycleOwner) { counts ->
@@ -150,8 +136,8 @@ class DashboardFragment : Fragment() {
                     .into(imageView)
             }
 
-            leaderboardCardHeader.showWithAnim()
-            leaderboardCard.showWithAnim()
+            leaderboardCardHeader.show()
+            leaderboardCard.show()
         }
     }
 
@@ -205,8 +191,8 @@ class DashboardFragment : Fragment() {
             binding.heatmapLayout.addView(circleView)
         }
 
-        binding.thisMonthCard.showWithAnim()
-        binding.thisMonthCardHeader.showWithAnim()
+        binding.thisMonthCard.show()
+        binding.thisMonthCardHeader.show()
     }
 
     private fun dpToPx(dp: Int): Int {

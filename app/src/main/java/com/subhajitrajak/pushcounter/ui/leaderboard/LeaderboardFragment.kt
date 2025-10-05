@@ -15,7 +15,7 @@ import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.removeWithAnim
 import com.subhajitrajak.pushcounter.utils.showToast
 import com.subhajitrajak.pushcounter.utils.showWithAnim50ms
-import com.subhajitrajak.pushcounter.utils.showWithAnim
+import com.subhajitrajak.pushcounter.utils.show
 
 class LeaderboardFragment : Fragment() {
 
@@ -56,7 +56,7 @@ class LeaderboardFragment : Fragment() {
                 binding.userRankScore.text = currentUser.pushups.toString()
             }
 
-            binding.cardView.showWithAnim()
+            binding.cardView.show()
         }
 
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->

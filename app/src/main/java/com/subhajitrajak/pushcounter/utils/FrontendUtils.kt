@@ -41,3 +41,7 @@ fun View.showWithAnim(duration: Long = 500) {
     visibility = View.VISIBLE
     fadeView(duration = duration)
 }
+
+fun View.show() {
+    visibility = View.VISIBLE
+}
