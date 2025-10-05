@@ -143,4 +143,6 @@
     <string name="permission_required">Permission Required</string>
     <string name="camera_permission_has_been_permanently_denied_please_enable_it_in_app_settings">Camera permission has been permanently denied. Please enable it in app settings.</string>
     <string name="go_to_settings">Go to Settings</string>
+
+    <string name="exit_rest">Exit Rest</string>
 </resources>

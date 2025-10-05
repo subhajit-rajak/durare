@@ -173,6 +173,7 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         binding.resetButton.setOnClickListener { pushUpDetector.reset() }
         binding.playPause.setOnClickListener { togglePause() }
         binding.done.setOnClickListener { onDoneClicked() }
+        binding.exitRest.setOnClickListener { onExitRestClick() }
 
         if (allPermissionsGranted()) {
             startCamera()
@@ -276,9 +277,27 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         // Prepare for next rep: freeze counting during rest
         binding.statusText.text = getString(R.string.resting)
         binding.repCount.text = getString(R.string.rest_time)
+        binding.resetButton.visibility = View.GONE
+        binding.done.visibility = View.GONE
+        binding.exitRest.visibility = View.VISIBLE
+    }
+
+    private fun onExitRestClick() {
+        // End the rest early
+        restRemainingMs = 0L
+
+        // Transition into the next rep (or complete session if last rep)
+        exitRestAndStartNextRep()
+
+        // Update timer text so UI reflects immediate change
+        updateTimerText()
     }
 
     private fun exitRestAndStartNextRep() {
+        binding.resetButton.visibility = View.VISIBLE
+        binding.done.visibility = View.VISIBLE
+        binding.exitRest.visibility = View.GONE
+
         isResting = false
         currentRep++
         if (currentRep > totalReps) {

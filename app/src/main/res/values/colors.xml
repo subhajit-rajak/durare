@@ -18,4 +18,5 @@
     <color name="level_4">#FF690C</color> <!-- primary (solid) -->
 
     <color name="white_fix">#FFFFFF</color>
+    <color name="red">#F00</color>
 </resources>
