@@ -38,6 +38,7 @@ import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.data.models.DailyPushStats
 import com.subhajitrajak.pushcounter.data.repositories.StatsRepository
 import com.subhajitrajak.pushcounter.databinding.ActivityCounterBinding
+import com.subhajitrajak.pushcounter.services.RestTimerService
 import com.subhajitrajak.pushcounter.ui.shareStats.ShareStatsActivity
 import com.subhajitrajak.pushcounter.utils.Constants.DATE_FORMAT
 import com.subhajitrajak.pushcounter.utils.Preferences
@@ -280,6 +281,15 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         binding.resetButton.visibility = View.GONE
         binding.done.visibility = View.GONE
         binding.exitRest.visibility = View.VISIBLE
+
+        startNotificationForRestTimer()
+    }
+
+    private fun startNotificationForRestTimer() {
+        val intent = Intent(this, RestTimerService::class.java).apply {
+            putExtra(RestTimerService.EXTRA_REST_DURATION_MS, customRestMs)
+        }
+        ContextCompat.startForegroundService(this, intent)
     }
 
     private fun onExitRestClick() {
@@ -294,6 +304,13 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
     }
 
     private fun exitRestAndStartNextRep() {
+        stopService(Intent(this, RestTimerService::class.java))
+
+        try { toneGenerator?.startTone(ToneGenerator.TONE_PROP_BEEP, 200) } catch (_: Exception) {}
+        try {
+            vibrator?.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+        } catch (_: Exception) {}
+
         binding.resetButton.visibility = View.VISIBLE
         binding.done.visibility = View.VISIBLE
         binding.exitRest.visibility = View.GONE
