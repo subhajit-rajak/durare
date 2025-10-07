@@ -38,11 +38,6 @@ class RestTimerService : Service() {
         }
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        createNotificationChannel()
-    }
-
     @SuppressLint("ForegroundServiceType")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         remainingMs = intent?.getLongExtra(EXTRA_REST_DURATION_MS, 0L) ?: 0L
@@ -78,18 +73,6 @@ class RestTimerService : Service() {
         val minutes = totalSeconds / 60
         val seconds = totalSeconds % 60
         return String.format(Locale.US, "%02d:%02d", minutes, seconds)
-    }
-
-    private fun createNotificationChannel() {
-        val channel = NotificationChannel(
-            CHANNEL_ID,
-            "Rest Timer",
-            NotificationManager.IMPORTANCE_LOW
-        ).apply {
-            description = "Shows the remaining rest time between sets"
-        }
-        val nm = getSystemService(NotificationManager::class.java)
-        nm.createNotificationChannel(channel)
     }
 
     override fun onDestroy() {

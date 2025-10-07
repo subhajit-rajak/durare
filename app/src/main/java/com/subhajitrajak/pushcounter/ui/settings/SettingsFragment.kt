@@ -1,5 +1,6 @@
 package com.subhajitrajak.pushcounter.ui.settings
 
+import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,12 +12,16 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.auth.GoogleAuthUiClient
 import com.subhajitrajak.pushcounter.auth.UserData
 import com.subhajitrajak.pushcounter.databinding.FragmentSettingsBinding
+import com.subhajitrajak.pushcounter.utils.reminderUtils.PushupReminderManager
 import com.subhajitrajak.pushcounter.utils.log
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
@@ -56,6 +61,32 @@ class SettingsFragment : Fragment() {
         binding.apply {
             backButton.setOnClickListener {
                 handleBackButtonPress()
+            }
+
+            setReminder.setOnClickListener {
+                // Show time picker
+                val picker = MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY))
+                    .setMinute(Calendar.getInstance().get(Calendar.MINUTE))
+                    .setTitleText("Select Reminder Time")
+                    .build()
+
+                // Show the picker
+                picker.show(parentFragmentManager, "pushup_time_picker")
+
+                // Handle the selected time
+                picker.addOnPositiveButtonClickListener {
+                    val selectedHour = picker.hour
+                    val selectedMinute = picker.minute
+
+                    // Schedule daily reminder
+                    PushupReminderManager.scheduleDailyReminder(
+                        requireContext(),
+                        selectedHour,
+                        selectedMinute
+                    )
+                }
             }
 
             personalize.setOnClickListener {
