@@ -14,6 +14,7 @@ class Preferences private constructor(context: Context) {
         const val KEY_REST_TIME = "rest_time" // long
         const val PREF_HOUR = "hour" // reminder hours - int
         const val PREF_MINUTE = "minute" // reminder minutes - int
+        const val PREF_REMINDER = "reminder" // boolean
 
         @Volatile private var instance: Preferences? = null
 
@@ -49,6 +50,8 @@ class Preferences private constructor(context: Context) {
     fun getReminderHour(): Int = prefs.getInt(PREF_HOUR, 8)
     fun getReminderMinute(): Int = prefs.getInt(PREF_MINUTE, 30)
     fun setReminder(hour: Int, minute: Int) = prefs.edit { putInt(PREF_HOUR, hour).putInt(PREF_MINUTE, minute) }
+    fun getReminderSet(): Boolean = prefs.getBoolean(PREF_REMINDER, false)
+    fun setReminderSet(set: Boolean) = prefs.edit { putBoolean(PREF_REMINDER, set) }
 
     fun clear() = prefs.edit { clear() }
     fun remove(key: String) = prefs.edit { remove(key) }

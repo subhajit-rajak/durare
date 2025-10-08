@@ -66,6 +66,7 @@ class PushupReminderManager {
                 )
             }
 
+            Preferences.getInstance(context).setReminderSet(true)
         }
 
         // Cancel the reminder
@@ -77,6 +78,9 @@ class PushupReminderManager {
             )
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.cancel(pendingIntent)
+
+            // Update stored reminder flag
+            Preferences.getInstance(context).setReminderSet(false)
         }
 
         // Reschedule on boot
@@ -88,14 +92,7 @@ class PushupReminderManager {
         }
 
         fun isReminderSet(context: Context): Boolean {
-            val intent = Intent(context, PushupAlarmReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(
-                context, 0, intent,
-                PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
-            )
-
-            // If pendingIntent is not null, the alarm is already set
-            return pendingIntent != null
+            return Preferences.getInstance(context).getReminderSet()
         }
     }
 }
