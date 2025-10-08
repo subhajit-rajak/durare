@@ -144,14 +144,14 @@
     <string name="camera_permission_has_been_permanently_denied_please_enable_it_in_app_settings">Camera permission has been permanently denied. Please enable it in app settings.</string>
     <string name="go_to_settings">Go to Settings</string>
 
+    <!-- Daily Reminder -->
     <string name="exit_rest">Exit Rest</string>
-    <string name="set_reminder">Set Reminder</string>
+    <string name="daily_reminder">Daily Reminder</string>
     <string name="set_an_alarm_to_stay_consistent">Set an alarm to stay consistent</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="workout_reminder">workout reminder</string>
     <string name="enable_daily_reminder">Enable Daily Reminder</string>
     <string name="get_notified_at_your_preferred_time_to_start_your_pushups">Get notified at your preferred time to start your pushups.</string>
     <string name="activate">Activate</string>
     <string name="hours">Hours</string>
+    <string name="set_reminder">Set Reminder</string>
 </resources>

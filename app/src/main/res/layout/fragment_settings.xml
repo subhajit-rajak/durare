@@ -101,58 +101,6 @@
             app:cardElevation="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/userImage"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:src="@drawable/person3"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/userName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:fontFamily="@font/special_gothic_semibold"
-                    android:text="@string/person_name_1"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toTopOf="@+id/userEmail"
-                    app:layout_constraintStart_toEndOf="@+id/userImage"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed" />
-
-                <TextView
-                    android:id="@+id/userEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/special_gothic_regular"
-                    android:text="@string/person_email_1"
-                    android:textColor="@color/grey"
-                    android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/userName"
-                    app:layout_constraintTop_toBottomOf="@+id/userName" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:cardBackgroundColor="@color/very_light_grey"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/setReminder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -185,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:fontFamily="@font/special_gothic_semibold"
-                    android:text="@string/set_reminder"
+                    android:text="@string/daily_reminder"
                     android:textColor="@color/dark_grey"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/description1"
@@ -204,6 +152,32 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/title1"
                     app:layout_constraintTop_toBottomOf="@+id/title1" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/timer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/special_gothic_expanded_medium"
+                        android:gravity="center"
+                        android:paddingHorizontal="16dp"
+                        android:text="@string/timer_sample_duration"
+                        android:textColor="@color/very_dark_grey"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/userRankText" />
+
+                </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -14,6 +14,7 @@ import com.subhajitrajak.pushcounter.utils.Preferences
 import com.subhajitrajak.pushcounter.utils.formatTwoDigits
 import com.subhajitrajak.pushcounter.utils.reminderUtils.PushupReminderManager
 import com.subhajitrajak.pushcounter.utils.showToast
+import java.util.Locale
 
 class ReminderFragment : Fragment() {
     private var _binding: FragmentReminderBinding? = null
@@ -101,7 +102,8 @@ class ReminderFragment : Fragment() {
         )
 
         binding.reminderSwitch.isChecked = true
-        showToast(requireContext(), "Reminder set for $selectedHour:$selectedMinute")
+        val formattedTime = String.format(Locale.US,"%02d:%02d", selectedHour, selectedMinute)
+        showToast(requireContext(), "Reminder set for $formattedTime")
     }
 
     private fun handleBackButtonPress() {

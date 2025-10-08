@@ -9,14 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.identity.Identity
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.auth.GoogleAuthUiClient
-import com.subhajitrajak.pushcounter.auth.UserData
 import com.subhajitrajak.pushcounter.databinding.FragmentSettingsBinding
+import com.subhajitrajak.pushcounter.utils.Preferences
 import com.subhajitrajak.pushcounter.utils.log
+import com.subhajitrajak.pushcounter.utils.reminderUtils.PushupReminderManager
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
@@ -40,22 +41,19 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Fetch signed-in user data
-        val userData: UserData? = googleAuthUiClient.getSignedInUser()
-
-        if (userData != null) {
-            binding.userName.text = userData.username
-            binding.userEmail.text = userData.userEmail
-
-            Glide.with(requireContext())
-                .load(userData.profilePictureUrl)
-                .placeholder(R.drawable.person3)
-                .into(binding.userImage)
-        }
-
         binding.apply {
             backButton.setOnClickListener {
                 handleBackButtonPress()
+            }
+
+            val isReminderSet = PushupReminderManager.isReminderSet(requireContext())
+
+            if(isReminderSet) {
+                val prefs = Preferences.getInstance(requireContext())
+                val reminderHour = prefs.getReminderHour()
+                val reminderMinute = prefs.getReminderMinute()
+                val reminderText = String.format(Locale.US,"%02d:%02d", reminderHour, reminderMinute)
+                timer.text = reminderText
             }
 
             setReminder.setOnClickListener {
