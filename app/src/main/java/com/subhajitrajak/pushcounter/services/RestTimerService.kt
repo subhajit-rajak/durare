@@ -1,13 +1,16 @@
 package com.subhajitrajak.pushcounter.services
 
 import android.annotation.SuppressLint
-import android.app.*
-import android.content.Context
+import android.app.Notification
+import android.app.NotificationManager
+import android.app.Service
 import android.content.Intent
-import android.os.*
+import android.os.Handler
+import android.os.IBinder
+import android.os.Looper
 import androidx.core.app.NotificationCompat
 import com.subhajitrajak.pushcounter.R
-import java.util.*
+import java.util.Locale
 
 class RestTimerService : Service() {
 
