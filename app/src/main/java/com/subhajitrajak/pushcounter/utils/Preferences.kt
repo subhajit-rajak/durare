@@ -12,6 +12,8 @@ class Preferences private constructor(context: Context) {
         const val KEY_COUNTER_FEEDBACK = "counter_feedback" // boolean
         const val KEY_TOTAL_REPS = "total_reps" // int
         const val KEY_REST_TIME = "rest_time" // long
+        const val PREF_HOUR = "hour" // reminder hours - int
+        const val PREF_MINUTE = "minute" // reminder minutes - int
 
         @Volatile private var instance: Preferences? = null
 
@@ -42,6 +44,11 @@ class Preferences private constructor(context: Context) {
     // Rest time
     fun getRestTime(): Long = prefs.getLong(KEY_REST_TIME, 0L)
     fun setRestTime(restTime: Long) = prefs.edit { putLong(KEY_REST_TIME, restTime) }
+
+    // Reminder
+    fun getReminderHour(): Int = prefs.getInt(PREF_HOUR, 8)
+    fun getReminderMinute(): Int = prefs.getInt(PREF_MINUTE, 30)
+    fun setReminder(hour: Int, minute: Int) = prefs.edit { putInt(PREF_HOUR, hour).putInt(PREF_MINUTE, minute) }
 
     fun clear() = prefs.edit { clear() }
     fun remove(key: String) = prefs.edit { remove(key) }

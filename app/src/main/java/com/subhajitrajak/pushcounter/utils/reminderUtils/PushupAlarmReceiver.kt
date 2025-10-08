@@ -38,6 +38,6 @@ class PushupAlarmReceiver : BroadcastReceiver() {
         notificationManager.notify(PushupReminderManager.NOTIFICATION_ID, notification)
 
         // Reschedule for next day
-        PushupReminderManager.rescheduleAfterBoot(context)
+        PushupReminderManager.rescheduleReminder(context)
     }
 }

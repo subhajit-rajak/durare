@@ -22,4 +22,14 @@
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">16dp</item>
     </style>
+
+    <style name="PushupTimePickerTheme" parent="ThemeOverlay.Material3.MaterialTimePicker">
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurfaceVariant">@color/grey</item>
+        <item name="colorOnSurface">@color/dark_grey</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
+        <item name="colorPrimaryContainer">@color/primary</item>
+    </style>
+
 </resources>

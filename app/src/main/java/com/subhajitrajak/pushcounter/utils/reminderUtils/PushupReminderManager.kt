@@ -5,24 +5,21 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.core.content.edit
+import com.subhajitrajak.pushcounter.utils.Preferences
 import java.util.Calendar
 
 class PushupReminderManager {
 
     companion object {
-
-        private const val PREFS_NAME = "pushup_prefs"
-        private const val PREF_HOUR = "hour"
-        private const val PREF_MINUTE = "minute"
         const val CHANNEL_ID = "pushup_reminder_channel"
         const val NOTIFICATION_ID = 1001
 
         // Schedule daily notification
         fun scheduleDailyReminder(context: Context, hour: Int, minute: Int) {
             // Save user preference
-            val sharedPref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            sharedPref.edit { putInt(PREF_HOUR, hour).putInt(PREF_MINUTE, minute) }
+
+            val preferences = Preferences.getInstance(context)
+            preferences.setReminder(hour, minute)
 
             val intent = Intent(context, PushupAlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(
@@ -83,11 +80,22 @@ class PushupReminderManager {
         }
 
         // Reschedule on boot
-        fun rescheduleAfterBoot(context: Context) {
-            val sharedPref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            val hour = sharedPref.getInt(PREF_HOUR, 20)
-            val minute = sharedPref.getInt(PREF_MINUTE, 0)
+        fun rescheduleReminder(context: Context) {
+            val preferences = Preferences.getInstance(context)
+            val hour = preferences.getReminderHour()
+            val minute = preferences.getReminderMinute()
             scheduleDailyReminder(context, hour, minute)
+        }
+
+        fun isReminderSet(context: Context): Boolean {
+            val intent = Intent(context, PushupAlarmReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(
+                context, 0, intent,
+                PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
+            )
+
+            // If pendingIntent is not null, the alarm is already set
+            return pendingIntent != null
         }
     }
 }

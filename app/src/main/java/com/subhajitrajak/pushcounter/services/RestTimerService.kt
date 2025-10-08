@@ -64,7 +64,7 @@ class RestTimerService : Service() {
 
     private fun updateNotification() {
         val notification = buildNotification()
-        val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         nm.notify(NOTIFICATION_ID, notification)
     }
 

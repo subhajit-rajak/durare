@@ -108,8 +108,8 @@
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:checkedButton="@+id/enabled_selected"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/lightModeImage">
@@ -124,12 +124,12 @@
                         android:id="@+id/lightMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:enabled="true"
                         android:fontFamily="@font/special_gothic_semibold"
                         android:text="@string/light"
                         android:textColor="@color/black"
                         android:textSize="11sp"
-                        app:buttonTint="@color/primary"
-                        android:enabled="true" />
+                        app:buttonTint="@color/primary" />
 
                     <RadioButton
                         android:layout_width="0dp"
@@ -141,13 +141,13 @@
                         android:id="@+id/darkMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:enabled="true"
                         android:fontFamily="@font/special_gothic_semibold"
                         android:text="@string/dark"
                         android:textColor="@color/black"
                         android:textSize="11sp"
-                        android:checked="false"
-                        app:buttonTint="@color/primary"
-                        android:enabled="true" />
+                        app:buttonTint="@color/primary" />
 
                     <RadioButton
                         android:layout_width="0dp"
