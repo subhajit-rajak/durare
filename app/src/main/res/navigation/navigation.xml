@@ -140,8 +140,8 @@
         android:label="fragment_camera_access"
         tools:layout="@layout/fragment_camera_access" >
         <action
-            android:id="@+id/action_cameraAccessFragment_to_dashboardFragment"
-            app:destination="@id/dashboardFragment"
+            android:id="@+id/action_cameraAccessFragment_to_notificationAccessFragment"
+            app:destination="@id/notificationAccessFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
@@ -152,4 +152,16 @@
         android:name="com.subhajitrajak.pushcounter.ui.reminder.ReminderFragment"
         android:label="fragment_reminder"
         tools:layout="@layout/fragment_reminder" />
+    <fragment
+        android:id="@+id/notificationAccessFragment"
+        android:name="com.subhajitrajak.pushcounter.ui.notificationAcess.NotificationAccessFragment"
+        android:label="NotificationAccessFragment" >
+        <action
+            android:id="@+id/action_notificationAccessFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 </navigation>

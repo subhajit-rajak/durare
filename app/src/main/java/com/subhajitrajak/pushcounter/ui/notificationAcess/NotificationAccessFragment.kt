@@ -1,26 +1,27 @@
-package com.subhajitrajak.pushcounter.ui.cameraAccess
+package com.subhajitrajak.pushcounter.ui.notificationAcess
 
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.DialogPermissionBinding
-import com.subhajitrajak.pushcounter.databinding.FragmentCameraAccessBinding
+import com.subhajitrajak.pushcounter.databinding.FragmentNotificationAccessBinding
 
-class CameraAccessFragment : Fragment() {
-
-    private var _binding: FragmentCameraAccessBinding? = null
+class NotificationAccessFragment : Fragment() {
+    private var _binding: FragmentNotificationAccessBinding? = null
     private val binding get() = _binding!!
 
     // Modern permission launcher
@@ -29,7 +30,7 @@ class CameraAccessFragment : Fragment() {
             if (isGranted) {
                 proceedToNextStep()
             } else {
-                if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                     showPermissionRationale()
                 } else {
                     showGoToSettingsDialog()
@@ -41,14 +42,15 @@ class CameraAccessFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCameraAccessBinding.inflate(inflater, container, false)
+        _binding = FragmentNotificationAccessBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (cameraPermissionGranted()) {
+        if (notificationPermissionGranted()) {
             // Already granted → no need to ask again
             proceedToNextStep()
         }
@@ -58,28 +60,33 @@ class CameraAccessFragment : Fragment() {
         }
 
         binding.allowButton.setOnClickListener {
-            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
 
-    private fun cameraPermissionGranted(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED
+    private fun notificationPermissionGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
     }
 
     private fun proceedToNextStep() {
-        findNavController().navigate(R.id.action_cameraAccessFragment_to_notificationAccessFragment)
+        findNavController().navigate(R.id.action_notificationAccessFragment_to_dashboardFragment)
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun showPermissionRationale() {
         showCustomDialog(
-            title = getString(R.string.camera_permission_needed),
-            message = getString(R.string.this_app_requires_camera_access_to_function_properly),
+            title = getString(R.string.notification_permission_needed),
+            message = getString(R.string.this_app_requires_notification_access_to_function_properly),
             positiveText = getString(R.string.ok),
             onPositiveClick = {
-                requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         )
     }
@@ -87,7 +94,7 @@ class CameraAccessFragment : Fragment() {
     private fun showGoToSettingsDialog() {
         showCustomDialog(
             title = getString(R.string.permission_required),
-            message = getString(R.string.camera_permission_has_been_permanently_denied_please_enable_it_in_app_settings),
+            message = getString(R.string.notification_permission_has_been_permanently_denied_please_enable_it_in_app_settings),
             positiveText = getString(R.string.go_to_settings),
             onPositiveClick = {
                 val intent = Intent(

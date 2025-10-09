@@ -154,4 +154,12 @@
     <string name="activate">Activate</string>
     <string name="hours">Hours</string>
     <string name="set_reminder">Set Reminder</string>
+
+    <!-- Notification access -->
+    <string name="notification_access">Notification Access</string>
+    <string name="allow_notifications">Allow Notifications</string>
+    <string name="notification_access_description">We send gentle reminders to help you stay consistent and take timely breaks.\nEnable notifications to receive:\n• Daily pushup reminders\n• Rest time alerts during workouts\nYou can manage or turn them off anytime.</string>
+    <string name="this_app_requires_notification_access_to_function_properly">This app requires notification access to function properly.</string>
+    <string name="notification_permission_needed">Notification Permission Needed</string>
+    <string name="notification_permission_has_been_permanently_denied_please_enable_it_in_app_settings">Notification permission has been permanently denied. Please enable it in app settings.</string>
 </resources>

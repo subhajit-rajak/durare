@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:scaleType="fitStart"
             app:lottie_autoPlay="true"
-            app:lottie_loop="true"
+            app:lottie_loop="false"
             app:lottie_rawRes="@raw/notification" />
 
     </LinearLayout>
