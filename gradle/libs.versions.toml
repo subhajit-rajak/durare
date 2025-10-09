@@ -33,6 +33,7 @@ concurrentFutures = "1.2.0"
 guavaListenableFuture = "1.0"
 guavaAndroid = "33.2.1-android"
 swiperefreshlayout = "1.1.0"
+vico = "2.2.0"
 
 [libraries]
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraView" }
@@ -62,6 +63,7 @@ androidx-concurrent-futures = { group = "androidx.concurrent", name = "concurren
 guava-listenablefuture = { group = "com.google.guava", name = "listenablefuture", version.ref = "guavaListenableFuture" }
 guava-android = { group = "com.google.guava", name = "guava", version.ref = "guavaAndroid" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+vico-views = { group = "com.patrykandpatrick.vico", name = "views", version.ref = "vico" }
 
 #firebase auth
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }

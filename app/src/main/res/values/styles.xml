@@ -32,4 +32,10 @@
         <item name="colorPrimaryContainer">@color/primary</item>
     </style>
 
+    <style name="ChartStyle">
+        <item name="layers">line</item>
+        <item name="showBottomAxis">true</item>
+        <item name="showStartAxis">true</item>
+    </style>
+
 </resources>
