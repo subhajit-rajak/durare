@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.data.models.User
 import com.subhajitrajak.pushcounter.databinding.ItemLeaderboardBinding
+import com.subhajitrajak.pushcounter.utils.formatToShortNumber
 
 class LeaderboardAdapter(
     private val context: Context
@@ -22,7 +23,7 @@ class LeaderboardAdapter(
             binding.apply {
                 rankTextView.text = (position + 1).toString()
                 userNameTextView.text = model.userData.username
-                countTextView.text = model.pushups.toString()
+                countTextView.text = model.pushups.formatToShortNumber()
 
                 Glide.with(context)
                     .load(model.userData.profilePictureUrl)

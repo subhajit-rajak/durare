@@ -16,6 +16,8 @@ import com.google.android.flexbox.FlexboxLayout
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.data.models.User
 import com.subhajitrajak.pushcounter.databinding.FragmentDashboardBinding
+import com.subhajitrajak.pushcounter.utils.formatToShortNumber
+import com.subhajitrajak.pushcounter.utils.formatWithCommas
 import com.subhajitrajak.pushcounter.utils.log
 import com.subhajitrajak.pushcounter.utils.removeWithAnim
 import com.subhajitrajak.pushcounter.utils.show
@@ -47,11 +49,11 @@ class DashboardFragment : Fragment() {
         viewModel.dashboardStats.observe(viewLifecycleOwner) { stats ->
             // update UI
             binding.apply {
-                todayText.text = stats.todayPushups.toString()
-                last7Text.text = stats.last7Pushups.toString()
-                last30Text.text = stats.last30Pushups.toString()
-                lifetimeText.text = stats.lifetimePushups.toString()
-                allUsersText.text = stats.allUsersTotal.toString()
+                todayText.text = stats.todayPushups.formatToShortNumber()
+                last7Text.text = stats.last7Pushups.formatToShortNumber()
+                last30Text.text = stats.last30Pushups.formatToShortNumber()
+                lifetimeText.text = stats.lifetimePushups.formatToShortNumber()
+                allUsersText.text = stats.allUsersTotal.formatWithCommas()
             }
 
             binding.statsCard.show()
@@ -64,9 +66,11 @@ class DashboardFragment : Fragment() {
         }
 
         viewModel.currentStreak.observe(viewLifecycleOwner) { streak ->
-            binding.streakText.text = streak.first.toString()
-            binding.currentStreakText.text = getString(R.string.current, streak.first)
-            binding.highestStreakText.text = getString(R.string.highest, streak.second)
+            val current = streak.first.formatToShortNumber()
+            val highest = streak.second.formatToShortNumber()
+            binding.streakText.text = current
+            binding.currentStreakText.text = getString(R.string.current, current)
+            binding.highestStreakText.text = getString(R.string.highest, highest)
         }
 
         viewModel.leaderboard.observe(viewLifecycleOwner) { users ->
@@ -129,7 +133,7 @@ class DashboardFragment : Fragment() {
                 val (nameView, countView, imageView) = views
 
                 nameView.text = user.userData.username
-                countView.text = user.pushups.toString()
+                countView.text = user.pushups.formatToShortNumber()
 
                 Glide.with(requireContext())
                     .load(user.userData.profilePictureUrl)

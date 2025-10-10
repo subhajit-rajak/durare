@@ -122,8 +122,8 @@
     <string name="saved_successfully">Saved Successfully</string>
     <string name="permission_denied">Permission Denied</string>
     <string name="save">Save</string>
-    <string name="current">current - %1$d</string>
-    <string name="highest">highest - %1$d</string>
+    <string name="current">current - %1$s</string>
+    <string name="highest">highest - %1$s</string>
 
     <!-- Leaderboard -->
     <string name="rankSampleText">You are at #-</string>
