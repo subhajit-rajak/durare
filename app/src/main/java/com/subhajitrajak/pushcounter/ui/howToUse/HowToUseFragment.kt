@@ -7,18 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.FragmentHowToUseBinding
 
 class HowToUseFragment : Fragment() {
     private var _binding: FragmentHowToUseBinding? = null
     private val binding get() = _binding!!
 
-    private val array = intArrayOf(
-        R.drawable.story1,
-        R.drawable.story2,
-        R.drawable.story3,
-        R.drawable.story4
+    private val array = arrayOf(
+        "https://github.com/user-attachments/assets/ccab1d52-34d5-4978-9bd9-4e3783e6a9e5",
+        "https://github.com/user-attachments/assets/2dcbd196-19df-4723-8aea-ff08b10999ea",
+        "https://github.com/user-attachments/assets/ea83be08-9728-4596-914a-94e28d8dcfa7",
+        "https://github.com/user-attachments/assets/4dbf3329-12a6-418e-b319-178a9f525c6f"
     )
 
     private lateinit var adapter: HowToUseAdapter
@@ -44,7 +43,7 @@ class HowToUseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = HowToUseAdapter(array)
+        adapter = HowToUseAdapter(requireContext(), array)
         binding.viewPager.adapter = adapter
         binding.dotsIndicator.attachTo(binding.viewPager)
 

@@ -3,6 +3,8 @@ package com.subhajitrajak.pushcounter
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import com.google.firebase.Firebase
+import com.google.firebase.initialize
 import com.subhajitrajak.pushcounter.services.RestTimerService.Companion.CHANNEL_ID
 import com.subhajitrajak.pushcounter.utils.reminderUtils.PushupReminderManager
 import com.subhajitrajak.pushcounter.utils.ThemeManager
@@ -11,6 +13,7 @@ class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         ThemeManager.applyTheme(this)
+        Firebase.initialize(this)
 
         createNotificationChannels()
     }

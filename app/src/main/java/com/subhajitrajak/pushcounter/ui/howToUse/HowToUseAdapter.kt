@@ -1,13 +1,17 @@
 package com.subhajitrajak.pushcounter.ui.howToUse
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.subhajitrajak.pushcounter.R
 
 class HowToUseAdapter(
-    private val images: IntArray
+    private val context: Context,
+    private val images: Array<String>
 ) : RecyclerView.Adapter<HowToUseAdapter.ImageViewHolder>() {
 
     class ImageViewHolder(val imageView: ImageView) : RecyclerView.ViewHolder(imageView)
@@ -19,7 +23,12 @@ class HowToUseAdapter(
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        holder.imageView.setImageResource(images[position])
+        Glide.with(context)
+            .load(images[position])
+            .placeholder(R.drawable.story_placeholder)
+            .error(R.drawable.story_error)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(holder.imageView)
     }
 
     override fun getItemCount(): Int = images.size
