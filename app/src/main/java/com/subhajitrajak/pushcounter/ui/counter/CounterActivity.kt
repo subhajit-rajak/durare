@@ -70,7 +70,8 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
     }
 
     private var showCameraCardSwitch: Boolean = false
-    private var counterFeedbackSwitch: Boolean = false
+    private var isSoundFeedbackEnabled: Boolean = false
+    private var isVibrationFeedbackEnabled: Boolean = false
 
     // Session/rep state
     private var totalReps: Int = 3
@@ -166,7 +167,8 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         // initializing preferences
         val prefs = Preferences.getInstance(this)
         showCameraCardSwitch = prefs.isCameraCardEnabled()
-        counterFeedbackSwitch = prefs.isCounterFeedbackEnabled()
+        isSoundFeedbackEnabled = prefs.isSoundFeedbackEnabled()
+        isVibrationFeedbackEnabled = prefs.isVibrationFeedbackEnabled()
 
         // Camera card
         binding.cameraCard.visibility = if (showCameraCardSwitch) View.VISIBLE else View.INVISIBLE
@@ -306,10 +308,13 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
     private fun exitRestAndStartNextRep() {
         stopService(Intent(this, RestTimerService::class.java))
 
-        try { toneGenerator?.startTone(ToneGenerator.TONE_PROP_BEEP, 200) } catch (_: Exception) {}
-        try {
-            vibrator?.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
-        } catch (_: Exception) {}
+        if (isSoundFeedbackEnabled) {
+            try { toneGenerator?.startTone(ToneGenerator.TONE_PROP_BEEP, 200) } catch (_: Exception) {}
+        }
+
+        if (isVibrationFeedbackEnabled) {
+            try { vibrator?.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE)) } catch (_: Exception) {}
+        }
 
         binding.resetButton.visibility = View.VISIBLE
         binding.done.visibility = View.VISIBLE
@@ -432,11 +437,14 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         val now = System.currentTimeMillis()
         if (lastPushTimestampMs != 0L) cumulativePushDurationMs += (now - lastPushTimestampMs)
         lastPushTimestampMs = now
-        if (!counterFeedbackSwitch) return
-        try { toneGenerator?.startTone(ToneGenerator.TONE_PROP_ACK, 120) } catch (_: Exception) {}
-        try {
-            vibrator?.vibrate(VibrationEffect.createOneShot(60, VibrationEffect.DEFAULT_AMPLITUDE))
-        } catch (_: Exception) {}
+
+        if (isSoundFeedbackEnabled) {
+            try { toneGenerator?.startTone(ToneGenerator.TONE_PROP_ACK, 120) } catch (_: Exception) {}
+        }
+
+        if (isVibrationFeedbackEnabled) {
+            try { vibrator?.vibrate(VibrationEffect.createOneShot(60, VibrationEffect.DEFAULT_AMPLITUDE)) } catch (_: Exception) {}
+        }
     }
 
     override fun onDestroy() {

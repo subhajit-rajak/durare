@@ -31,7 +31,8 @@ class PersonalizeFragment : Fragment() {
 
         // Restore saved values
         binding.showCameraCardSwitch.isChecked = prefs.isCameraCardEnabled()
-        binding.counterFeedbackSwitch.isChecked = prefs.isCounterFeedbackEnabled()
+        binding.soundFeedbackSwitch.isChecked = prefs.isSoundFeedbackEnabled()
+        binding.vibrationFeedbackSwitch.isChecked = prefs.isVibrationFeedbackEnabled()
 
         binding.repCount.text = prefs.getTotalReps().toString()
         val restTimeMs = prefs.getRestTime()
@@ -48,8 +49,12 @@ class PersonalizeFragment : Fragment() {
                 prefs.setCameraCardEnabled(isChecked)
             }
 
-            counterFeedbackSwitch.setOnCheckedChangeListener { _, isChecked ->
-                prefs.setCounterFeedbackEnabled(isChecked)
+            soundFeedbackSwitch.setOnCheckedChangeListener { _, isChecked ->
+                prefs.setSoundFeedbackEnabled(isChecked)
+            }
+
+            vibrationFeedbackSwitch.setOnCheckedChangeListener { _, isChecked ->
+                prefs.setVibrationFeedbackEnabled(isChecked)
             }
 
             repCountCard.setOnClickListener {

@@ -9,7 +9,8 @@ class Preferences private constructor(context: Context) {
         const val PREFS_NAME = "push_counter_prefs"
         const val KEY_THEME = "app_theme" // boolean
         const val KEY_SHOW_CAMERA = "show_camera_card" // boolean
-        const val KEY_COUNTER_FEEDBACK = "counter_feedback" // boolean
+        const val KEY_SOUND_FEEDBACK = "sound_feedback" // boolean
+        const val KEY_VIBRATION_FEEDBACK = "vibration_feedback" // boolean
         const val KEY_TOTAL_REPS = "total_reps" // int
         const val KEY_REST_TIME = "rest_time" // long
         const val PREF_HOUR = "hour" // reminder hours - int
@@ -34,9 +35,13 @@ class Preferences private constructor(context: Context) {
     fun isCameraCardEnabled(): Boolean = prefs.getBoolean(KEY_SHOW_CAMERA, true)
     fun setCameraCardEnabled(show: Boolean) = prefs.edit { putBoolean(KEY_SHOW_CAMERA, show) }
 
-    // Counter feedback
-    fun isCounterFeedbackEnabled(): Boolean = prefs.getBoolean(KEY_COUNTER_FEEDBACK, true)
-    fun setCounterFeedbackEnabled(enabled: Boolean) = prefs.edit { putBoolean(KEY_COUNTER_FEEDBACK, enabled) }
+    // Sound feedback
+    fun isSoundFeedbackEnabled(): Boolean = prefs.getBoolean(KEY_SOUND_FEEDBACK, false)
+    fun setSoundFeedbackEnabled(enabled: Boolean) = prefs.edit { putBoolean(KEY_SOUND_FEEDBACK, enabled) }
+
+    // Vibration feedback
+    fun isVibrationFeedbackEnabled(): Boolean = prefs.getBoolean(KEY_VIBRATION_FEEDBACK, true)
+    fun setVibrationFeedbackEnabled(enabled: Boolean) = prefs.edit { putBoolean(KEY_VIBRATION_FEEDBACK, enabled) }
 
     // Total reps
     fun getTotalReps(): Int = prefs.getInt(KEY_TOTAL_REPS, 3)
