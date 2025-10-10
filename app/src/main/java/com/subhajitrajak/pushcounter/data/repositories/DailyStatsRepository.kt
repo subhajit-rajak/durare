@@ -36,7 +36,6 @@ class DailyStatsRepository {
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
 
         val cal = Calendar.getInstance()
-        cal.add(Calendar.MONTH, -1) //last month
         val daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
 
         cal.set(Calendar.DAY_OF_MONTH, 1)
