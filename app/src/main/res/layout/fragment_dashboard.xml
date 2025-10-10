@@ -456,7 +456,6 @@
                             android:id="@+id/firstImage"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/person1"
                             android:visibility="visible" />
 
                         <TextView
@@ -495,7 +494,6 @@
                             android:id="@+id/secondImage"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/person2"
                             android:visibility="visible" />
 
                         <TextView
@@ -533,7 +531,6 @@
                             android:id="@+id/thirdImage"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/person3"
                             android:visibility="visible" />
 
                         <TextView

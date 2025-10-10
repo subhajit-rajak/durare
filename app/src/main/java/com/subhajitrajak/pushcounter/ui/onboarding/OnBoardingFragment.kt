@@ -82,7 +82,7 @@ class OnBoardingFragment : Fragment() {
             OnboardingScreen(
                 title = getString(R.string.onboarding_title_1),
                 body = getString(R.string.onboarding_body_1),
-                imageResId = R.drawable.onboarding_image_1_1
+                imageResId = R.drawable.onboarding_image_1
             ),
             OnboardingScreen(
                 title = getString(R.string.onboarding_title_2),
@@ -97,7 +97,7 @@ class OnBoardingFragment : Fragment() {
             OnboardingScreen(
                 title = getString(R.string.onboarding_title_4),
                 body = getString(R.string.onboarding_body_4),
-                imageResId = R.drawable.onboarding_image_4_1
+                imageResId = R.drawable.onboarding_image_4
             )
         )
     }

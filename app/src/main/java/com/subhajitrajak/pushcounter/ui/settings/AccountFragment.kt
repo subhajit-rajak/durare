@@ -50,7 +50,6 @@ class AccountFragment : Fragment() {
 
             Glide.with(requireContext())
                 .load(userData.profilePictureUrl)
-                .placeholder(R.drawable.person3)
                 .into(binding.userImage)
         }
     }
