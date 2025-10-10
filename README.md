@@ -76,3 +76,13 @@ private const val FRAME_THRESHOLD = 3   // Adjust for position confirmation fram
 ## License
 
 This project is open source and available under the MIT License.
+
+## Share stats to social media stories
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ccab1d52-34d5-4978-9bd9-4e3783e6a9e5" width="24%%">
+  <img src="https://github.com/user-attachments/assets/2dcbd196-19df-4723-8aea-ff08b10999ea" width="24%%">
+  <img src="https://github.com/user-attachments/assets/ea83be08-9728-4596-914a-94e28d8dcfa7" width="24%%">
+  <img src="https://github.com/user-attachments/assets/4dbf3329-12a6-418e-b319-178a9f525c6f" width="24%%">
+</p>
+
