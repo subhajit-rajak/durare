@@ -22,8 +22,8 @@
     <string name="current_streak_text">current - 11</string>
     <string name="highest_streak_text">highest - 26</string>
     <string name="current_streak_number">11</string>
-    <string name="this_month">this month</string>
-    <string name="this_week">this week</string>
+    <string name="this_month">last 30 days</string>
+    <string name="this_week">last 7 days</string>
     <string name="so_far">so far</string>
     <string name="leaderboard">leaderboard</string>
     <string name="view_more">View More</string>
