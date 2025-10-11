@@ -150,7 +150,7 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         }
 
         // Detector
-        pushUpDetector = PushUpDetector(this)
+        pushUpDetector = PushUpDetector(this, preferences = Preferences.getInstance(this))
 
         // Face detector
         val options = FaceDetectorOptions.Builder()

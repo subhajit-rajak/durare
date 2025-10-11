@@ -223,6 +223,128 @@
 
         </LinearLayout>
 
+        <!-- DOWN THRESHOLD -->
+        <LinearLayout
+            android:id="@+id/downThresholdCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/down_threshold_title"
+                    android:fontFamily="@font/special_gothic_medium"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/downThresholdValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/down_threshold_value"
+                    android:fontFamily="@font/special_gothic_expanded_medium"
+                    android:textColor="@color/grey"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/down_threshold_desc"
+                android:fontFamily="@font/special_gothic_regular"
+                android:textColor="@color/grey"
+                android:textSize="11sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/downThresholdSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="20"
+                android:valueTo="70"
+                android:value="40"
+                android:stepSize="5"
+                app:haloColor="@color/level_2"
+                app:thumbColor="@color/very_dark_grey"
+                app:tickColorActive="@color/white"
+                app:tickColorInactive="@color/very_dark_grey"
+                app:trackColorActive="@color/primary"
+                app:trackColorInactive="@color/light_grey_85"
+                app:haloRadius="8dp"
+                app:thumbRadius="8dp"/>
+        </LinearLayout>
+
+        <!-- UP THRESHOLD -->
+        <LinearLayout
+            android:id="@+id/upThresholdCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/up_threshold_title"
+                    android:fontFamily="@font/special_gothic_medium"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/upThresholdValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/up_threshold_value"
+                    android:fontFamily="@font/special_gothic_expanded_medium"
+                    android:textColor="@color/grey"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/up_threshold_desc"
+                android:fontFamily="@font/special_gothic_regular"
+                android:textColor="@color/grey"
+                android:textSize="11sp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/upThresholdSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="10"
+                android:valueTo="50"
+                android:value="25"
+                android:stepSize="5"
+                app:haloColor="@color/level_2"
+                app:thumbColor="@color/very_dark_grey"
+                app:tickColorActive="@color/white"
+                app:tickColorInactive="@color/very_dark_grey"
+                app:trackColorActive="@color/primary"
+                app:trackColorInactive="@color/light_grey_85"
+                app:haloRadius="8dp"
+                app:thumbRadius="8dp"/>
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/repCountCard"
             android:layout_width="match_parent"

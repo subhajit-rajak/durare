@@ -1,6 +1,5 @@
 package com.subhajitrajak.pushcounter.ui.settings
 
-import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.subhajitrajak.pushcounter.databinding.FragmentPersonalizeBinding
 import com.subhajitrajak.pushcounter.ui.dashboard.WorkoutSetupDialog
 import com.subhajitrajak.pushcounter.utils.Preferences
+import java.util.Locale
 
 class PersonalizeFragment : Fragment() {
     private var _binding: FragmentPersonalizeBinding? = null
@@ -23,24 +23,27 @@ class PersonalizeFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("DefaultLocale")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val prefs = Preferences.getInstance(requireContext())
-
-        // Restore saved values
-        binding.showCameraCardSwitch.isChecked = prefs.isCameraCardEnabled()
-        binding.soundFeedbackSwitch.isChecked = prefs.isSoundFeedbackEnabled()
-        binding.vibrationFeedbackSwitch.isChecked = prefs.isVibrationFeedbackEnabled()
-
-        binding.repCount.text = prefs.getTotalReps().toString()
-        val restTimeMs = prefs.getRestTime()
-        var restMinutes = restTimeMs / 1000 / 60
-        var restSeconds = (restTimeMs / 1000) % 60
-        binding.restTime.text = String.format("%02d:%02d", restMinutes, restSeconds)
-
         binding.apply {
+            val prefs = Preferences.getInstance(requireContext())
+
+            // Restore saved values
+            showCameraCardSwitch.isChecked = prefs.isCameraCardEnabled()
+            soundFeedbackSwitch.isChecked = prefs.isSoundFeedbackEnabled()
+            vibrationFeedbackSwitch.isChecked = prefs.isVibrationFeedbackEnabled()
+            downThresholdSlider.value = prefs.getDownThreshold()
+            upThresholdSlider.value = prefs.getUpThreshold()
+            downThresholdValue.text = prefs.getDownThreshold().toInt().toString()
+            upThresholdValue.text = prefs.getUpThreshold().toInt().toString()
+
+            repCount.text = prefs.getTotalReps().toString()
+            val restTimeMs = prefs.getRestTime()
+            var restMinutes = restTimeMs / 1000 / 60
+            var restSeconds = (restTimeMs / 1000) % 60
+            restTime.text = String.format(Locale.US, "%02d:%02d", restMinutes, restSeconds)
+
             backButton.setOnClickListener {
                 handleBackButtonPress()
             }
@@ -76,11 +79,23 @@ class PersonalizeFragment : Fragment() {
                         prefs.setRestTime(restTimeMs)
                         restMinutes = restTimeMs / 1000 / 60
                         restSeconds = (restTimeMs / 1000) % 60
-                        restTime.text = String.format("%02d:%02d", restMinutes, restSeconds)
+                        restTime.text = String.format(Locale.US, "%02d:%02d", restMinutes, restSeconds)
                         dialog.dismiss()
                     }
                 }
                 dialog.show(childFragmentManager, WorkoutSetupDialog.TAG)
+            }
+
+            downThresholdSlider.addOnChangeListener { _, value, _ ->
+                val threshold = value.coerceIn(20f, 70f)
+                downThresholdValue.text = threshold.toInt().toString()
+                prefs.setDownThreshold(threshold)
+            }
+
+            upThresholdSlider.addOnChangeListener { _, value, _ ->
+                val threshold = value.coerceIn(10f, 50f)
+                upThresholdValue.text = threshold.toInt().toString()
+                prefs.setUpThreshold(threshold)
             }
         }
     }

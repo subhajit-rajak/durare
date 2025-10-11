@@ -84,6 +84,12 @@
     <string name="daily_records">daily records</string>
     <string name="current_month_stats">current month stats</string>
     <string name="push_up_counts_days_of_the_month"><font color="#FF690C"><b>↑</b></font> push-up counts &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <font color="#FF690C"><b>→</b></font> days of the month</string>
+    <string name="down_threshold_title">Lower Position Sensitivity</string>
+    <string name="down_threshold_value">40</string>
+    <string name="down_threshold_desc">Increase if push-ups are counted too early. Decrease if it’s not detecting your ‘down’ position even when you’re close.</string>
+    <string name="up_threshold_title">Upper Position Sensitivity</string>
+    <string name="up_threshold_value">25</string>
+    <string name="up_threshold_desc">Increase if new push-ups aren’t counted after going up. Decrease if it counts too quickly before you finish moving up.</string>
 
     <!-- Onboarding strings -->
     <string name="onboarding_title_1">track your push-ups.\nanytime. anywhere.</string>

@@ -5,7 +5,8 @@ import kotlin.math.max
 import kotlin.math.min
 
 class PushUpDetector(
-    private val listener: Listener
+    private val listener: Listener,
+    preferences: Preferences
 ) {
 
     interface Listener {
@@ -23,9 +24,10 @@ class PushUpDetector(
     private var consecutiveUpFrames = 0
     private var consecutiveNoFaceFrames = 0
 
+    private val downThreshold: Float = preferences.getDownThreshold()
+    private val upThreshold: Float = preferences.getUpThreshold()
+
     companion object {
-        private const val DOWN_THRESHOLD = 40f
-        private const val UP_THRESHOLD = 25f
         private const val FRAME_THRESHOLD = 3
         private const val LOST_FACE_GRACE_FRAMES = 5
         private const val SMOOTHING_ALPHA = 0.25f
@@ -55,7 +57,7 @@ class PushUpDetector(
         listener.onFaceSizeChanged(clampedDisplay)
 
         when {
-            smoothedFacePercentage > DOWN_THRESHOLD -> {
+            smoothedFacePercentage > downThreshold -> {
                 consecutiveDownFrames++
                 consecutiveUpFrames = 0
                 if (consecutiveDownFrames >= FRAME_THRESHOLD && !isInDownPosition) {
@@ -63,7 +65,7 @@ class PushUpDetector(
                     listener.onStatusChanged(R.string.status_go_up)
                 }
             }
-            smoothedFacePercentage > UP_THRESHOLD -> {
+            smoothedFacePercentage > upThreshold -> {
                 consecutiveUpFrames++
                 consecutiveDownFrames = 0
                 if (consecutiveUpFrames >= FRAME_THRESHOLD && isInDownPosition) {
