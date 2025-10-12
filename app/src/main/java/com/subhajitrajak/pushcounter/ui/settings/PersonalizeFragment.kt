@@ -1,12 +1,16 @@
 package com.subhajitrajak.pushcounter.ui.settings
 
+import android.animation.ValueAnimator
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
+import com.google.android.material.slider.Slider
 import com.subhajitrajak.pushcounter.R
 import com.subhajitrajak.pushcounter.databinding.DialogPermissionBinding
 import com.subhajitrajak.pushcounter.databinding.FragmentPersonalizeBinding
@@ -38,12 +42,37 @@ class PersonalizeFragment : Fragment() {
         showCameraCardSwitch.isChecked = prefs.isCameraCardEnabled()
         soundFeedbackSwitch.isChecked = prefs.isSoundFeedbackEnabled()
         vibrationFeedbackSwitch.isChecked = prefs.isVibrationFeedbackEnabled()
-        downThresholdSlider.value = prefs.getDownThreshold()
-        upThresholdSlider.value = prefs.getUpThreshold()
-        downThresholdValue.text = prefs.getDownThreshold().toInt().toString()
-        upThresholdValue.text = prefs.getUpThreshold().toInt().toString()
-        repCount.text = prefs.getTotalReps().toString()
-        restTime.text = formatRestTime(prefs.getRestTime())
+        animateSlider(downThresholdSlider, prefs.getDownThreshold())
+        animateSlider(upThresholdSlider, prefs.getUpThreshold())
+        animateTextChange(downThresholdValue, prefs.getDownThreshold().toInt().toString())
+        animateTextChange(upThresholdValue, prefs.getUpThreshold().toInt().toString())
+        animateTextChange(repCount, prefs.getTotalReps().toString())
+        animateTextChange(restTime, formatRestTime(prefs.getRestTime()))
+    }
+
+    private fun animateSlider(slider: Slider, targetValue: Float) {
+        val originalStep = slider.stepSize
+        slider.stepSize = 0f
+
+        val animator = ValueAnimator.ofFloat(slider.value, targetValue)
+        animator.duration = 1000
+        animator.addUpdateListener { anim ->
+            slider.value = (anim.animatedValue as Float)
+        }
+
+        animator.doOnEnd {
+            slider.stepSize = originalStep
+            slider.value = targetValue
+        }
+
+        animator.start()
+    }
+
+    private fun animateTextChange(textView: TextView, newValue: String) {
+        textView.animate().alpha(0f).setDuration(150).withEndAction {
+            textView.text = newValue
+            textView.animate().alpha(1f).setDuration(150).start()
+        }.start()
     }
 
     private fun formatRestTime(ms: Long): String {
