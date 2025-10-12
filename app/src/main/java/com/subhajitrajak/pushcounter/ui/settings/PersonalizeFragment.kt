@@ -1,11 +1,14 @@
 package com.subhajitrajak.pushcounter.ui.settings
 
+import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.subhajitrajak.pushcounter.R
+import com.subhajitrajak.pushcounter.databinding.DialogPermissionBinding
 import com.subhajitrajak.pushcounter.databinding.FragmentPersonalizeBinding
 import com.subhajitrajak.pushcounter.ui.dashboard.WorkoutSetupDialog
 import com.subhajitrajak.pushcounter.utils.Preferences
@@ -97,7 +100,70 @@ class PersonalizeFragment : Fragment() {
                 upThresholdValue.text = threshold.toInt().toString()
                 prefs.setUpThreshold(threshold)
             }
+
+            resetSettingsButton.setOnClickListener {
+                showCustomDialog(
+                    title = "Reset to defaults",
+                    message = "Are you sure you want to reset to default values?",
+                    positiveText = "Yes",
+                    onPositiveClick = {
+                        prefs.resetPersonalizationsToDefaults()
+                        refreshPersonalizationUI(prefs)
+                    }
+                )
+            }
         }
+    }
+
+    private fun refreshPersonalizationUI(prefs: Preferences) {
+        binding.apply {
+            showCameraCardSwitch.isChecked = prefs.isCameraCardEnabled()
+            soundFeedbackSwitch.isChecked = prefs.isSoundFeedbackEnabled()
+            vibrationFeedbackSwitch.isChecked = prefs.isVibrationFeedbackEnabled()
+            downThresholdSlider.value = prefs.getDownThreshold()
+            upThresholdSlider.value = prefs.getUpThreshold()
+            downThresholdValue.text = prefs.getDownThreshold().toInt().toString()
+            upThresholdValue.text = prefs.getUpThreshold().toInt().toString()
+            repCount.text = prefs.getTotalReps().toString()
+
+            val restTimeMs = prefs.getRestTime()
+            val restMinutes = restTimeMs / 1000 / 60
+            val restSeconds = (restTimeMs / 1000) % 60
+            restTime.text = String.format(Locale.US, "%02d:%02d", restMinutes, restSeconds)
+        }
+    }
+
+    private fun showCustomDialog(
+        title: String,
+        message: String,
+        positiveText: String,
+        negativeText: String = getString(R.string.cancel),
+        onPositiveClick: () -> Unit,
+        onNegativeClick: () -> Unit = {}
+    ) {
+        val dialogBinding = DialogPermissionBinding.inflate(layoutInflater)
+
+        dialogBinding.dialogTitle.text = title
+        dialogBinding.dialogMessage.text = message
+        dialogBinding.dialogOk.text = positiveText
+        dialogBinding.dialogCancel.text = negativeText
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogBinding.root)
+            .create()
+
+        dialogBinding.dialogCancel.setOnClickListener {
+            dialog.dismiss()
+            onNegativeClick()
+        }
+
+        dialogBinding.dialogOk.setOnClickListener {
+            dialog.dismiss()
+            onPositiveClick()
+        }
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
     }
 
     private fun handleBackButtonPress() {

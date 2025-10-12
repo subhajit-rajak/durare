@@ -66,6 +66,16 @@ class Preferences private constructor(context: Context) {
     fun getUpThreshold(): Float = prefs.getFloat(UP_THRESHOLD, 25f)
     fun setUpThreshold(upThreshold: Float) = prefs.edit { putFloat(UP_THRESHOLD, upThreshold) }
 
-    fun clear() = prefs.edit { clear() }
-    fun remove(key: String) = prefs.edit { remove(key) }
+    // reset all preferences in personalize screen to defaults
+    fun resetPersonalizationsToDefaults() {
+        prefs.edit {
+            remove(KEY_SHOW_CAMERA)
+            remove(KEY_SOUND_FEEDBACK)
+            remove(KEY_VIBRATION_FEEDBACK)
+            remove(KEY_TOTAL_REPS)
+            remove(KEY_REST_TIME)
+            remove(DOWN_THRESHOLD)
+            remove(UP_THRESHOLD)
+        }
+    }
 }

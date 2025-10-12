@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:animateLayoutChanges="true"
         android:padding="24dp">
 
         <androidx.cardview.widget.CardView
@@ -432,6 +433,16 @@
                 android:textSize="24sp" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/resetSettingsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset to defaults"
+            android:layout_marginVertical="32dp"
+            android:fontFamily="@font/special_gothic_semiexpanded_regular"
+            android:textColor="@color/primary"
+            android:textSize="14sp"/>
 
     </LinearLayout>
 
