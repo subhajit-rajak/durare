@@ -17,6 +17,7 @@ import java.util.Locale
 class PersonalizeFragment : Fragment() {
     private var _binding: FragmentPersonalizeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var prefs: Preferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,109 +29,90 @@ class PersonalizeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        prefs = Preferences.getInstance(requireContext())
+        setupUI()
+        setupListeners()
+    }
 
-        binding.apply {
-            val prefs = Preferences.getInstance(requireContext())
+    private fun setupUI() = with(binding) {
+        showCameraCardSwitch.isChecked = prefs.isCameraCardEnabled()
+        soundFeedbackSwitch.isChecked = prefs.isSoundFeedbackEnabled()
+        vibrationFeedbackSwitch.isChecked = prefs.isVibrationFeedbackEnabled()
+        downThresholdSlider.value = prefs.getDownThreshold()
+        upThresholdSlider.value = prefs.getUpThreshold()
+        downThresholdValue.text = prefs.getDownThreshold().toInt().toString()
+        upThresholdValue.text = prefs.getUpThreshold().toInt().toString()
+        repCount.text = prefs.getTotalReps().toString()
+        restTime.text = formatRestTime(prefs.getRestTime())
+    }
 
-            // Restore saved values
-            showCameraCardSwitch.isChecked = prefs.isCameraCardEnabled()
-            soundFeedbackSwitch.isChecked = prefs.isSoundFeedbackEnabled()
-            vibrationFeedbackSwitch.isChecked = prefs.isVibrationFeedbackEnabled()
-            downThresholdSlider.value = prefs.getDownThreshold()
-            upThresholdSlider.value = prefs.getUpThreshold()
-            downThresholdValue.text = prefs.getDownThreshold().toInt().toString()
-            upThresholdValue.text = prefs.getUpThreshold().toInt().toString()
+    private fun formatRestTime(ms: Long): String {
+        val minutes = ms / 1000 / 60
+        val seconds = (ms / 1000) % 60
+        return String.format(Locale.US, "%02d:%02d", minutes, seconds)
+    }
 
-            repCount.text = prefs.getTotalReps().toString()
-            val restTimeMs = prefs.getRestTime()
-            var restMinutes = restTimeMs / 1000 / 60
-            var restSeconds = (restTimeMs / 1000) % 60
-            restTime.text = String.format(Locale.US, "%02d:%02d", restMinutes, restSeconds)
+    private fun setupListeners() = with(binding) {
 
-            backButton.setOnClickListener {
-                handleBackButtonPress()
-            }
+        backButton.setOnClickListener { handleBackButtonPress() }
 
-            showCameraCardSwitch.setOnCheckedChangeListener { _, isChecked ->
-                prefs.setCameraCardEnabled(isChecked)
-            }
+        // Switches
+        showCameraCardSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prefs.setCameraCardEnabled(isChecked)
+        }
+        soundFeedbackSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prefs.setSoundFeedbackEnabled(isChecked)
+        }
+        vibrationFeedbackSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prefs.setVibrationFeedbackEnabled(isChecked)
+        }
 
-            soundFeedbackSwitch.setOnCheckedChangeListener { _, isChecked ->
-                prefs.setSoundFeedbackEnabled(isChecked)
-            }
+        // Reps and rest time setup
+        repCountCard.setOnClickListener { showWorkoutDialog(1) }
+        restTimeCard.setOnClickListener { showWorkoutDialog(2) }
 
-            vibrationFeedbackSwitch.setOnCheckedChangeListener { _, isChecked ->
-                prefs.setVibrationFeedbackEnabled(isChecked)
-            }
+        // Sliders
+        downThresholdSlider.addOnChangeListener { _, value, _ ->
+            val threshold = value.coerceIn(20f, 70f)
+            downThresholdValue.text = threshold.toInt().toString()
+            prefs.setDownThreshold(threshold)
+        }
+        upThresholdSlider.addOnChangeListener { _, value, _ ->
+            val threshold = value.coerceIn(10f, 50f)
+            upThresholdValue.text = threshold.toInt().toString()
+            prefs.setUpThreshold(threshold)
+        }
 
-            repCountCard.setOnClickListener {
-                val dialog = WorkoutSetupDialog(1)
-                dialog.onStartClick = { totalReps, _ ->
-                    dialog.binding.apply {
-                        prefs.setTotalReps(totalReps)
-                        repCount.text = totalReps.toString()
-                        dialog.dismiss()
-                    }
+        // Reset
+        resetSettingsButton.setOnClickListener {
+            showCustomDialog(
+                title = "Reset to defaults",
+                message = "Are you sure you want to reset to default values?",
+                positiveText = "Yes",
+                onPositiveClick = {
+                    prefs.resetPersonalizationsToDefaults()
+                    setupUI()
                 }
-                dialog.show(childFragmentManager, WorkoutSetupDialog.TAG)
-            }
-
-            restTimeCard.setOnClickListener {
-                val dialog = WorkoutSetupDialog(2)
-                dialog.onStartClick = { _, restTimeMs ->
-                    dialog.binding.apply {
-                        prefs.setRestTime(restTimeMs)
-                        restMinutes = restTimeMs / 1000 / 60
-                        restSeconds = (restTimeMs / 1000) % 60
-                        restTime.text = String.format(Locale.US, "%02d:%02d", restMinutes, restSeconds)
-                        dialog.dismiss()
-                    }
-                }
-                dialog.show(childFragmentManager, WorkoutSetupDialog.TAG)
-            }
-
-            downThresholdSlider.addOnChangeListener { _, value, _ ->
-                val threshold = value.coerceIn(20f, 70f)
-                downThresholdValue.text = threshold.toInt().toString()
-                prefs.setDownThreshold(threshold)
-            }
-
-            upThresholdSlider.addOnChangeListener { _, value, _ ->
-                val threshold = value.coerceIn(10f, 50f)
-                upThresholdValue.text = threshold.toInt().toString()
-                prefs.setUpThreshold(threshold)
-            }
-
-            resetSettingsButton.setOnClickListener {
-                showCustomDialog(
-                    title = "Reset to defaults",
-                    message = "Are you sure you want to reset to default values?",
-                    positiveText = "Yes",
-                    onPositiveClick = {
-                        prefs.resetPersonalizationsToDefaults()
-                        refreshPersonalizationUI(prefs)
-                    }
-                )
-            }
+            )
         }
     }
 
-    private fun refreshPersonalizationUI(prefs: Preferences) {
-        binding.apply {
-            showCameraCardSwitch.isChecked = prefs.isCameraCardEnabled()
-            soundFeedbackSwitch.isChecked = prefs.isSoundFeedbackEnabled()
-            vibrationFeedbackSwitch.isChecked = prefs.isVibrationFeedbackEnabled()
-            downThresholdSlider.value = prefs.getDownThreshold()
-            upThresholdSlider.value = prefs.getUpThreshold()
-            downThresholdValue.text = prefs.getDownThreshold().toInt().toString()
-            upThresholdValue.text = prefs.getUpThreshold().toInt().toString()
-            repCount.text = prefs.getTotalReps().toString()
-
-            val restTimeMs = prefs.getRestTime()
-            val restMinutes = restTimeMs / 1000 / 60
-            val restSeconds = (restTimeMs / 1000) % 60
-            restTime.text = String.format(Locale.US, "%02d:%02d", restMinutes, restSeconds)
+    private fun showWorkoutDialog(type: Int) {
+        val dialog = WorkoutSetupDialog(type)
+        dialog.onStartClick = { totalReps, restTimeMs ->
+            when (type) {
+                1 -> {
+                    prefs.setTotalReps(totalReps)
+                    binding.repCount.text = totalReps.toString()
+                }
+                2 -> {
+                    prefs.setRestTime(restTimeMs)
+                    binding.restTime.text = formatRestTime(restTimeMs)
+                }
+            }
+            dialog.dismiss()
         }
+        dialog.show(childFragmentManager, WorkoutSetupDialog.TAG)
     }
 
     private fun showCustomDialog(
