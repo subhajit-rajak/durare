@@ -86,9 +86,9 @@ class PersonalizeFragment : Fragment() {
         // Reset
         resetSettingsButton.setOnClickListener {
             showCustomDialog(
-                title = "Reset to defaults",
-                message = "Are you sure you want to reset to default values?",
-                positiveText = "Yes",
+                title = getString(R.string.reset_to_defaults),
+                message = getString(R.string.are_you_sure_you_want_to_reset_to_default_values),
+                positiveText = getString(R.string.yes),
                 onPositiveClick = {
                     prefs.resetPersonalizationsToDefaults()
                     setupUI()
