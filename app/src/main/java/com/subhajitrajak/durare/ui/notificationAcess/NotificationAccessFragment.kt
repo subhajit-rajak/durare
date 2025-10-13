@@ -25,6 +25,7 @@ class NotificationAccessFragment : Fragment() {
     private val binding get() = _binding!!
 
     // Modern permission launcher
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
