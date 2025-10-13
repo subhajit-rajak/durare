@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.subhajitrajak.pushcounter"
+    namespace = "com.subhajitrajak.durare"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.subhajitrajak.pushcounter"
+        applicationId = "com.subhajitrajak.durare"
         minSdk = 26
         targetSdk = 36
         versionCode = 1

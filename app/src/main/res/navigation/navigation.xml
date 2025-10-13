@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.subhajitrajak.pushcounter.ui.dashboard.DashboardFragment"
+        android:name="com.subhajitrajak.durare.ui.dashboard.DashboardFragment"
         android:label="Dashboard"
         tools:layout="@layout/fragment_dashboard">
         <action
@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.subhajitrajak.pushcounter.ui.settings.SettingsFragment"
+        android:name="com.subhajitrajak.durare.ui.settings.SettingsFragment"
         android:label="Settings"
         tools:layout="@layout/fragment_settings">
         <action
@@ -77,27 +77,27 @@
 
     <fragment
         android:id="@+id/personalizeFragment"
-        android:name="com.subhajitrajak.pushcounter.ui.settings.PersonalizeFragment"
+        android:name="com.subhajitrajak.durare.ui.settings.PersonalizeFragment"
         android:label="Personalize"
         tools:layout="@layout/fragment_personalize" />
     <fragment
         android:id="@+id/notificationsFragment"
-        android:name="com.subhajitrajak.pushcounter.ui.settings.NotificationsFragment"
+        android:name="com.subhajitrajak.durare.ui.settings.NotificationsFragment"
         android:label="fragment_notifications"
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/appearanceFragment"
-        android:name="com.subhajitrajak.pushcounter.ui.settings.AppearanceFragment"
+        android:name="com.subhajitrajak.durare.ui.settings.AppearanceFragment"
         android:label="fragment_appearance"
         tools:layout="@layout/fragment_appearance" />
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.subhajitrajak.pushcounter.ui.settings.AccountFragment"
+        android:name="com.subhajitrajak.durare.ui.settings.AccountFragment"
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" />
     <fragment
         android:id="@+id/onBoardingFragment"
-        android:name="com.subhajitrajak.pushcounter.ui.onboarding.OnBoardingFragment"
+        android:name="com.subhajitrajak.durare.ui.onboarding.OnBoardingFragment"
         android:label="fragment_on_boarding"
         tools:layout="@layout/fragment_on_boarding" >
         <action
@@ -110,17 +110,17 @@
     </fragment>
     <fragment
         android:id="@+id/leaderboardFragment"
-        android:name="com.subhajitrajak.pushcounter.ui.leaderboard.LeaderboardFragment"
+        android:name="com.subhajitrajak.durare.ui.leaderboard.LeaderboardFragment"
         android:label="fragment_leaderboard"
         tools:layout="@layout/fragment_leaderboard" />
     <fragment
         android:id="@+id/dailyStatsFragment"
-        android:name="com.subhajitrajak.pushcounter.ui.dailyStats.DailyStatsFragment"
+        android:name="com.subhajitrajak.durare.ui.dailyStats.DailyStatsFragment"
         android:label="fragment_daily_stats"
         tools:layout="@layout/fragment_daily_stats" />
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.subhajitrajak.pushcounter.ui.splash.SplashFragment"
+        android:name="com.subhajitrajak.durare.ui.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -136,7 +136,7 @@
     </fragment>
     <fragment
         android:id="@+id/cameraAccessFragment"
-        android:name="com.subhajitrajak.pushcounter.ui.cameraAccess.CameraAccessFragment"
+        android:name="com.subhajitrajak.durare.ui.cameraAccess.CameraAccessFragment"
         android:label="fragment_camera_access"
         tools:layout="@layout/fragment_camera_access" >
         <action
@@ -149,12 +149,12 @@
     </fragment>
     <fragment
         android:id="@+id/reminderFragment"
-        android:name="com.subhajitrajak.pushcounter.ui.reminder.ReminderFragment"
+        android:name="com.subhajitrajak.durare.ui.reminder.ReminderFragment"
         android:label="fragment_reminder"
         tools:layout="@layout/fragment_reminder" />
     <fragment
         android:id="@+id/notificationAccessFragment"
-        android:name="com.subhajitrajak.pushcounter.ui.notificationAcess.NotificationAccessFragment"
+        android:name="com.subhajitrajak.durare.ui.notificationAcess.NotificationAccessFragment"
         android:label="NotificationAccessFragment" >
         <action
             android:id="@+id/action_notificationAccessFragment_to_dashboardFragment"
