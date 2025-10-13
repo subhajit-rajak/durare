@@ -41,63 +41,63 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.apply {
-            backButton.setOnClickListener {
-                handleBackButtonPress()
-            }
+        setupActionButtons()
+        setupReminders()
+        setupGeneralSettings()
+        setupAppVersions()
+    }
 
-            val isReminderSet = PushupReminderManager.isReminderSet(requireContext())
-
-            if(isReminderSet) {
-                val prefs = Preferences.getInstance(requireContext())
-                val reminderHour = prefs.getReminderHour()
-                val reminderMinute = prefs.getReminderMinute()
-                val reminderText = String.format(Locale.US,"%02d:%02d", reminderHour, reminderMinute)
-                timer.text = reminderText
-            }
-
-            setReminder.setOnClickListener {
-                findNavController().navigate(R.id.action_settingsFragment_to_reminderFragment)
-            }
-
-            personalize.setOnClickListener {
-                findNavController().navigate(R.id.action_settingsFragment_to_personalizeFragment)
-            }
-
-            notifications.setOnClickListener {
-                findNavController().navigate(R.id.action_settingsFragment_to_notificationsFragment)
-            }
-
-            appearance.setOnClickListener {
-                findNavController().navigate(R.id.action_settingsFragment_to_appearanceFragment)
-            }
-
-            accountInformation.setOnClickListener {
-                findNavController().navigate(R.id.action_settingsFragment_to_accountFragment)
-            }
-
-            logout.setOnClickListener {
-                lifecycleScope.launch {
-                    googleAuthUiClient.signOut()
-                    try {
-                        val navController = findNavController()
-                        val navOptions = NavOptions.Builder()
-                            .setPopUpTo(R.id.settingsFragment, true)
-                            .build()
-
-                        navController.navigate(
-                            R.id.action_settingsFragment_to_onBoardingFragment,
-                            null,
-                            navOptions
-                        )
-                    } catch (e: Exception) {
-                        log(e.message.toString())
-                    }
-                }
-            }
+    private fun setupActionButtons() = with(binding) {
+        backButton.setOnClickListener {
+            handleBackButtonPress()
         }
 
-        setupAppVersions()
+        logout.setOnClickListener {
+            signOutUser()
+        }
+    }
+
+    private fun setupReminders() = with(binding) {
+        val isReminderSet = PushupReminderManager.isReminderSet(requireContext())
+
+        if(isReminderSet) {
+            val prefs = Preferences.getInstance(requireContext())
+            val reminderHour = prefs.getReminderHour()
+            val reminderMinute = prefs.getReminderMinute()
+            val reminderText = String.format(Locale.US,"%02d:%02d", reminderHour, reminderMinute)
+            timer.text = reminderText
+        }
+
+        setReminder.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_reminderFragment)
+        }
+    }
+
+    private fun signOutUser() {
+        lifecycleScope.launch {
+            googleAuthUiClient.signOut()
+            try {
+                val navController = findNavController()
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(R.id.settingsFragment, true)
+                    .build()
+
+                navController.navigate(
+                    R.id.action_settingsFragment_to_onBoardingFragment,
+                    null,
+                    navOptions
+                )
+            } catch (e: Exception) {
+                log(e.message.toString())
+            }
+        }
+    }
+
+    private fun setupGeneralSettings() = with(binding) {
+        accountInformation.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_accountFragment) }
+        personalize.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_personalizeFragment) }
+        appearance.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_appearanceFragment) }
+        notifications.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_notificationsFragment) }
     }
 
     private fun setupAppVersions() {
@@ -116,12 +116,11 @@ class SettingsFragment : Fragment() {
     }
 
     private fun handleBackButtonPress() {
-        if (isAdded) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                requireActivity().onBackPressedDispatcher.onBackPressed()
-            } else {
-                parentFragmentManager.popBackStack()
-            }
+        if (!isAdded) return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        } else {
+            parentFragmentManager.popBackStack()
         }
     }
 
