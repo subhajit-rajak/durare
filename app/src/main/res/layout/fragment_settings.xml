@@ -59,19 +59,19 @@
             </androidx.cardview.widget.CardView>
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/rateUs"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@string/rate_us"
                 android:src="@drawable/star"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                app:layout_constraintEnd_toStartOf="@+id/shareApp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/grey" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/shareApp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/share_app"
@@ -326,6 +326,7 @@
             android:textSize="16sp" />
 
         <LinearLayout
+            android:id="@+id/reportAnIssue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp">
@@ -356,6 +357,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/contactUs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp">
@@ -386,6 +388,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/privacyPolicy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp">
@@ -416,6 +419,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/termsAndConditions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp">
