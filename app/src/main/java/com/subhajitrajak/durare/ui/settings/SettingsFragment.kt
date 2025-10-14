@@ -1,10 +1,12 @@
 package com.subhajitrajak.durare.ui.settings
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
@@ -102,6 +104,19 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupSupportSettings() = with(binding) {
+        val contact = "subhajitrajak.dev@gmail.com"
+        contactUs.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO, "mailto:$contact".toUri())
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject_contact))
+            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_body_contact))
+            startActivity(Intent.createChooser(intent, "Contact Us"))
+        }
+        reportAnIssue.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO, "mailto:$contact".toUri())
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject_report))
+            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_body_report))
+            startActivity(Intent.createChooser(intent, "Contact Us"))
+        }
         privacyPolicy.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_privacyPolicyFragment) }
         termsAndConditions.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_termsFragment) }
     }
