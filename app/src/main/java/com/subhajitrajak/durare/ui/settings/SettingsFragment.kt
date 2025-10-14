@@ -55,6 +55,21 @@ class SettingsFragment : Fragment() {
             handleBackButtonPress()
         }
 
+        val appLink = "https://play.google.com/store/apps/details?id=com.subhajitrajak.durare"
+
+        rateUs.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, appLink.toUri())
+            startActivity(intent)
+        }
+
+        shareApp.setOnClickListener {
+            val text = "Check out this app to track your pushups and be consistent:\n$appLink"
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, text)
+            startActivity(Intent.createChooser(intent, "Share"))
+        }
+
         logout.setOnClickListener {
             signOutUser()
         }
