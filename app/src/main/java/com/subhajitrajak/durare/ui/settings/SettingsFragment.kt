@@ -44,6 +44,7 @@ class SettingsFragment : Fragment() {
         setupActionButtons()
         setupReminders()
         setupGeneralSettings()
+        setupSupportSettings()
         setupAppVersions()
     }
 
@@ -98,6 +99,11 @@ class SettingsFragment : Fragment() {
         personalize.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_personalizeFragment) }
         appearance.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_appearanceFragment) }
         notifications.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_notificationsFragment) }
+    }
+
+    private fun setupSupportSettings() = with(binding) {
+        privacyPolicy.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_privacyPolicyFragment) }
+        termsAndConditions.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_termsFragment) }
     }
 
     private fun setupAppVersions() {
