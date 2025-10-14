@@ -46,11 +46,11 @@ class Preferences private constructor(context: Context) {
     fun setVibrationFeedbackEnabled(enabled: Boolean) = prefs.edit { putBoolean(KEY_VIBRATION_FEEDBACK, enabled) }
 
     // Total reps
-    fun getTotalReps(): Int = prefs.getInt(KEY_TOTAL_REPS, 3)
+    fun getTotalReps(): Int = prefs.getInt(KEY_TOTAL_REPS, 5)
     fun setTotalReps(totalReps: Int) = prefs.edit { putInt(KEY_TOTAL_REPS, totalReps) }
 
     // Rest time
-    fun getRestTime(): Long = prefs.getLong(KEY_REST_TIME, 0L)
+    fun getRestTime(): Long = prefs.getLong(KEY_REST_TIME, 2 * 60 * 1000L)
     fun setRestTime(restTime: Long) = prefs.edit { putLong(KEY_REST_TIME, restTime) }
 
     // Reminder
