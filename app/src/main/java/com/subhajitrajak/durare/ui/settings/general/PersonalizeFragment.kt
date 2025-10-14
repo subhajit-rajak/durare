@@ -1,4 +1,4 @@
-package com.subhajitrajak.durare.ui.settings
+package com.subhajitrajak.durare.ui.settings.general
 
 import android.animation.ValueAnimator
 import android.app.AlertDialog
@@ -33,7 +33,7 @@ class PersonalizeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prefs = Preferences.getInstance(requireContext())
+        prefs = Preferences.Companion.getInstance(requireContext())
         setupUI()
         setupListeners()
     }
@@ -78,7 +78,7 @@ class PersonalizeFragment : Fragment() {
     private fun formatRestTime(ms: Long): String {
         val minutes = ms / 1000 / 60
         val seconds = (ms / 1000) % 60
-        return String.format(Locale.US, "%02d:%02d", minutes, seconds)
+        return String.Companion.format(Locale.US, "%02d:%02d", minutes, seconds)
     }
 
     private fun setupListeners() = with(binding) {
@@ -141,7 +141,7 @@ class PersonalizeFragment : Fragment() {
             }
             dialog.dismiss()
         }
-        dialog.show(childFragmentManager, WorkoutSetupDialog.TAG)
+        dialog.show(childFragmentManager, WorkoutSetupDialog.Companion.TAG)
     }
 
     private fun showCustomDialog(

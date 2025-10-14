@@ -1,4 +1,4 @@
-package com.subhajitrajak.durare.ui.settings
+package com.subhajitrajak.durare.ui.settings.general
 
 import android.os.Build
 import android.os.Bundle

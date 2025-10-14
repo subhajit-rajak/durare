@@ -1,4 +1,4 @@
-package com.subhajitrajak.durare.ui.settings
+package com.subhajitrajak.durare.ui.settings.general
 
 import android.os.Build
 import android.os.Bundle
@@ -32,7 +32,7 @@ class AppearanceFragment : Fragment() {
             }
 
             // Load current theme and set checked state
-            val prefs = Preferences.getInstance(requireContext())
+            val prefs = Preferences.Companion.getInstance(requireContext())
             val isDark = prefs.isDarkTheme()
             lightMode.isChecked = !isDark
             darkMode.isChecked = isDark
