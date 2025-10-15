@@ -24,6 +24,11 @@ fun View.removeWithAnim() {
     fadeView(from = 1f, to = 0f, duration = 100)
 }
 
+fun View.hideWithAnim() {
+    visibility = View.INVISIBLE
+    fadeView(from = 1f, to = 0f, duration = 100)
+}
+
 fun View.showWithAnim50ms() {
     visibility = View.VISIBLE
     fadeView(duration = 50)

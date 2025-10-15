@@ -11,8 +11,8 @@ import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.databinding.FragmentLeaderboardBinding
 import com.subhajitrajak.durare.ui.dashboard.DashboardViewModel
 import com.subhajitrajak.durare.ui.dashboard.DashboardViewModelFactory
+import com.subhajitrajak.durare.utils.hideWithAnim
 import com.subhajitrajak.durare.utils.log
-import com.subhajitrajak.durare.utils.removeWithAnim
 import com.subhajitrajak.durare.utils.showToast
 import com.subhajitrajak.durare.utils.showWithAnim50ms
 import com.subhajitrajak.durare.utils.show
@@ -63,12 +63,12 @@ class LeaderboardFragment : Fragment() {
             if (isLoading) {
                 binding.loadingIndicator.showWithAnim50ms()
             } else {
-                binding.loadingIndicator.removeWithAnim()
+                binding.loadingIndicator.hideWithAnim()
             }
         }
 
         viewModel.error.observe(viewLifecycleOwner) { errorMsg ->
-            binding.loadingIndicator.removeWithAnim()
+            binding.loadingIndicator.hideWithAnim()
             if (errorMsg != null) {
                 log(errorMsg)
                 showToast(requireContext(), errorMsg)
