@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:cardBackgroundColor="@color/very_light_grey"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp">
@@ -115,6 +115,245 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top3Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:id="@+id/secondInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingHorizontal="4dp"
+                app:layout_constraintBottom_toTopOf="@id/secondCard"
+                app:layout_constraintEnd_toStartOf="@+id/firstInfo"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/secondPersonImage"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/story_placeholder"
+                    app:civ_border_color="@color/black"
+                    app:civ_border_width="2dp" />
+
+                <TextView
+                    android:id="@+id/secondPersonName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/special_gothic_semiexpanded_regular"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/person_name_2"
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/secondPersonScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/special_gothic_semiexpanded_regular"
+                    android:gravity="center"
+                    android:text="@string/score_2"
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/firstInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp"
+                app:layout_constraintBottom_toTopOf="@id/firstCard"
+                app:layout_constraintEnd_toStartOf="@+id/thirdInfo"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/secondInfo">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/crown"
+                    android:layout_marginBottom="-8dp"
+                    android:elevation="1dp"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/firstPersonImage"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/story_placeholder"
+                    app:civ_border_color="@color/black"
+                    app:civ_border_width="2dp" />
+
+                <TextView
+                    android:id="@+id/firstPersonName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/special_gothic_semiexpanded_regular"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/person_name_1"
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/firstPersonScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/special_gothic_semiexpanded_regular"
+                    android:gravity="center"
+                    android:text="@string/score_1"
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/thirdInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingHorizontal="4dp"
+                app:layout_constraintBottom_toTopOf="@id/thirdCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/firstInfo">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/thirdPersonImage"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/story_placeholder"
+                    app:civ_border_color="@color/black"
+                    app:civ_border_width="2dp" />
+
+                <TextView
+                    android:id="@+id/thirdPersonName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/special_gothic_semiexpanded_regular"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/person_name_3"
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/thirdPersonScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/special_gothic_semiexpanded_regular"
+                    android:gravity="center"
+                    android:text="@string/score_3"
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/secondCard"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                app:cardBackgroundColor="@color/very_light_grey"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/firstCard"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:shapeAppearanceOverlay="@style/LeftCornersRoundedCard"
+                app:strokeWidth="0dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/special_gothic_semiexpanded_bold"
+                    android:gravity="center"
+                    android:text="@string/_2"
+                    android:textColor="@color/light_grey"
+                    android:textSize="64sp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/firstCard"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                app:cardBackgroundColor="@color/very_light_grey"
+                app:cardElevation="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/thirdCard"
+                app:layout_constraintStart_toEndOf="@+id/secondCard"
+                app:shapeAppearanceOverlay="@style/TopCornersRoundedCard"
+                app:strokeWidth="0dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/special_gothic_semiexpanded_bold"
+                    android:gravity="center"
+                    android:text="@string/_1"
+                    android:textColor="@color/light_grey"
+                    android:textSize="84sp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/thirdCard"
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                app:cardBackgroundColor="@color/very_light_grey"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/firstCard"
+                app:shapeAppearanceOverlay="@style/RightCornersRoundedCard"
+                app:strokeWidth="0dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/special_gothic_semiexpanded_bold"
+                    android:gravity="center"
+                    android:text="@string/_3"
+                    android:textColor="@color/light_grey"
+                    android:textSize="64sp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="84dp"
+                android:alpha="0.75"
+                android:background="@drawable/gradient"
+                android:elevation="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/leaderboard"

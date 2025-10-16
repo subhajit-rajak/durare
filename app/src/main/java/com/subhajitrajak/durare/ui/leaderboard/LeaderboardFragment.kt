@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.subhajitrajak.durare.R
+import com.subhajitrajak.durare.data.models.User
 import com.subhajitrajak.durare.databinding.FragmentLeaderboardBinding
 import com.subhajitrajak.durare.ui.dashboard.DashboardViewModel
 import com.subhajitrajak.durare.ui.dashboard.DashboardViewModelFactory
+import com.subhajitrajak.durare.utils.formatToShortNumber
 import com.subhajitrajak.durare.utils.hideWithAnim
 import com.subhajitrajak.durare.utils.log
 import com.subhajitrajak.durare.utils.showToast
@@ -57,6 +60,7 @@ class LeaderboardFragment : Fragment() {
             }
 
             binding.cardView.show()
+            setupTop3(newUsers)
         }
 
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
@@ -73,6 +77,28 @@ class LeaderboardFragment : Fragment() {
                 log(errorMsg)
                 showToast(requireContext(), errorMsg)
             }
+        }
+    }
+
+    private fun setupTop3(newUsers: List<User>) {
+        val list = newUsers.take(3)
+
+        binding.apply {
+            firstPersonName.text = list[0].userData.username
+            secondPersonName.text = list[1].userData.username
+            thirdPersonName.text = list[2].userData.username
+
+            firstPersonScore.text = list[0].pushups.formatToShortNumber()
+            secondPersonScore.text = list[1].pushups.formatToShortNumber()
+            thirdPersonScore.text = list[2].pushups.formatToShortNumber()
+
+            Glide.with(requireContext()).apply {
+                load(list[0].userData.profilePictureUrl).into(firstPersonImage)
+                load(list[1].userData.profilePictureUrl).into(secondPersonImage)
+                load(list[2].userData.profilePictureUrl).into(thirdPersonImage)
+            }
+
+            top3Card.show()
         }
     }
 

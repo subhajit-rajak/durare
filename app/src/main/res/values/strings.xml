@@ -180,4 +180,7 @@
     <string name="email_body_contact">Hi Subhajit,\n\nI hope you\'re doing well. I\'m reaching out to request assistance with an issue I encountered while using the app.\n\n**Issue Details:**\n[Describe your issue or question here]\n\nI\'d really appreciate your help in resolving this. Please let me know if you need any additional details from my end.\n\nThank you for your time and support.\n\nBest regards,\n[Your Name]\n[Your Contact Information, optional]</string>
     <string name="email_subject_report">DurareApp: Reporting A Bug</string>
     <string name="email_body_report">Hi Subhajit,\n\nI encountered an issue while using the app and wanted to report it.\n\n**Bug Description:**\n[Describe the issue in detail]\n\n**Steps to Reproduce:**\n1. [Step one]\n2. [Step two]\n3. [Step three]\n\n**Expected Result:**\n[What you expected to happen]\n\n**Actual Result:**\n[What actually happened]\n\n**Device Information:**\n- Device Model: [e.g., Pixel 8]\n- Android Version: [e.g., Android 14]\n- App Version: [e.g., 1.2.3]\n\nI hope this helps with debugging. Please let me know if you need any additional information.\n\nThank you,\n[Your Name]</string>
+    <string name="_1">1</string>
+    <string name="_3">3</string>
+    <string name="_2">2</string>
 </resources>
