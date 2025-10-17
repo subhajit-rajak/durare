@@ -118,6 +118,10 @@ class DashboardFragment : Fragment() {
                 R.color.white,
                 R.color.black
             )
+
+            askAiButton.setOnClickListener {
+                findNavController().navigate(R.id.action_dashboardFragment_to_askAiFragment)
+            }
         }
     }
 

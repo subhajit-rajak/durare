@@ -23,6 +23,13 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out_right"  />
+        <action
+            android:id="@+id/action_dashboardFragment_to_askAiFragment"
+            app:destination="@id/askAiFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right"  />
 
     </fragment>
 
@@ -188,4 +195,9 @@
         android:name="com.subhajitrajak.durare.ui.settings.support.TermsFragment"
         android:label="fragment_terms"
         tools:layout="@layout/fragment_terms" />
+    <fragment
+        android:id="@+id/askAiFragment"
+        android:name="com.subhajitrajak.durare.ui.askAi.AskAiFragment"
+        android:label="fragment_ask_ai"
+        tools:layout="@layout/fragment_ask_ai" />
 </navigation>

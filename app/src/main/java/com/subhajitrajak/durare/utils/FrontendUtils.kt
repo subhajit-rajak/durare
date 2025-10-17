@@ -50,3 +50,7 @@ fun View.showWithAnim(duration: Long = 500) {
 fun View.show() {
     visibility = View.VISIBLE
 }
+
+fun View.remove() {
+    visibility = View.GONE
+}

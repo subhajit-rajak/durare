@@ -11,8 +11,8 @@
     <string name="status_camera_permission">Camera permission required</string>
     <string name="face_size_format">Face: %d%%</string>
     <string name="settings">settings</string>
-    <string name="ask_ai_bar_hint">ask ai anything…</string>
-    <string name="ask_ai">Ask Ai</string>
+    <string name="ask_ai_bar_hint">Ask Anything</string>
+    <string name="ask_ai">ask ai</string>
     <string name="person_name_1">Davian Allen</string>
     <string name="person_name_2">Isaac Osborne</string>
     <string name="person_name_3">Tobias Huber</string>
@@ -172,6 +172,15 @@
     <string name="notification_permission_needed">Notification Permission Needed</string>
     <string name="notification_permission_has_been_permanently_denied_please_enable_it_in_app_settings">Notification permission has been permanently denied. Please enable it in app settings.</string>
 
+    <!-- Ask Ai -->
+    <string name="previous_conversions">previous conversions</string>
+    <string name="send">Send</string>
+    <string name="use_my_stats">📊 Use my stats</string>
+    <string name="remember">🧠 Remember</string>
+    <string name="listening">Listening…</string>
+    <string name="go_ahead_i_m_listening">Go ahead, I’m listening!</string>
+    <string name="processing_your_speech">Processing your speech…</string>
+    <string name="got_it">Got it!</string>
 
     <string name="reset_to_defaults">Reset to defaults</string>
     <string name="yes">Yes</string>

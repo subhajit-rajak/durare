@@ -6,6 +6,9 @@
 
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorAccent">@color/primary</item>
     </style>
 
     <style name="Theme.PushCounter" parent="Base.Theme.PushCounter" />
