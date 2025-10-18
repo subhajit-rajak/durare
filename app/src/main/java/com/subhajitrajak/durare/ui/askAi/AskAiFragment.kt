@@ -17,11 +17,13 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.auth.api.identity.Identity
 import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.auth.GoogleAuthUiClient
 import com.subhajitrajak.durare.auth.UserData
+import com.subhajitrajak.durare.data.repositories.AiChatRepository
 import com.subhajitrajak.durare.databinding.FragmentAskAiBinding
 import com.subhajitrajak.durare.utils.remove
 import com.subhajitrajak.durare.utils.show
@@ -46,6 +48,9 @@ class AskAiFragment : Fragment() {
     }
 
     private lateinit var chatAdapter: AiChatAdapter
+    private val viewModel: AiChatViewModel by viewModels {
+        AiChatViewModelFactory(AiChatRepository(requireContext()))
+    }
 
     private val googleAuthUiClient: GoogleAuthUiClient by lazy {
         GoogleAuthUiClient(
@@ -65,6 +70,8 @@ class AskAiFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.setModel("openai/gpt-oss-20b:free")
 
         binding.apply {
             backButton.setOnClickListener {
@@ -88,17 +95,41 @@ class AskAiFragment : Fragment() {
             sendButton.setOnClickListener {
                 val message = binding.messageEditText.text.toString().trim()
                 if (message.isNotEmpty()) {
-                    // Add user message to RecyclerView
+                    viewModel.askAI(
+                        prompt = message,
+                        userData = getUserPushupSummary()
+                    )
+
+                    // add user message to RecyclerView
                     chatAdapter.addMessage(ChatMessage(message, true))
                     binding.messageEditText.text?.clear()
 
-                    // Scroll to latest message
+                    // scroll to latest message
                     binding.chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
                 }
+            }
+
+            viewModel.response.observe(viewLifecycleOwner) { response ->
+                // add ai message to RecyclerView
+                chatAdapter.addMessage(ChatMessage(response, false))
+                binding.messageEditText.text?.clear()
+
+                // Scroll to latest message
+                binding.chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
             }
         }
 
         setupSpeechRecognition()
+    }
+
+    fun getUserPushupSummary(): String {
+        return """
+        Total Pushups: 1240
+        Best Day: 80 pushups
+        Average per day: 45
+        Streak: 6 days
+        Last 7 days: [50, 48, 52, 60, 58, 62, 70]
+    """.trimIndent()
     }
 
     private fun hideListeningOverlay() {
