@@ -93,7 +93,7 @@ class AskAiFragment : Fragment() {
 
             // setup send button
             sendButton.setOnClickListener {
-                val message = binding.messageEditText.text.toString().trim()
+                val message = messageEditText.text.toString().trim()
                 if (message.isNotEmpty()) {
                     viewModel.askAI(
                         prompt = message,
@@ -102,14 +102,19 @@ class AskAiFragment : Fragment() {
 
                     // add user message to RecyclerView
                     chatAdapter.addMessage(ChatMessage(message, true))
-                    binding.messageEditText.text?.clear()
+                    messageEditText.text?.clear()
 
                     // scroll to latest message
-                    binding.chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
+                    chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
                 }
+
+                chatAdapter.addMessage(ChatMessage("Thinking...", false))
+                chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
             }
 
             viewModel.response.observe(viewLifecycleOwner) { response ->
+                // removes the thinking message
+                chatAdapter.removeLastMessage()
                 // add ai message to RecyclerView
                 chatAdapter.addMessage(ChatMessage(response, false))
                 binding.messageEditText.text?.clear()

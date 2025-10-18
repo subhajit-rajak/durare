@@ -69,4 +69,13 @@ class AiChatAdapter(
         chatList.add(message)
         notifyItemInserted(chatList.size - 1)
     }
+
+    // removes the last message
+    fun removeLastMessage() {
+        if (chatList.isNotEmpty()) {
+            val position = chatList.size - 1
+            chatList.removeAt(position)
+            notifyItemRemoved(position)
+        }
+    }
 }

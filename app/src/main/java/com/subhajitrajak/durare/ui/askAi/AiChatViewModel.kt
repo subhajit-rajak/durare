@@ -22,7 +22,6 @@ class AiChatViewModel(
 
     fun askAI(prompt: String, userData: String) {
         viewModelScope.launch {
-            _response.postValue("Thinking...")
             val result = repository.askAI(prompt, selectedModel, userData)
             result.onSuccess {
                 _response.postValue(it)
