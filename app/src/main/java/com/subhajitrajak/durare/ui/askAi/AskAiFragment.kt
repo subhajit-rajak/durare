@@ -17,7 +17,11 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.auth.api.identity.Identity
 import com.subhajitrajak.durare.R
+import com.subhajitrajak.durare.auth.GoogleAuthUiClient
+import com.subhajitrajak.durare.auth.UserData
 import com.subhajitrajak.durare.databinding.FragmentAskAiBinding
 import com.subhajitrajak.durare.utils.remove
 import com.subhajitrajak.durare.utils.show
@@ -27,15 +31,6 @@ import java.util.Locale
 class AskAiFragment : Fragment() {
     private var _binding: FragmentAskAiBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAskAiBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     private lateinit var speechRecognizer: SpeechRecognizer
     private lateinit var speechIntent: Intent
@@ -50,12 +45,56 @@ class AskAiFragment : Fragment() {
         }
     }
 
+    private lateinit var chatAdapter: AiChatAdapter
+
+    private val googleAuthUiClient: GoogleAuthUiClient by lazy {
+        GoogleAuthUiClient(
+            context = requireContext(),
+            oneTapClient = Identity.getSignInClient(requireContext())
+        )
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAskAiBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
             backButton.setOnClickListener {
                 handleBackButtonPress()
+            }
+
+            val userData: UserData? = googleAuthUiClient.getSignedInUser()
+
+            // setup chat adapter
+            chatAdapter = AiChatAdapter(requireContext(), mutableListOf(), userData?.profilePictureUrl)
+            chatRecyclerView.adapter = chatAdapter
+            chatRecyclerView.setHasFixedSize(true)
+
+            // setup layout manager
+            val layoutManager = LinearLayoutManager(requireContext())
+            layoutManager.stackFromEnd = true
+            layoutManager.reverseLayout = false
+            chatRecyclerView.layoutManager = layoutManager
+
+            // setup send button
+            sendButton.setOnClickListener {
+                val message = binding.messageEditText.text.toString().trim()
+                if (message.isNotEmpty()) {
+                    // Add user message to RecyclerView
+                    chatAdapter.addMessage(ChatMessage(message, true))
+                    binding.messageEditText.text?.clear()
+
+                    // Scroll to latest message
+                    binding.chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
+                }
             }
         }
 
