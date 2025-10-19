@@ -62,8 +62,8 @@ class DashboardFragment : Fragment() {
             binding.globalCardHeader.show()
         }
 
-        viewModel.thisMonthPushupCounts.observe(viewLifecycleOwner) { counts ->
-            generateThisMonthHeatmap(counts)
+        viewModel.monthlyPushupCounts.observe(viewLifecycleOwner) { counts ->
+            generateLast30DaysHeatmap(counts)
         }
 
         viewModel.currentStreak.observe(viewLifecycleOwner) { streak ->
@@ -96,7 +96,7 @@ class DashboardFragment : Fragment() {
 
         // Trigger loading
         viewModel.loadDashboardStats()
-        viewModel.loadThisMonthPushupCounts()
+        viewModel.fetchLast30DaysPushupCounts()
         viewModel.loadCurrentStreak()
         viewModel.loadLeaderboard()
 
@@ -108,7 +108,7 @@ class DashboardFragment : Fragment() {
 
             swipeRefresh.setOnRefreshListener {
                 viewModel.loadDashboardStats()
-                viewModel.loadThisMonthPushupCounts()
+                viewModel.fetchLast30DaysPushupCounts()
                 viewModel.loadLeaderboard()
                 viewModel.loadCurrentStreak()
                 swipeRefresh.isRefreshing = false
@@ -122,7 +122,7 @@ class DashboardFragment : Fragment() {
 
             askAiButton.setOnClickListener {
                 val dashboardStats = viewModel.dashboardStats.value
-                val last30PushupsList = viewModel.thisMonthPushupCounts.value ?: emptyList()
+                val last30PushupsList = viewModel.monthlyPushupCounts.value ?: emptyList()
                 val streak = viewModel.currentStreak.value ?: (0 to 0)
 
                 if (dashboardStats != null) {
@@ -169,7 +169,7 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    private fun generateThisMonthHeatmap(streaks: List<Int>) {
+    private fun generateLast30DaysHeatmap(streaks: List<Int>) {
         val daysInMonth = streaks.size
         val maxValue = streaks.maxOrNull() ?: 0
         val levels = 5
@@ -210,11 +210,6 @@ class DashboardFragment : Fragment() {
             }
             (drawable as GradientDrawable).setColor(requireContext().getColor(colorRes))
 
-            val today = LocalDate.now().dayOfMonth
-            if (day == today) {
-                drawable.setStroke(dpToPx(1), requireContext().getColor(R.color.black))
-            }
-
             circleView.background = drawable
             binding.heatmapLayout.addView(circleView)
         }
@@ -236,7 +231,7 @@ class DashboardFragment : Fragment() {
         super.onResume()
         viewModel.apply {
             loadDashboardStats()
-            loadThisMonthPushupCounts()
+            fetchLast30DaysPushupCounts()
             loadCurrentStreak()
             loadLeaderboard()
         }

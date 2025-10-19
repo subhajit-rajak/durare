@@ -70,21 +70,19 @@ class DashboardRepository(context: Context) {
         )
     }
 
-    suspend fun fetchThisMonthPushupCounts(): List<Int> {
+    suspend fun fetchLast30DaysPushupCounts(): List<Int> {
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
 
         val cal = Calendar.getInstance()
-        val daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+        val today = cal.time
+        cal.add(Calendar.DAY_OF_YEAR, -29) // last 30 days includes today
+        val startDate = dateFormat.format(cal.time)
+        val endDate = dateFormat.format(today)
 
-        cal.set(Calendar.DAY_OF_MONTH, 1)
-        val startOfMonth = dateFormat.format(cal.time)
-
-        cal.set(Calendar.DAY_OF_MONTH, daysInMonth)
-        val endOfMonth = dateFormat.format(cal.time)
-
+        // Fetch stats from Firestore
         val query = dailyStatsRef(uid)
-            .whereGreaterThanOrEqualTo(DATE, startOfMonth)
-            .whereLessThanOrEqualTo(DATE, endOfMonth)
+            .whereGreaterThanOrEqualTo(DATE, startDate)
+            .whereLessThanOrEqualTo(DATE, endDate)
             .get().await()
 
         val pushupMap = query.documents.mapNotNull { doc ->
@@ -93,12 +91,17 @@ class DashboardRepository(context: Context) {
             if (dateStr != null && stats != null) dateStr to stats.totalPushups else null
         }.toMap()
 
-        val result = MutableList(daysInMonth) { 0 }
-        for (day in 1..daysInMonth) {
-            cal.set(Calendar.DAY_OF_MONTH, day)
-            val key = dateFormat.format(cal.time)
-            result[day - 1] = pushupMap[key] ?: 0
+        // Build result list
+        val result = MutableList(30) { 0 }
+        cal.time = today
+        for (i in 29 downTo 0) {
+            val dayCal = Calendar.getInstance()
+            dayCal.time = today
+            dayCal.add(Calendar.DAY_OF_YEAR, -i)
+            val key = dateFormat.format(dayCal.time)
+            result[29 - i] = pushupMap[key] ?: 0
         }
+
         return result
     }
 
