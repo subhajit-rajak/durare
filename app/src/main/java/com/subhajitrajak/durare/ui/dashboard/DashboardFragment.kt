@@ -24,7 +24,6 @@ import com.subhajitrajak.durare.utils.removeWithAnim
 import com.subhajitrajak.durare.utils.show
 import com.subhajitrajak.durare.utils.showToast
 import com.subhajitrajak.durare.utils.showWithAnim50ms
-import java.time.LocalDate
 
 class DashboardFragment : Fragment() {
 

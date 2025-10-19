@@ -89,8 +89,8 @@
         android:id="@+id/textInputCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
         app:cardBackgroundColor="@color/very_light_grey"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
@@ -115,7 +115,7 @@
                 android:inputType="textMultiLine"
                 android:padding="8dp"
                 android:textColor="@color/dark_grey"
-                android:textColorHint="@color/light_grey"
+                android:textColorHint="@color/grey"
                 android:textSize="16sp" />
 
             <LinearLayout
