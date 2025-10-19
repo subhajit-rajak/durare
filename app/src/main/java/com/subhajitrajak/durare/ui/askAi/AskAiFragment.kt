@@ -94,22 +94,24 @@ class AskAiFragment : Fragment() {
             // setup send button
             sendButton.setOnClickListener {
                 val message = messageEditText.text.toString().trim()
-                if (message.isNotEmpty()) {
-                    viewModel.askAI(
-                        prompt = message,
-                        userData = getUserPushupSummary()
-                    )
+                if (message.isEmpty()) return@setOnClickListener
 
-                    // add user message to RecyclerView
-                    chatAdapter.addMessage(ChatMessage(message, true))
-                    messageEditText.text?.clear()
+                // add user message to RecyclerView
+                chatAdapter.addMessage(ChatMessage(message, true))
+                messageEditText.text?.clear()
+                chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
 
-                    // scroll to latest message
-                    chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
-                }
-
+                // add "thinking..." placeholder
                 chatAdapter.addMessage(ChatMessage("Thinking...", false))
                 chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
+
+                // launch ai request
+                viewModel.askAI(
+                    prompt = message,
+                    userData = getUserPushupSummary(),
+                    useStats = statsChip.isChecked,
+                    remember = rememberChip.isChecked
+                )
             }
 
             viewModel.response.observe(viewLifecycleOwner) { response ->
@@ -117,9 +119,6 @@ class AskAiFragment : Fragment() {
                 chatAdapter.removeLastMessage()
                 // add ai message to RecyclerView
                 chatAdapter.addMessage(ChatMessage(response, false))
-                binding.messageEditText.text?.clear()
-
-                // Scroll to latest message
                 binding.chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
             }
         }

@@ -133,6 +133,7 @@
                     app:singleLine="true">
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/statsChip"
                         style="@style/CustomChipStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -142,6 +143,7 @@
                         app:chipCornerRadius="12dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/rememberChip"
                         style="@style/CustomChipStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

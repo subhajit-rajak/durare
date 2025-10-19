@@ -20,9 +20,15 @@ class AiChatViewModel(
         selectedModel = model
     }
 
-    fun askAI(prompt: String, userData: String) {
+    fun askAI(prompt: String, userData: String, useStats: Boolean, remember: Boolean) {
         viewModelScope.launch {
-            val result = repository.askAI(prompt, selectedModel, userData)
+            val result = repository.askAI(
+                userPrompt = prompt,
+                model = selectedModel,
+                userData = userData,
+                useStats = useStats,
+                remember = remember
+            )
             result.onSuccess {
                 _response.postValue(it)
             }.onFailure { error ->
