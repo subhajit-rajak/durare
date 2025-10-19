@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.subhajitrajak.durare.R
+import io.noties.markwon.Markwon
 
 data class ChatMessage(
     val message: String,
@@ -58,7 +59,9 @@ class AiChatAdapter(
             holder.textMessage.text = chat.message
             Glide.with(context).load(userProfileUrl).into(holder.userImage)
         } else if (holder is AiViewHolder) {
-            holder.textMessage.text = chat.message
+            val markwon = Markwon.create(context)
+            val markdown = markwon.toMarkdown(chat.message)
+            markwon.setParsedMarkdown(holder.textMessage, markdown)
         }
     }
 

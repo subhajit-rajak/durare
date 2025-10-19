@@ -36,6 +36,7 @@ roomRuntime = "2.8.2"
 swiperefreshlayout = "1.1.0"
 vico = "2.2.0"
 retrofit = "3.0.0"
+markwon = "4.6.2"
 
 [libraries]
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraView" }
@@ -70,6 +71,7 @@ androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefre
 vico-views = { group = "com.patrykandpatrick.vico", name = "views", version.ref = "vico" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+noties-markwon-core = { module = "io.noties.markwon:core", version.ref = "markwon" }
 
 #firebase auth
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }

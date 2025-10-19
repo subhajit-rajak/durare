@@ -125,4 +125,7 @@ dependencies {
     // retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+
+    // markdown
+    implementation(libs.noties.markwon.core)
 }
