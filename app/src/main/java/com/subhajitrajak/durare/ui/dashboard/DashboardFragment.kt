@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayout
 import com.subhajitrajak.durare.R
+import com.subhajitrajak.durare.data.models.AiUserStats
 import com.subhajitrajak.durare.data.models.User
 import com.subhajitrajak.durare.databinding.FragmentDashboardBinding
 import com.subhajitrajak.durare.utils.formatToShortNumber
@@ -120,7 +121,26 @@ class DashboardFragment : Fragment() {
             )
 
             askAiButton.setOnClickListener {
-                findNavController().navigate(R.id.action_dashboardFragment_to_askAiFragment)
+                val dashboardStats = viewModel.dashboardStats.value
+                val last30PushupsList = viewModel.thisMonthPushupCounts.value ?: emptyList()
+                val streak = viewModel.currentStreak.value ?: (0 to 0)
+
+                if (dashboardStats != null) {
+                    val aiStats = AiUserStats(
+                        totalPushups = dashboardStats.lifetimePushups,
+                        averagePerDay = (dashboardStats.last30Pushups / 30f), // or calculate more accurately
+                        currentStreak = streak.first,
+                        highestStreak = streak.second,
+                        last7Days = last30PushupsList.takeLast(7),
+                        last30Days = last30PushupsList.takeLast(30)
+                    )
+
+                    val bundle = Bundle().apply {
+                        putParcelable("ai_stats", aiStats)
+                    }
+
+                    findNavController().navigate(R.id.action_dashboardFragment_to_askAiFragment, bundle)
+                }
             }
         }
     }

@@ -23,6 +23,7 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.auth.GoogleAuthUiClient
 import com.subhajitrajak.durare.auth.UserData
+import com.subhajitrajak.durare.data.models.AiUserStats
 import com.subhajitrajak.durare.data.repositories.AiChatRepository
 import com.subhajitrajak.durare.databinding.FragmentAskAiBinding
 import com.subhajitrajak.durare.utils.remove
@@ -33,6 +34,8 @@ import java.util.Locale
 class AskAiFragment : Fragment() {
     private var _binding: FragmentAskAiBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var aiStats: AiUserStats
 
     private lateinit var speechRecognizer: SpeechRecognizer
     private lateinit var speechIntent: Intent
@@ -70,6 +73,10 @@ class AskAiFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        arguments?.getParcelable<AiUserStats>("ai_stats")?.let {
+            aiStats = it
+        }
 
         viewModel.setModel("openai/gpt-oss-20b:free")
 
@@ -128,11 +135,12 @@ class AskAiFragment : Fragment() {
 
     fun getUserPushupSummary(): String {
         return """
-        Total Pushups: 1240
-        Best Day: 80 pushups
-        Average per day: 45
-        Streak: 6 days
-        Last 7 days: [50, 48, 52, 60, 58, 62, 70]
+        Total Pushups: ${aiStats.totalPushups}
+        Average per day (last 30 days): ${String.format(Locale.US, "%.1f", aiStats.averagePerDay)}}
+        Current Streak: ${aiStats.currentStreak} days
+        Highest Streak: ${aiStats.highestStreak} days
+        Last 7 days: ${aiStats.last7Days}
+        Last 30 days: ${aiStats.last30Days}
     """.trimIndent()
     }
 
