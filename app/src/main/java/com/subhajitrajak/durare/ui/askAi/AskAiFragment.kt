@@ -16,6 +16,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,6 +32,7 @@ import com.subhajitrajak.durare.utils.remove
 import com.subhajitrajak.durare.utils.show
 import com.subhajitrajak.durare.utils.showToast
 import java.util.Locale
+import kotlin.math.max
 
 class AskAiFragment : Fragment() {
     private var _binding: FragmentAskAiBinding? = null
@@ -73,6 +76,14 @@ class AskAiFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
+            val navInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            view.setPadding(0, 0, 0, max(imeInsets.bottom, navInsets.bottom))
+            insets
+        }
 
         arguments?.getParcelable<AiUserStats>("ai_stats")?.let {
             aiStats = it
