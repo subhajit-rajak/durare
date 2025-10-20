@@ -17,6 +17,7 @@ import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.data.models.AiUserStats
 import com.subhajitrajak.durare.data.models.User
 import com.subhajitrajak.durare.databinding.FragmentDashboardBinding
+import com.subhajitrajak.durare.ui.askAi.AskAiFragment
 import com.subhajitrajak.durare.utils.formatToShortNumber
 import com.subhajitrajak.durare.utils.formatWithCommas
 import com.subhajitrajak.durare.utils.log
@@ -135,7 +136,7 @@ class DashboardFragment : Fragment() {
                     )
 
                     val bundle = Bundle().apply {
-                        putParcelable("ai_stats", aiStats)
+                        putParcelable(AskAiFragment.AI_STATS, aiStats)
                     }
 
                     findNavController().navigate(R.id.action_dashboardFragment_to_askAiFragment, bundle)

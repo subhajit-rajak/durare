@@ -70,6 +70,10 @@ class AskAiFragment : Fragment() {
         )
     }
 
+    companion object {
+        const val AI_STATS = "ai_stats"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -90,8 +94,15 @@ class AskAiFragment : Fragment() {
             insets
         }
 
-        arguments?.getParcelable<AiUserStats>("ai_stats")?.let {
-            aiStats = it
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(AI_STATS, AiUserStats::class.java)?.let {
+                aiStats = it
+            }
+        } else {
+            @Suppress("DEPRECATION")
+            arguments?.getParcelable<AiUserStats>(AI_STATS)?.let {
+                aiStats = it
+            }
         }
 
         viewModel.setModel("gemini-2.5-flash-lite")
