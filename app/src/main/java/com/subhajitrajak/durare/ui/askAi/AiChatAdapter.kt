@@ -73,6 +73,16 @@ class AiChatAdapter(
         notifyItemInserted(chatList.size - 1)
     }
 
+    fun updateAiMessage(position: Int, markdown: CharSequence) {
+        if (position in chatList.indices) {
+            val chat = chatList[position]
+            if (!chat.isUser) {
+                chatList[position] = chat.copy(message = markdown.toString())
+                notifyItemChanged(position)
+            }
+        }
+    }
+
     // removes the last message
     fun removeLastMessage() {
         if (chatList.isNotEmpty()) {

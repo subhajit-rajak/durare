@@ -20,6 +20,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.auth.api.identity.Identity
 import com.subhajitrajak.durare.R
@@ -31,6 +32,10 @@ import com.subhajitrajak.durare.databinding.FragmentAskAiBinding
 import com.subhajitrajak.durare.utils.remove
 import com.subhajitrajak.durare.utils.show
 import com.subhajitrajak.durare.utils.showToast
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 import kotlin.math.max
 
@@ -89,7 +94,7 @@ class AskAiFragment : Fragment() {
             aiStats = it
         }
 
-        viewModel.setModel("openai/gpt-oss-20b:free")
+        viewModel.setModel("gemini-2.5-flash-lite")
 
         binding.apply {
             backButton.setOnClickListener {
@@ -100,14 +105,18 @@ class AskAiFragment : Fragment() {
 
             // setup chat adapter
             chatAdapter = AiChatAdapter(requireContext(), mutableListOf(), userData?.profilePictureUrl)
-            chatRecyclerView.adapter = chatAdapter
-            chatRecyclerView.setHasFixedSize(true)
 
             // setup layout manager
-            val layoutManager = LinearLayoutManager(requireContext())
-            layoutManager.stackFromEnd = true
-            layoutManager.reverseLayout = false
-            chatRecyclerView.layoutManager = layoutManager
+            val layoutManager = LinearLayoutManager(requireContext()).apply {
+                stackFromEnd = true
+                reverseLayout = false
+            }
+            chatRecyclerView.apply {
+                adapter = chatAdapter
+                setHasFixedSize(true)
+                this.layoutManager = layoutManager
+                itemAnimator = null
+            }
 
             // setup send button
             sendButton.setOnClickListener {
@@ -135,13 +144,40 @@ class AskAiFragment : Fragment() {
             viewModel.response.observe(viewLifecycleOwner) { response ->
                 // removes the thinking message
                 chatAdapter.removeLastMessage()
-                // add ai message to RecyclerView
-                chatAdapter.addMessage(ChatMessage(response, false))
-                binding.chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
+                // add empty AI message first
+                val aiMessage = ChatMessage("", false)
+                chatAdapter.addMessage(aiMessage)
+                val aiPosition = chatAdapter.itemCount - 1
+
+                // Animate typing
+                animateAiResponse(aiPosition, response)
             }
         }
 
         setupSpeechRecognition()
+    }
+
+    private fun animateAiResponse(position: Int, fullText: String) {
+        val typingSpeed = 25L // ms per word or char (tweak for speed)
+        val markwon = io.noties.markwon.Markwon.create(requireContext())
+
+        val textBuffer = StringBuilder()
+        val words = fullText.split(" ") // or fullText.toCharArray() for per-character typing
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            for (word in words) {
+                textBuffer.append(word).append(" ")
+                val markdown = markwon.toMarkdown(textBuffer.toString())
+
+                // Update adapter on main thread
+                withContext(Dispatchers.Main) {
+                    chatAdapter.updateAiMessage(position, markdown)
+                    binding.chatRecyclerView.scrollToPosition(chatAdapter.itemCount - 1)
+                }
+
+                delay(typingSpeed)
+            }
+        }
     }
 
     fun getUserPushupSummary(): String {

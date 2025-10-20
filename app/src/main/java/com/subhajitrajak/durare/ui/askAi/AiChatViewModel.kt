@@ -14,7 +14,7 @@ class AiChatViewModel(
     private val _response = MutableLiveData<String>()
     val response: LiveData<String> = _response
 
-    private var selectedModel = "deepseek/deepseek-r1:free"
+    private var selectedModel = "gemini-2.5-flash-lite"
 
     fun setModel(model: String) {
         selectedModel = model
@@ -22,7 +22,7 @@ class AiChatViewModel(
 
     fun askAI(prompt: String, userData: String, useStats: Boolean, remember: Boolean) {
         viewModelScope.launch {
-            val result = repository.askAI(
+            val result = repository.askAi(
                 userPrompt = prompt,
                 model = selectedModel,
                 userData = userData,
@@ -32,13 +32,7 @@ class AiChatViewModel(
             result.onSuccess {
                 _response.postValue(it)
             }.onFailure { error ->
-                val message = when (error.message) {
-                    "400" -> "Request error, please try again."
-                    "401" -> "API key issue. Please verify configuration."
-                    "429" -> "Too many requests, slow down."
-                    else -> "Something went wrong (${error.message})."
-                }
-                _response.postValue(message)
+                _response.postValue(error.message)
             }
         }
     }

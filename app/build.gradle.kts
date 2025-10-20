@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -7,11 +5,6 @@ plugins {
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
 }
-
-val localProperties = rootProject.file("local.properties").inputStream().use { input ->
-    Properties().apply { load(input) }
-}
-val openRouterApiKey: String = localProperties.getProperty("OPENROUTER_API_KEY") ?: "\"\""
 
 android {
     namespace = "com.subhajitrajak.durare"
@@ -25,7 +18,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "OPENROUTER_API_KEY", "\"$openRouterApiKey\"")
     }
 
     buildTypes {
@@ -129,4 +121,7 @@ dependencies {
 
     // markdown
     implementation(libs.noties.markwon.core)
+
+    // firebase ai
+    implementation(libs.firebase.ai)
 }
