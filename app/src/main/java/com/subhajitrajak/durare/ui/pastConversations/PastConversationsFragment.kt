@@ -1,19 +1,25 @@
 package com.subhajitrajak.durare.ui.pastConversations
 
+import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.auth.api.identity.Identity
 import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.auth.GoogleAuthUiClient
 import com.subhajitrajak.durare.auth.UserData
+import com.subhajitrajak.durare.databinding.DialogPermissionBinding
 import com.subhajitrajak.durare.databinding.FragmentPastConversationsBinding
+import kotlinx.coroutines.launch
 
 class PastConversationsFragment : Fragment() {
     private var _binding: FragmentPastConversationsBinding? = null
@@ -50,6 +56,24 @@ class PastConversationsFragment : Fragment() {
                 handleBackButtonPress()
             }
 
+            moreOptions.setOnClickListener { view ->
+                val popup = PopupMenu(requireContext(), view, Gravity.END, 0, R.style.CustomPopupMenu)
+                popup.menuInflater.inflate(R.menu.menu_past_conversations, popup.menu)
+
+                popup.setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.action_clear_chat -> {
+                            // Confirm before clearing (optional)
+                            showClearChatConfirmation()
+                            true
+                        }
+                        else -> false
+                    }
+                }
+
+                popup.show()
+            }
+
             // setup chat adapter
             chatAdapter = ConversationsAdapter(requireContext(), userData?.profilePictureUrl)
 
@@ -73,6 +97,52 @@ class PastConversationsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun showClearChatConfirmation() {
+        showCustomDialog(
+            title = "Clear chat history?",
+            message = "This will permanently delete all past conversations.",
+            positiveText = "Clear",
+            onPositiveClick = {
+                lifecycleScope.launch {
+                    viewModel.clearChat()
+                }
+            }
+        )
+    }
+
+    private fun showCustomDialog(
+        title: String,
+        message: String,
+        positiveText: String,
+        negativeText: String = getString(R.string.cancel),
+        onPositiveClick: () -> Unit,
+        onNegativeClick: () -> Unit = {}
+    ) {
+        val dialogBinding = DialogPermissionBinding.inflate(layoutInflater)
+
+        dialogBinding.dialogTitle.text = title
+        dialogBinding.dialogMessage.text = message
+        dialogBinding.dialogOk.text = positiveText
+        dialogBinding.dialogCancel.text = negativeText
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogBinding.root)
+            .create()
+
+        dialogBinding.dialogCancel.setOnClickListener {
+            dialog.dismiss()
+            onNegativeClick()
+        }
+
+        dialogBinding.dialogOk.setOnClickListener {
+            dialog.dismiss()
+            onPositiveClick()
+        }
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
     }
 
     private fun handleBackButtonPress() {

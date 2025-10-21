@@ -41,6 +41,7 @@ class ConversationsViewModel(
             _loading.value = true
             try {
                 repository.clearChat()
+                _chats.value = emptyList()
                 _error.value = null
             } catch (e: Exception) {
                 _error.value = e.message

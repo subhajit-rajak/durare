@@ -75,4 +75,15 @@
         <item name="cornerSizeBottomRight">16dp</item>
     </style>
 
+    <style name="CustomPopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@color/very_light_grey</item>
+        <item name="android:elevation">8dp</item>
+        <item name="android:itemTextAppearance">@style/CustomPopupMenuText</item>
+    </style>
+
+    <style name="CustomPopupMenuText" parent="TextAppearance.AppCompat.Light.Widget.PopupMenu.Small">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
