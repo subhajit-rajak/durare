@@ -65,7 +65,7 @@
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_margin="4dp"
-                android:contentDescription="@string/previous_conversions"
+                android:contentDescription="@string/previous_conversations"
                 android:src="@drawable/chat_history"
                 app:tint="@color/grey" />
 

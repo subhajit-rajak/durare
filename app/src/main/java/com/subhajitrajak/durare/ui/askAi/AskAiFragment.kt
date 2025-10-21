@@ -21,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.google.android.gms.auth.api.identity.Identity
@@ -123,6 +124,10 @@ class AskAiFragment : Fragment() {
                 handleBackButtonPress()
             }
 
+            chatHistory.setOnClickListener {
+                findNavController().navigate(R.id.action_askAiFragment_to_pastConversationsFragment)
+            }
+
             val userData: UserData? = googleAuthUiClient.getSignedInUser()
 
             // setup chat adapter
@@ -135,7 +140,7 @@ class AskAiFragment : Fragment() {
             }
             chatRecyclerView.apply {
                 adapter = chatAdapter
-                setHasFixedSize(true)
+                setHasFixedSize(false)
                 this.layoutManager = layoutManager
                 itemAnimator = null
             }

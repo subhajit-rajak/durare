@@ -199,5 +199,18 @@
         android:id="@+id/askAiFragment"
         android:name="com.subhajitrajak.durare.ui.askAi.AskAiFragment"
         android:label="fragment_ask_ai"
-        tools:layout="@layout/fragment_ask_ai" />
+        tools:layout="@layout/fragment_ask_ai" >
+        <action
+            android:id="@+id/action_askAiFragment_to_pastConversationsFragment"
+            app:destination="@id/pastConversationsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/pastConversationsFragment"
+        android:name="com.subhajitrajak.durare.ui.pastConversations.PastConversationsFragment"
+        android:label="fragment_past_conversations"
+        tools:layout="@layout/fragment_past_conversations" />
 </navigation>

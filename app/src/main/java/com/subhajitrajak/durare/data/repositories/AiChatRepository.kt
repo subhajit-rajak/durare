@@ -1,23 +1,18 @@
 package com.subhajitrajak.durare.data.repositories
 
 import android.content.Context
-import androidx.room.Room
 import com.google.firebase.Firebase
 import com.google.firebase.ai.ai
 import com.google.firebase.ai.type.GenerativeBackend
-import com.subhajitrajak.durare.data.local.ChatDatabase
 import com.subhajitrajak.durare.data.local.ChatMessageEntity
+import com.subhajitrajak.durare.data.local.ChatDatabaseProvider
 import com.subhajitrajak.durare.data.models.Message
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class AiChatRepository(context: Context) {
 
-    private val db: ChatDatabase = Room.databaseBuilder(
-        context.applicationContext,
-        ChatDatabase::class.java,
-        "chat_db"
-    ).build()
+    private val db = ChatDatabaseProvider.getDatabase(context)
 
     suspend fun getChatHistory(): List<ChatMessageEntity> = db.chatDao().getAllMessages().takeLast(7)
 
