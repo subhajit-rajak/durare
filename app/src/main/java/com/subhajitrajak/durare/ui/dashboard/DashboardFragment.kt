@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayout
@@ -139,7 +140,9 @@ class DashboardFragment : Fragment() {
                         putParcelable(AskAiFragment.AI_STATS, aiStats)
                     }
 
-                    findNavController().navigate(R.id.action_dashboardFragment_to_askAiFragment, bundle)
+                    val extras = FragmentNavigatorExtras( askAiButton to "ask_ai_message")
+
+                    findNavController().navigate(R.id.action_dashboardFragment_to_askAiFragment, bundle, null, extras)
                 }
             }
         }

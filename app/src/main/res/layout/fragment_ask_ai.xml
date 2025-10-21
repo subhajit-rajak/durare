@@ -91,6 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="16dp"
+        android:transitionName="ask_ai_message"
         app:cardBackgroundColor="@color/very_light_grey"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"

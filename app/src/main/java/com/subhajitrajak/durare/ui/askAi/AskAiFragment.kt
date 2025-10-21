@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.TransitionInflater
 import com.google.android.gms.auth.api.identity.Identity
 import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.auth.GoogleAuthUiClient
@@ -72,6 +73,16 @@ class AskAiFragment : Fragment() {
 
     companion object {
         const val AI_STATS = "ai_stats"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val animation = TransitionInflater.from(requireContext()).inflateTransition(
+            android.R.transition.move
+        )
+        sharedElementEnterTransition = animation
+        sharedElementReturnTransition = animation
     }
 
     override fun onCreateView(

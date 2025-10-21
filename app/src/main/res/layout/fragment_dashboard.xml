@@ -67,6 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:transitionName="ask_ai_card"
                 app:cardBackgroundColor="@color/very_light_grey"
                 app:cardCornerRadius="32dp"
                 app:cardElevation="0dp">
