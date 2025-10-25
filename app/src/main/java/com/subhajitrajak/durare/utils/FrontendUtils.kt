@@ -53,6 +53,7 @@ fun View.showWithAnim(duration: Long = 500) {
 }
 
 fun View.show() {
+    alpha = 1f
     visibility = View.VISIBLE
 }
 

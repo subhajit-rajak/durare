@@ -1,12 +1,14 @@
 package com.subhajitrajak.durare.ui.onboarding
 
 import android.app.Activity.RESULT_OK
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -18,7 +20,9 @@ import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.auth.GoogleAuthUiClient
 import com.subhajitrajak.durare.databinding.FragmentOnBoardingBinding
 import com.subhajitrajak.durare.utils.log
+import com.subhajitrajak.durare.utils.remove
 import com.subhajitrajak.durare.utils.removeWithAnim
+import com.subhajitrajak.durare.utils.show
 import com.subhajitrajak.durare.utils.showToast
 import com.subhajitrajak.durare.utils.showWithAnim
 import kotlinx.coroutines.CoroutineScope
@@ -34,6 +38,10 @@ class OnBoardingFragment : Fragment() {
 
     private lateinit var googleAuthUiClient: GoogleAuthUiClient
     private val signInViewModel: SignInViewModel by viewModels()
+
+    private var isArrowed: Boolean = true
+    private lateinit var checkToArrow: AnimatedVectorDrawable
+    private lateinit var arrowToCheck: AnimatedVectorDrawable
 
     // Activity result launcher for handling sign-in response
     private val signInLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
@@ -113,9 +121,11 @@ class OnBoardingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        checkToArrow = AppCompatResources.getDrawable(requireContext(), R.drawable.avd_check_to_arrow) as AnimatedVectorDrawable
+        arrowToCheck = AppCompatResources.getDrawable(requireContext(), R.drawable.avd_arrow_to_check) as AnimatedVectorDrawable
+
         setupViewPager()
         setupNavigation()
-        updateSkipButtonVisibility()
     }
 
     private fun setupViewPager() {
@@ -129,7 +139,7 @@ class OnBoardingFragment : Fragment() {
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                updateSkipButtonVisibility()
+                updateSkipButtonVisibility(position)
             }
         })
     }
@@ -145,9 +155,14 @@ class OnBoardingFragment : Fragment() {
                 super.onPageSelected(position)
 
                 if(position == onboardingScreens.size - 1) {
-                    binding.nextImage.setImageResource(R.drawable.check)
+                    isArrowed = false
+                    binding.nextImage.setImageDrawable(arrowToCheck)
+                    arrowToCheck.start()
                 } else {
-                    binding.nextImage.setImageResource(R.drawable.arrow_right)
+                    if (isArrowed) return
+                    isArrowed = true
+                    binding.nextImage.setImageDrawable(checkToArrow)
+                    checkToArrow.start()
                 }
             }
         })
@@ -165,13 +180,12 @@ class OnBoardingFragment : Fragment() {
         }
     }
 
-    private fun updateSkipButtonVisibility() {
-        val currentItem = binding.viewPager.currentItem
+    private fun updateSkipButtonVisibility(position: Int) {
         // Hide skip button on last screen
-        if (currentItem == onboardingScreens.size - 1) {
+        if (position == onboardingScreens.size - 1) {
             binding.skipButton.removeWithAnim()
         } else {
-            binding.skipButton.visibility = View.VISIBLE
+            binding.skipButton.show()
         }
     }
 
