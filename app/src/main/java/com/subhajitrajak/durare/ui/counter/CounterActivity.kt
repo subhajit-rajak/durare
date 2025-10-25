@@ -456,5 +456,6 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         toneGenerator?.release()
         window.decorView.keepScreenOn = false
         uiHandler.removeCallbacksAndMessages(null)
+        stopService(Intent(this, RestTimerService::class.java))
     }
 }
