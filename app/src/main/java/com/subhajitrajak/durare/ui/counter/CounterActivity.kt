@@ -261,6 +261,7 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
 
     private fun onDoneClicked() {
         if (isResting) return
+        binding.done.isEnabled = false
         // Finish current rep: move currentRepCount into completed sum, then reset per-rep counter
         completedRepsPushUpsSum += currentRepCount
         currentRepCount = 0
@@ -275,6 +276,7 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
     }
 
     private fun enterRest() {
+        binding.done.isEnabled = true
         isResting = true
         restRemainingMs = customRestMs
         // Prepare for next rep: freeze counting during rest
