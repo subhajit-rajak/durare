@@ -9,16 +9,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.PopupMenu
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.auth.api.identity.Identity
 import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.auth.GoogleAuthUiClient
 import com.subhajitrajak.durare.auth.UserData
 import com.subhajitrajak.durare.databinding.DialogPermissionBinding
 import com.subhajitrajak.durare.databinding.FragmentPastConversationsBinding
+import com.subhajitrajak.durare.utils.hideWithAnim
+import com.subhajitrajak.durare.utils.showWithAnim
 import kotlinx.coroutines.launch
 
 class PastConversationsFragment : Fragment() {
@@ -36,6 +40,8 @@ class PastConversationsFragment : Fragment() {
             oneTapClient = Identity.getSignInClient(requireContext())
         )
     }
+
+    private var hideScrollButtonRunnable: Runnable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +61,42 @@ class PastConversationsFragment : Fragment() {
             backButton.setOnClickListener {
                 handleBackButtonPress()
             }
+
+            scrollBottom.setOnClickListener {
+                chatRecyclerView.smoothScrollToPosition(chatAdapter.itemCount - 1)
+            }
+
+            chatRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition()
+                    val totalItems = chatAdapter.itemCount
+
+                    scrollBottom.removeCallbacks(hideScrollButtonRunnable)
+
+                    // User is not at the bottom
+                    if (lastVisibleItem < totalItems - 1) {
+                        scrollBottom.showWithAnim(200)
+
+                        // Cancel any previous hide tasks
+                        scrollBottom.removeCallbacks(hideScrollButtonRunnable)
+
+                        // Schedule it to hide after 3 seconds
+                        hideScrollButtonRunnable = Runnable {
+                            scrollBottom.hideWithAnim(200)
+                        }
+                        scrollBottom.postDelayed(hideScrollButtonRunnable, 3000)
+
+                    } else {
+                        // If user scrolled to bottom, hide immediately
+                        scrollBottom.hideWithAnim(200)
+                        // Cancel pending hide actions
+                        scrollBottom.removeCallbacks(hideScrollButtonRunnable)
+                    }
+                }
+            })
 
             moreOptions.setOnClickListener { view ->
                 val popup = PopupMenu(requireContext(), view, Gravity.END, 0, R.style.CustomPopupMenu)

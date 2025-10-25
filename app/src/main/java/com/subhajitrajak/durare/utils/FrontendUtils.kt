@@ -5,28 +5,32 @@ import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
+import androidx.core.view.isVisible
 
 fun View.fadeView(
     duration: Long = 1000,
     from: Float = 0f,
-    to: Float = 1f,
+    to: Float = 1f
 ) {
-    alpha = from
+    animate().cancel()
     animate()
         .alpha(to)
         .setDuration(duration)
         .setInterpolator(DecelerateInterpolator())
+        .withStartAction { alpha = from }
         .start()
 }
 
-fun View.removeWithAnim() {
+fun View.removeWithAnim(duration: Long = 100) {
+    if (!isVisible) return
+    fadeView(from = 1f, to = 0f, duration = duration)
     visibility = View.GONE
-    fadeView(from = 1f, to = 0f, duration = 100)
 }
 
-fun View.hideWithAnim() {
+fun View.hideWithAnim(duration: Long = 100) {
+    if (!isVisible) return
+    fadeView(from = 1f, to = 0f, duration = duration)
     visibility = View.INVISIBLE
-    fadeView(from = 1f, to = 0f, duration = 100)
 }
 
 fun View.showWithAnim50ms() {
@@ -43,6 +47,7 @@ fun log(message: String) {
 }
 
 fun View.showWithAnim(duration: Long = 500) {
+    if (isVisible) return
     visibility = View.VISIBLE
     fadeView(duration = duration)
 }
