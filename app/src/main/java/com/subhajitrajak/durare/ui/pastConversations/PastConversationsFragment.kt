@@ -63,8 +63,11 @@ class PastConversationsFragment : Fragment() {
                 popup.setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.action_clear_chat -> {
-                            // Confirm before clearing (optional)
                             showClearChatConfirmation()
+                            true
+                        }
+                        R.id.info -> {
+                            showInfoDialog()
                             true
                         }
                         else -> false
@@ -99,6 +102,15 @@ class PastConversationsFragment : Fragment() {
         }
     }
 
+    private fun showInfoDialog() {
+        showCustomDialog(
+            title = "Chat Privacy Information",
+            message = "Your messages are stored only on your device and are never uploaded to any server. The AI processes your input to generate replies but does not keep your chats. Clearing app data or uninstalling will permanently delete your chat history.",
+            positiveText = "Got it!",
+            negativeText = ""
+        )
+    }
+
     private fun showClearChatConfirmation() {
         showCustomDialog(
             title = "Clear chat history?",
@@ -117,7 +129,7 @@ class PastConversationsFragment : Fragment() {
         message: String,
         positiveText: String,
         negativeText: String = getString(R.string.cancel),
-        onPositiveClick: () -> Unit,
+        onPositiveClick: () -> Unit = {},
         onNegativeClick: () -> Unit = {}
     ) {
         val dialogBinding = DialogPermissionBinding.inflate(layoutInflater)

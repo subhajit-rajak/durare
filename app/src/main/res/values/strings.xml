@@ -193,5 +193,6 @@
     <string name="_3">3</string>
     <string name="_2">2</string>
     <string name="more_options">more options</string>
-    <string name="clear_chat">Clear chat</string>
+    <string name="clear_chat">🗑️ Clear chat</string>
+    <string name="info">ⓘ Info</string>
 </resources>
