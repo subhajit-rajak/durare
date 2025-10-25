@@ -63,6 +63,15 @@ class ConversationsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val chat = getItem(position)
+
+        val params = holder.itemView.layoutParams as RecyclerView.LayoutParams
+        if (position == 0) {
+            params.topMargin = (64 * context.resources.displayMetrics.density).toInt()
+        } else {
+            params.topMargin = 0
+        }
+        holder.itemView.layoutParams = params
+
         if (holder is UserViewHolder) {
             holder.textMessage.text = chat.content
             Glide.with(context).load(userProfileUrl).into(holder.userImage)
