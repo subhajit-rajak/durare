@@ -34,6 +34,7 @@ fun View.hideWithAnim(duration: Long = 100) {
 }
 
 fun View.showWithAnim50ms() {
+    if (isVisible) return
     visibility = View.VISIBLE
     fadeView(duration = 50)
 }
@@ -53,10 +54,12 @@ fun View.showWithAnim(duration: Long = 500) {
 }
 
 fun View.show() {
+    if (isVisible) return
     alpha = 1f
     visibility = View.VISIBLE
 }
 
 fun View.remove() {
+    if (!isVisible) return
     visibility = View.GONE
 }
