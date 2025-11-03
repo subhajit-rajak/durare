@@ -196,4 +196,8 @@
     <string name="clear_chat">🗑️ Clear chat</string>
     <string name="info">ⓘ Info</string>
     <string name="scroll_to_the_bottom">scroll to the bottom</string>
+    <string name="what_can_i_help_with">What can I help with?</string>
+    <string name="prompt1">Analyze my push-up stats this week</string>
+    <string name="prompt2">Suggest a 7-day push-up challenge for me.</string>
+    <string name="prompt3">Help me create a workout plan.</string>
 </resources>

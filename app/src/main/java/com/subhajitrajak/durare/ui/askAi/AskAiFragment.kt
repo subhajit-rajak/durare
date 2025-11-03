@@ -150,6 +150,9 @@ class AskAiFragment : Fragment() {
                 val message = messageEditText.text.toString().trim()
                 if (message.isEmpty()) return@setOnClickListener
 
+                emptyResponse.remove()
+                chatRecyclerView.show()
+
                 // add user message to RecyclerView
                 chatAdapter.addMessage(ChatMessage(message, true))
                 messageEditText.text?.clear()
@@ -182,6 +185,19 @@ class AskAiFragment : Fragment() {
         }
 
         setupSpeechRecognition()
+        setupPrompts()
+    }
+
+    private fun setupPrompts() = with(binding) {
+        prompt1.setOnClickListener {
+            messageEditText.setText(R.string.prompt1)
+        }
+        prompt2.setOnClickListener {
+            messageEditText.setText(R.string.prompt2)
+        }
+        prompt3.setOnClickListener {
+            messageEditText.setText(R.string.prompt3)
+        }
     }
 
     private fun animateAiResponse(position: Int, fullText: String) {

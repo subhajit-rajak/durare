@@ -17,4 +17,12 @@
     <color name="level_3">#CC5210</color> <!-- bright orange -->
     <color name="level_4">#FF690C</color> <!-- primary (solid orange) -->
 
+    <!-- glass style button colors -->
+    <color name="button_pressed_solid">#45FFFFFF</color>
+    <color name="button_pressed_stroke">#8DFFFFFF</color>
+
+    <color name="button_gradient_start">#1AFFFFFF</color>
+    <color name="button_gradient_end">#11FFFFFF</color>
+    <color name="button_stroke">#3CFFFFFF</color>
+
 </resources>
