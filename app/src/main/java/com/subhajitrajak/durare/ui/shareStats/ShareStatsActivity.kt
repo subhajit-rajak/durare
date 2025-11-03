@@ -257,7 +257,8 @@ class ShareStatsActivity : AppCompatActivity() {
 
     private fun generateFilename(): String {
         val ts = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-        return "PushUp_${ts}.png"
+        val appName = getString(R.string.app_name)
+        return "${appName}_${ts}.png"
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
