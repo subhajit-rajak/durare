@@ -62,45 +62,53 @@
 
             </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/askAiButton"
+            <FrameLayout
+                android:id="@+id/aiBorderContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:transitionName="ask_ai_card"
-                app:cardBackgroundColor="@color/very_light_grey"
-                app:cardCornerRadius="32dp"
-                app:cardElevation="0dp">
+                android:padding="2dp">
 
-                <LinearLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/askAiButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    tools:ignore="UseCompoundDrawables">
+                    android:transitionName="ask_ai_card"
+                    app:cardBackgroundColor="@color/very_light_grey"
+                    app:cardCornerRadius="32dp"
+                    app:cardElevation="0dp">
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:contentDescription="@string/ask_ai"
-                        android:src="@drawable/ai_icon"
-                        app:tint="@color/black" />
-
-                    <TextView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/special_gothic_expanded_regular"
-                        android:paddingHorizontal="16dp"
-                        android:text="@string/ask_ai_bar_hint"
-                        android:textColor="@color/light_grey"
-                        android:textSize="18sp"
-                        tools:ignore="TextContrastCheck" />
+                        android:orientation="horizontal"
+                        android:padding="16dp"
+                        tools:ignore="UseCompoundDrawables">
 
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@string/ask_ai"
+                            android:src="@drawable/ai_icon"
+                            app:tint="@color/black" />
 
-            </androidx.cardview.widget.CardView>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/special_gothic_expanded_regular"
+                            android:paddingHorizontal="16dp"
+                            android:text="@string/ask_ai_bar_hint"
+                            android:textColor="@color/light_grey"
+                            android:textSize="18sp"
+                            tools:ignore="TextContrastCheck" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </FrameLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/statsCard"

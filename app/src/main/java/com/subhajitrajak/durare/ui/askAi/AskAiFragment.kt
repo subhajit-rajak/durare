@@ -83,7 +83,7 @@ class AskAiFragment : Fragment() {
             android.R.transition.move
         )
         sharedElementEnterTransition = animation
-        sharedElementReturnTransition = animation
+        sharedElementReturnTransition = null
     }
 
     override fun onCreateView(

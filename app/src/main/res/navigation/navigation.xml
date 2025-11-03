@@ -26,10 +26,10 @@
         <action
             android:id="@+id/action_dashboardFragment_to_askAiFragment"
             app:destination="@id/askAiFragment"
-            app:enterAnim="@anim/slide_in_right"
+            app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out_right"  />
+            app:popExitAnim="@anim/fade_out"  />
 
     </fragment>
 

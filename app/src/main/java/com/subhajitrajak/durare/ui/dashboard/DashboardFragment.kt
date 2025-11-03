@@ -1,5 +1,7 @@
 package com.subhajitrajak.durare.ui.dashboard
 
+import android.animation.ValueAnimator
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.Gravity
@@ -26,11 +28,14 @@ import com.subhajitrajak.durare.utils.removeWithAnim
 import com.subhajitrajak.durare.utils.show
 import com.subhajitrajak.durare.utils.showToast
 import com.subhajitrajak.durare.utils.showWithAnim50ms
+import androidx.core.graphics.toColorInt
 
 class DashboardFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
+
+    private var borderAnimator: ValueAnimator? = null
 
     private val viewModel: DashboardViewModel by viewModels {
         DashboardViewModelFactory(requireContext().applicationContext)
@@ -47,6 +52,8 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setAnimation()
 
         viewModel.dashboardStats.observe(viewLifecycleOwner) { stats ->
             // update UI
@@ -148,6 +155,48 @@ class DashboardFragment : Fragment() {
         }
     }
 
+    private fun setAnimation() {
+        val orange = requireContext().getColor(R.color.primary)
+        val yellow = "#FFD700".toColorInt()
+        val red = requireContext().getColor(R.color.red)
+
+        val gradientDrawable = GradientDrawable(
+            GradientDrawable.Orientation.LEFT_RIGHT,
+            intArrayOf(orange, yellow, red)
+        ).apply {
+            cornerRadius = dpToPx(32).toFloat()
+        }
+
+        borderAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = 3000
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+
+            addUpdateListener { animation ->
+                _binding?.let { binding ->
+                    val progress = animation.animatedFraction
+                    val newColors = intArrayOf(
+                        blendColors(orange, yellow, progress),
+                        blendColors(yellow, red, progress),
+                        blendColors(red, orange, progress)
+                    )
+                    gradientDrawable.colors = newColors
+                    binding.aiBorderContainer.background = gradientDrawable
+                }
+            }
+
+            start()
+        }
+    }
+
+    private fun blendColors(from: Int, to: Int, ratio: Float): Int {
+        val inverseRatio = 1f - ratio
+        val r = Color.red(from) * inverseRatio + Color.red(to) * ratio
+        val g = Color.green(from) * inverseRatio + Color.green(to) * ratio
+        val b = Color.blue(from) * inverseRatio + Color.blue(to) * ratio
+        return Color.rgb(r.toInt(), g.toInt(), b.toInt())
+    }
+
     private fun updateLeaderboard(users: List<User>) {
         binding.apply {
             val positions = listOf(
@@ -227,6 +276,8 @@ class DashboardFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        borderAnimator?.cancel()
+        borderAnimator = null
         _binding = null
     }
 
