@@ -116,7 +116,10 @@ class DailyStatsFragment : Fragment() {
                     title = "Pushups Counts"
                 ),
                 bottomAxis = (chart!!.bottomAxis as HorizontalAxis).copy(
-                    title = "Days of the month"
+                    title = "Days of the month",
+                    valueFormatter = { _, value, _ ->
+                        (value.toInt() + 1).toString()
+                    }
                 ),
                 marker = getMarker(requireContext())
             )
