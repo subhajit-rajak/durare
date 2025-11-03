@@ -86,16 +86,20 @@ class AiChatRepository(context: Context) {
             - If `remember = false`, politely remind the user to click the "🧠 Remember" button if they ask questions that depend on past conversations.
             """.trimIndent()
             )
-            append("\n\n")
+            append("\n")
 
             if (useStats) {
-                append("### User Push-up Data:\n$userData\n\n")
-                append("Always base your insights and feedback on this data.\nuseStats = true\n")
+                append("### User Push-up Data:\n$userData\n")
+                append("Always base your insights and feedback on this data.\n")
             }
+            append("userStats = $useStats \n")
 
             if (remember) {
-                append("Include context from previous messages if relevant.\nremember = true\n")
+                append("Include context from previous messages if relevant.\n")
             }
+            append("remember = $remember \n")
+
+            append("At the end ask a small and relevant follow up question if needed.")
         }
     }
 }

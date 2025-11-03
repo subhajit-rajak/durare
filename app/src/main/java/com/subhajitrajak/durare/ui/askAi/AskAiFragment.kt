@@ -117,7 +117,7 @@ class AskAiFragment : Fragment() {
             }
         }
 
-        viewModel.setModel("gemini-2.5-flash-lite")
+        viewModel.setModel("gemini-2.5-flash")
 
         binding.apply {
             backButton.setOnClickListener {
