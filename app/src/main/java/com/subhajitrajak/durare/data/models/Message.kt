@@ -1,6 +1,6 @@
 package com.subhajitrajak.durare.data.models
 
 data class Message(
-    val role: String,
+    val role: Role,
     val content: String
 )

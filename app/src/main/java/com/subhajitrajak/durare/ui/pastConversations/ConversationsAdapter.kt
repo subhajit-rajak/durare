@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.data.local.ChatMessageEntity
+import com.subhajitrajak.durare.data.models.Role
 import io.noties.markwon.Markwon
 
 class ConversationsAdapter(
@@ -47,7 +48,7 @@ class ConversationsAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position).role == "user") VIEW_TYPE_USER else VIEW_TYPE_AI
+        return if (getItem(position).role == Role.USER) VIEW_TYPE_USER else VIEW_TYPE_AI
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

@@ -7,6 +7,7 @@ import com.google.firebase.ai.type.GenerativeBackend
 import com.subhajitrajak.durare.data.local.ChatMessageEntity
 import com.subhajitrajak.durare.data.local.ChatDatabaseProvider
 import com.subhajitrajak.durare.data.models.Message
+import com.subhajitrajak.durare.data.models.Role
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -16,7 +17,7 @@ class AiChatRepository(context: Context) {
 
     suspend fun getChatHistory(): List<ChatMessageEntity> = db.chatDao().getAllMessages().takeLast(7)
 
-    suspend fun saveMessage(role: String, content: String) {
+    suspend fun saveMessage(role: Role, content: String) {
         db.chatDao().insertMessage(ChatMessageEntity(role = role, content = content))
     }
 
@@ -35,7 +36,7 @@ class AiChatRepository(context: Context) {
 
                 // system message
                 val systemContent = buildSystemMessage(userData, useStats, remember)
-                messages.add(Message("system", systemContent))
+                messages.add(Message(Role.SYSTEM, systemContent))
 
                 // add chat history if remember = true
                 if (remember) {
@@ -46,17 +47,17 @@ class AiChatRepository(context: Context) {
                 }
 
                 // add current user message
-                messages.add(Message("user", userPrompt))
+                messages.add(Message(Role.USER, userPrompt))
 
-                val prompt = messages.joinToString("\n\n") { "${it.role.uppercase()}: ${it.content}" }
+                val prompt = messages.joinToString("\n\n") { "${it.role}: ${it.content}" }
 
                 val model = Firebase.ai(backend = GenerativeBackend.googleAI()).generativeModel(model)
                 val resp = model.generateContent(prompt)
                 val result = resp.text
 
                 if (result != null) {
-                    saveMessage("user", userPrompt)
-                    saveMessage("assistant", result)
+                    saveMessage(Role.USER, userPrompt)
+                    saveMessage(Role.ASSISTANT, result)
 
                     Result.success(result)
                 } else {
