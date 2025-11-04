@@ -1,9 +1,20 @@
-
+<div align="center">
+   
 <img width="200" height="200" src="https://github.com/user-attachments/assets/faa2ef94-eadf-4490-baaa-0a80fdef1844" />
+   
+<h1>Durare - Ai Pushup Counter</h1>
 
-# Push-Up Counter App
-
-An Android application that uses face detection to count push-ups in real-time. The app detects your face position through the front camera and counts push-ups based on how close your face is to the camera.
+  <h4>An Android application that uses face detection to count push-ups in real-time. The app detects your face position through the front camera and counts push-ups based on how close your face is to the camera.</h4>
+  
+  <p><img alt="Static Badge" src="https://img.shields.io/badge/1.0-0?style=for-the-badge&logo=android&label=Version&labelColor=%2310140e&color=%233A761D"></p>
+  
+  <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/Android/android3.svg">
+  <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/Firebase/firebase3.svg">
+  <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/Kotlin/kotlin3.svg">
+  <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/LicenceMIT/licencemit3.svg">
+  <img src="https://m3-markdown-badges.vercel.app/stars/2/3/subhajit-rajak/durare">
+  
+</div>
 
 ## Features
 
@@ -24,8 +35,9 @@ The app uses the following logic to detect push-ups:
 ## Usage Instructions
 
 1. **Grant Camera Permission**: Allow the app to access your front camera when prompted
-2. **Position Yourself**: Stand in front of your device with the front camera facing you
-3. **Start Push-ups**: 
+2. **Grant Notifcation Permission**: Allow the app to prompt a notification for the rest timer
+3. **Position Yourself**: Stand in front of your device with the front camera facing you
+4. **Start Push-ups**: 
    - Move your face close to the camera (down position)
    - Push up to move your face further from the camera (up position)
    - Repeat to count more push-ups
@@ -43,18 +55,17 @@ The app uses the following logic to detect push-ups:
 - **Frame Threshold**: 3 consecutive frames required to confirm position
 - **Min Face Size**: 0.1f (detects very small faces for high sensitivity)
 
-### Permissions Required
-- `android.permission.CAMERA`: For accessing the front camera
-- `android.hardware.camera`: Required camera hardware
-- `android.hardware.camera.autofocus`: Optional autofocus feature
+**Note**: You can customize the `Down` and `Up` Threshold in `settings/personalize`
 
 ## Building and Running
 
 1. Open the project in Android Studio
 2. Sync Gradle files to download dependencies
-3. Connect an Android device or start an emulator
-4. Build and run the app
-5. Grant camera permissions when prompted
+3. Connect your project to firebase and add the `google_services.json` file
+4. Enable `Authentication`, `Firestore Database` and `Ai Logic` in Firebase and edit the `default_web_client_id` in `strings.xml` in `app/src/main/res/values` folder
+5. Connect an Android device or start an emulator
+6. Build and run the app
+7. Grant camera permissions when prompted
 
 ## Troubleshooting
 
@@ -62,16 +73,6 @@ The app uses the following logic to detect push-ups:
 - **Inconsistent counting**: Try adjusting your distance from the camera
 - **App crashes**: Ensure you have granted camera permissions
 - **Poor detection**: Clean your camera lens and ensure good lighting
-
-## Customization
-
-You can adjust the sensitivity by modifying these constants in `utils/PushUpDetector.kt/companion object`:
-
-```kotlin
-private const val DOWN_THRESHOLD = 50f  // Adjust for down position sensitivity
-private const val UP_THRESHOLD = 25f    // Adjust for up position sensitivity
-private const val FRAME_THRESHOLD = 3   // Adjust for position confirmation frames
-```
 
 ## License
 
