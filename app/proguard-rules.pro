@@ -19,18 +19,3 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-
-# Keep Firebase model classes
--keepclassmembers class com.subhajitrajak.durare.data.models.** {
-    public <init>(...);
-}
-
-# Keep Firebase annotations
--keepattributes Signature
--keepattributes *Annotation*
-
-# Keep Firebase and Gson models safe
--keepclassmembers class * {
-    @com.google.firebase.firestore.IgnoreExtraProperties *;
-    @com.google.firebase.firestore.PropertyName *;
-}

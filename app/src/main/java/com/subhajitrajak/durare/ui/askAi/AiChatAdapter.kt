@@ -12,8 +12,8 @@ import com.subhajitrajak.durare.R
 import io.noties.markwon.Markwon
 
 data class ChatMessage(
-    val message: String,
-    val isUser: Boolean
+    val message: String = "",
+    val isUser: Boolean = false
 )
 
 class AiChatAdapter(
