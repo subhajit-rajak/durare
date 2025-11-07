@@ -14,8 +14,8 @@ android {
         applicationId = "com.subhajitrajak.durare"
         minSdk = 26
         targetSdk = 36
-        versionCode = 5
-        versionName = "0.1.4"
+        versionCode = 6
+        versionName = "0.1.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,7 +41,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    ndkVersion = "29.0.13846066 rc3"
+    ndkVersion = "29.0.14206865"
 }
 
 kotlin {
