@@ -1,6 +1,5 @@
 package com.subhajitrajak.durare.services
 
-import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.Service
