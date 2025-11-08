@@ -36,7 +36,6 @@ guavaAndroid = "33.2.1-android"
 roomRuntime = "2.8.2"
 swiperefreshlayout = "1.1.0"
 vico = "2.2.0"
-retrofit = "3.0.0"
 markwon = "4.6.2"
 
 [libraries]
@@ -71,8 +70,6 @@ guava-listenablefuture = { group = "com.google.guava", name = "listenablefuture"
 guava-android = { group = "com.google.guava", name = "guava", version.ref = "guavaAndroid" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 vico-views = { group = "com.patrykandpatrick.vico", name = "views", version.ref = "vico" }
-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 noties-markwon-core = { module = "io.noties.markwon:core", version.ref = "markwon" }
 
 #firebase auth

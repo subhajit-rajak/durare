@@ -14,8 +14,8 @@ android {
         applicationId = "com.subhajitrajak.durare"
         minSdk = 26
         targetSdk = 36
-        versionCode = 7
-        versionName = "0.1.6"
+        versionCode = 8
+        versionName = "0.1.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,13 +28,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            ndk.debugSymbolLevel = "FULL"
+            ndk.debugSymbolLevel = "SYMBOL_TABLE"
         }
     }
 
     buildFeatures {
         viewBinding = true
-        buildConfig = true
     }
 
     compileOptions {
@@ -116,10 +115,6 @@ dependencies {
     // room
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
-
-    // retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
 
     // markdown
     implementation(libs.noties.markwon.core)
