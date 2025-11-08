@@ -41,7 +41,6 @@ class RestTimerService : Service() {
         }
     }
 
-    @SuppressLint("ForegroundServiceType")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         remainingMs = intent?.getLongExtra(EXTRA_REST_DURATION_MS, 0L) ?: 0L
         lastTick = System.currentTimeMillis()
