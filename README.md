@@ -26,7 +26,7 @@
          width="25%" /> 
    </a>
    &nbsp;&nbsp;&nbsp;&nbsp;
-   <a href="https://github.com/subhajit-rajak/durare/releases/download/v0.1.9/Durare.v0.1.9.apk">
+   <a href="https://github.com/subhajit-rajak/durare/releases">
       <img 
          alt="Github" 
          src="https://github.com/user-attachments/assets/33a17f11-9ff0-4ed2-9ef1-0c168fdbe063" 
