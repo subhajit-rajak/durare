@@ -1,8 +1,11 @@
 <div align="center">
    
-<img width="200" height="200" src="https://github.com/user-attachments/assets/13284f01-93cf-4524-a9f1-76cc79afab3e" />
+   <img alt="Feature graphic" src="https://github.com/user-attachments/assets/824e2c6c-aa5f-476d-9f7d-9a5bc60103f9" />
 
-<h1>Durare - Ai Pushup Counter</h1>
+   <h1>
+     <img src="https://github.com/user-attachments/assets/13284f01-93cf-4524-a9f1-76cc79afab3e" alt="App Icon" width="30" style="vertical-align:middle; margin-right:10px;">
+     Durare - Ai Pushup Counter
+   </h1>
 
   <h4>An Android application that uses face detection to count push-ups in real-time. The app detects your face position through the front camera and counts push-ups based on how close your face is to the camera.</h4>
   
