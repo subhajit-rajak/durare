@@ -26,14 +26,13 @@
       <img 
          alt="Google Play" 
          src="https://github.com/user-attachments/assets/672a8eaa-e089-47fa-b097-685787aeeb23" 
-         width="25%" /> 
+         width="250" /> 
    </a>
-   &nbsp;&nbsp;&nbsp;&nbsp;
    <a href="https://github.com/subhajit-rajak/durare/releases">
       <img 
          alt="Github" 
          src="https://github.com/user-attachments/assets/33a17f11-9ff0-4ed2-9ef1-0c168fdbe063" 
-         width="25%" /> 
+         width="250" /> 
    </a>
 </p>
 
