@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.databinding.DialogPermissionBinding
@@ -77,7 +78,11 @@ class NotificationAccessFragment : Fragment() {
     }
 
     private fun proceedToNextStep() {
-        findNavController().navigate(R.id.action_notificationAccessFragment_to_dashboardFragment)
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.notificationAccessFragment, inclusive = true)
+            .build()
+
+        findNavController().navigate(R.id.action_notificationAccessFragment_to_dashboardFragment, null, navOptions)
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

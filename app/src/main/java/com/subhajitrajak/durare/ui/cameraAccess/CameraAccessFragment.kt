@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.databinding.DialogPermissionBinding
@@ -70,7 +71,11 @@ class CameraAccessFragment : Fragment() {
     }
 
     private fun proceedToNextStep() {
-        findNavController().navigate(R.id.action_cameraAccessFragment_to_notificationAccessFragment)
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.cameraAccessFragment, inclusive = true)
+            .build()
+
+        findNavController().navigate(R.id.action_cameraAccessFragment_to_notificationAccessFragment, null, navOptions)
     }
 
     private fun showPermissionRationale() {
