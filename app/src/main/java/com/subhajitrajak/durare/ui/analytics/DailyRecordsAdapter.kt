@@ -1,4 +1,4 @@
-package com.subhajitrajak.durare.ui.dailyStats
+package com.subhajitrajak.durare.ui.analytics
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.subhajitrajak.durare.data.models.DailyPushStats
 import com.subhajitrajak.durare.databinding.ItemRecordsBinding
 
-class DailyStatsAdapter(
+class DailyRecordsAdapter(
     private val navigateToShareStats: (DailyPushStats) -> Unit
-) : ListAdapter<DailyPushStats, DailyStatsAdapter.ViewHolder>(DiffCallback) {
+) : ListAdapter<DailyPushStats, DailyRecordsAdapter.ViewHolder>(DiffCallback) {
 
     inner class ViewHolder(val binding: ItemRecordsBinding) :
         RecyclerView.ViewHolder(binding.root) {

@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class DailyStatsRepository {
+class AnalyticsRepository {
     private val db: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val dateFormat = SimpleDateFormat(DATE_FORMAT, Locale.US)

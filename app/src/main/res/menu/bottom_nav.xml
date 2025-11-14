@@ -6,7 +6,7 @@
         android:icon="@drawable/home" />
 
     <item
-        android:id="@+id/dailyStatsFragment"
+        android:id="@+id/analyticsFragment"
         android:title="@string/analytics"
         android:icon="@drawable/analytics" />
 

@@ -135,10 +135,10 @@
         android:label="fragment_leaderboard"
         tools:layout="@layout/fragment_leaderboard" />
     <fragment
-        android:id="@+id/dailyStatsFragment"
-        android:name="com.subhajitrajak.durare.ui.dailyStats.DailyStatsFragment"
-        android:label="fragment_daily_stats"
-        tools:layout="@layout/fragment_daily_stats" />
+        android:id="@+id/analyticsFragment"
+        android:name="com.subhajitrajak.durare.ui.analytics.AnalyticsFragment"
+        android:label="fragment_analytics"
+        tools:layout="@layout/fragment_analytics" />
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.subhajitrajak.durare.ui.splash.SplashFragment"

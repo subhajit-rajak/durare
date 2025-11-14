@@ -38,7 +38,7 @@ class HomeActivity : AppCompatActivity() {
         binding.bottomNav.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            val shouldShow = (destination.id == R.id.dashboardFragment) || (destination.id == R.id.leaderboardFragment) || (destination.id == R.id.dailyStatsFragment)
+            val shouldShow = (destination.id == R.id.dashboardFragment) || (destination.id == R.id.leaderboardFragment) || (destination.id == R.id.analyticsFragment)
             binding.bottomNav.visibility = if (shouldShow) View.VISIBLE else View.GONE
             binding.view.visibility = if (shouldShow) View.VISIBLE else View.GONE
             binding.startButton.visibility = if (shouldShow) View.VISIBLE else View.GONE

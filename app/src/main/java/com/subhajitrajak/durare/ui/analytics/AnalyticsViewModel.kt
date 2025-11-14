@@ -1,4 +1,4 @@
-package com.subhajitrajak.durare.ui.dailyStats
+package com.subhajitrajak.durare.ui.analytics
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,10 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModelProducer
 import com.patrykandpatrick.vico.core.cartesian.data.lineSeries
 import com.subhajitrajak.durare.data.models.DailyPushStats
-import com.subhajitrajak.durare.data.repositories.DailyStatsRepository
+import com.subhajitrajak.durare.data.repositories.AnalyticsRepository
 import kotlinx.coroutines.launch
 
-class DailyStatsViewModel(private val repository: DailyStatsRepository): ViewModel() {
+class AnalyticsViewModel(private val repository: AnalyticsRepository): ViewModel() {
     val modelProducer = CartesianChartModelProducer()
 
     private val _dailyStats = MutableLiveData<List<DailyPushStats>>()

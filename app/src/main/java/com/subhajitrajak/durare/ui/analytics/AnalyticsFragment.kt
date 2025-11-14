@@ -1,4 +1,4 @@
-package com.subhajitrajak.durare.ui.dailyStats
+package com.subhajitrajak.durare.ui.analytics
 
 import android.content.Intent
 import android.graphics.Color
@@ -17,7 +17,7 @@ import com.patrykandpatrick.vico.core.common.Fill
 import com.patrykandpatrick.vico.core.common.shader.ShaderProvider
 import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.data.models.DailyPushStats
-import com.subhajitrajak.durare.databinding.FragmentDailyStatsBinding
+import com.subhajitrajak.durare.databinding.FragmentAnalyticsBinding
 import com.subhajitrajak.durare.ui.shareStats.ShareStatsActivity
 import com.subhajitrajak.durare.utils.getMarker
 import com.subhajitrajak.durare.utils.log
@@ -25,28 +25,28 @@ import com.subhajitrajak.durare.utils.removeWithAnim
 import com.subhajitrajak.durare.utils.showToast
 import com.subhajitrajak.durare.utils.showWithAnim50ms
 
-class DailyStatsFragment : Fragment() {
-    private var _binding: FragmentDailyStatsBinding? = null
+class AnalyticsFragment : Fragment() {
+    private var _binding: FragmentAnalyticsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: DailyStatsViewModel by viewModels {
-        DailyStatsViewModelFactory()
+    private val viewModel: AnalyticsViewModel by viewModels {
+        AnalyticsViewModelFactory()
     }
 
-    private lateinit var adapter: DailyStatsAdapter
+    private lateinit var adapter: DailyRecordsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDailyStatsBinding.inflate(inflater, container, false)
+        _binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DailyStatsAdapter { stats ->
+        adapter = DailyRecordsAdapter { stats ->
             binding.loadingIndicator.showWithAnim50ms()
             navigateToShareStats(stats)
         }
