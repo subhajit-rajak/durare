@@ -1,6 +1,5 @@
 package com.subhajitrajak.durare.ui.analytics
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +19,6 @@ import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.data.models.DailyPushStats
 import com.subhajitrajak.durare.databinding.FragmentAnalyticsBinding
 import com.subhajitrajak.durare.ui.daySummary.DaySummaryFragment
-import com.subhajitrajak.durare.ui.shareStats.ShareStatsActivity
 import com.subhajitrajak.durare.utils.getMarker
 import com.subhajitrajak.durare.utils.log
 import com.subhajitrajak.durare.utils.removeWithAnim

@@ -205,10 +205,10 @@
     <string name="active_time">Active Time</string>
     <string name="sets">Sets</string>
     <string name="pace_reps_min">Pace (reps/min)</string>
-    <string name="you_have_reached_0_of_your_goal">You have reached 0% of your goal</string>
-    <string name="goal_0">Goal: 0</string>
     <string name="session_time">Session Time</string>
     <string name="active_rest_time_ratio">Active-Rest Time Ratio</string>
     <string name="estimated_calories_burned">Estimated Calories Burned</string>
     <string name="_00_00_kcal">~00.00 kcal</string>
+    <string name="goal">Goal: %1$d</string>
+    <string name="you_have_reached_of_your_goal">You have reached %1$d%% of your goal</string>
 </resources>

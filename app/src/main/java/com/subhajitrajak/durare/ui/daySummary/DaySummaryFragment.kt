@@ -17,6 +17,7 @@ import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.data.models.DailyPushStats
 import com.subhajitrajak.durare.databinding.FragmentDaySummaryBinding
 import com.subhajitrajak.durare.ui.shareStats.ShareStatsActivity
+import com.subhajitrajak.durare.utils.Preferences
 import com.subhajitrajak.durare.utils.getFormattedDate
 import com.subhajitrajak.durare.utils.getFormattedTime
 import java.util.Locale
@@ -73,7 +74,18 @@ class DaySummaryFragment : Fragment() {
 
             setupTextViews()
             setUpChart()
+            setUpGoals()
         }
+    }
+
+    private fun setUpGoals() {
+        val pref = Preferences.getInstance(requireContext())
+        val goal = pref.getGoal()
+        binding.goalTextView.text = getString(R.string.goal, goal)
+
+        val progress = pushups * 100 / goal
+        binding.progressTextView.text = getString(R.string.you_have_reached_of_your_goal, progress)
+        binding.progressBar.progress = if (progress > 100) 100 else progress
     }
 
     private fun setUpChart() {
