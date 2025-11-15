@@ -110,6 +110,9 @@ dependencies {
     // vico charts
     implementation(libs.vico.views)
 
+    // android charts
+    implementation("com.github.AppDevNext:AndroidChart:3.1.0.31")
+
     // room
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)

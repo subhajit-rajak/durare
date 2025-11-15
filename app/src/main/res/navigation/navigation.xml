@@ -138,7 +138,15 @@
         android:id="@+id/analyticsFragment"
         android:name="com.subhajitrajak.durare.ui.analytics.AnalyticsFragment"
         android:label="fragment_analytics"
-        tools:layout="@layout/fragment_analytics" />
+        tools:layout="@layout/fragment_analytics" >
+        <action
+            android:id="@+id/action_analyticsFragment_to_daySummaryFragment"
+            app:destination="@id/daySummaryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.subhajitrajak.durare.ui.splash.SplashFragment"
@@ -213,4 +221,9 @@
         android:name="com.subhajitrajak.durare.ui.pastConversations.PastConversationsFragment"
         android:label="fragment_past_conversations"
         tools:layout="@layout/fragment_past_conversations" />
+    <fragment
+        android:id="@+id/daySummaryFragment"
+        android:name="com.subhajitrajak.durare.ui.daySummary.DaySummaryFragment"
+        android:label="fragment_day_summary"
+        tools:layout="@layout/fragment_day_summary" />
 </navigation>

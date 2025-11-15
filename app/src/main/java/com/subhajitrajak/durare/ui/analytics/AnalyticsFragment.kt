@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.patrykandpatrick.vico.core.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.core.cartesian.axis.VerticalAxis
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianLayerRangeProvider
@@ -18,6 +19,7 @@ import com.patrykandpatrick.vico.core.common.shader.ShaderProvider
 import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.data.models.DailyPushStats
 import com.subhajitrajak.durare.databinding.FragmentAnalyticsBinding
+import com.subhajitrajak.durare.ui.daySummary.DaySummaryFragment
 import com.subhajitrajak.durare.ui.shareStats.ShareStatsActivity
 import com.subhajitrajak.durare.utils.getMarker
 import com.subhajitrajak.durare.utils.log
@@ -48,7 +50,7 @@ class AnalyticsFragment : Fragment() {
 
         adapter = DailyRecordsAdapter { stats ->
             binding.loadingIndicator.showWithAnim50ms()
-            navigateToShareStats(stats)
+            navigateToNextScreen(stats)
         }
         binding.recordsRv.adapter = adapter
 
@@ -128,23 +130,12 @@ class AnalyticsFragment : Fragment() {
         }
     }
 
-    // navigates to the share stats activity with the specified parameters
-    private fun navigateToShareStats(stats: DailyPushStats) {
-        val pushUps = stats.totalPushups.toString()
-        val timeMinutes = stats.totalActiveTimeMs / 1000 / 60
-        val timeSeconds = (stats.totalActiveTimeMs / 1000) % 60
-        val time = "${timeMinutes}m ${timeSeconds}s"
-
-        val restMinutes = stats.totalRestTimeMs / 1000 / 60
-        val restSeconds = (stats.totalRestTimeMs / 1000) % 60
-        val rest = "${restMinutes}m ${restSeconds}s"
-
-        val intent = Intent(requireContext(), ShareStatsActivity::class.java).apply {
-            putExtra(ShareStatsActivity.EXTRA_PUSH_UPS, pushUps)
-            putExtra(ShareStatsActivity.EXTRA_TIME, time)
-            putExtra(ShareStatsActivity.EXTRA_REST, rest)
+    // navigates to the day summary screen
+    private fun navigateToNextScreen(stats: DailyPushStats) {
+        val bundle = Bundle().apply {
+            putParcelable(DaySummaryFragment.STATS, stats)
         }
-        startActivity(intent)
+        findNavController().navigate(R.id.action_analyticsFragment_to_daySummaryFragment, bundle)
         binding.loadingIndicator.removeWithAnim()
     }
 
