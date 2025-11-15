@@ -21,6 +21,7 @@ import com.subhajitrajak.durare.data.models.DailyPushStats
 import com.subhajitrajak.durare.databinding.FragmentDaySummaryBinding
 import com.subhajitrajak.durare.ui.shareStats.ShareStatsActivity
 import com.subhajitrajak.durare.utils.Preferences
+import com.subhajitrajak.durare.utils.calculatePushupCalories
 import com.subhajitrajak.durare.utils.getFormattedDate
 import com.subhajitrajak.durare.utils.getFormattedTime
 import java.util.Locale
@@ -29,13 +30,15 @@ class DaySummaryFragment : Fragment() {
     private var _binding: FragmentDaySummaryBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var pref: Preferences
+
     private lateinit var stats: DailyPushStats
     private var pushups: Int = 0
     private var activeTime: String = ""
     private var restTime: String = ""
     private var sessionTime: String = ""
     private var date: String = ""
-    private var pace: String = ""
+    private var pace: Float = 0f
     private var ratio: String = ""
 
     companion object {
@@ -47,6 +50,7 @@ class DaySummaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDaySummaryBinding.inflate(inflater, container, false)
+        pref = Preferences.getInstance(requireContext())
         return binding.root
     }
 
@@ -78,11 +82,21 @@ class DaySummaryFragment : Fragment() {
             setupTextViews()
             setUpChart()
             setUpGoals()
+            setUpCalories()
         }
     }
 
+    private fun setUpCalories() {
+        val caloriesBurnt = calculatePushupCalories(
+            weightKg = pref.getWeight(),
+            pushupCount = pushups,
+            pushupsPerMinute = pace
+        )
+
+        binding.calorieTextView.text = getString(R.string.estimated_calories_burned_value, caloriesBurnt.toString())
+    }
+
     private fun setUpGoals() {
-        val pref = Preferences.getInstance(requireContext())
         val goal = pref.getGoal()
         binding.goalTextView.text = getString(R.string.goal, goal)
 
@@ -90,18 +104,20 @@ class DaySummaryFragment : Fragment() {
         val targetProgress = if (progress > 100) 100 else progress
 
         ObjectAnimator.ofInt(binding.progressBar, "progress", binding.progressBar.progress, targetProgress).apply {
-            duration = 2000
+            duration = 1000
             interpolator = DecelerateInterpolator(0.5f)
             start()
         }
 
         ValueAnimator.ofInt(binding.progressBar.progress, targetProgress).apply {
-            duration = 2000
+            duration = 1000
             interpolator = DecelerateInterpolator(0.5f)
             addUpdateListener { animator ->
-                val animatedValue = animator.animatedValue as Int
-                binding.progressTextView.text =
-                    getString(R.string.you_have_reached_of_your_goal, animatedValue)
+                _binding?.let { binding ->
+                    val animatedValue = animator.animatedValue as Int
+                    binding.progressTextView.text =
+                        getString(R.string.you_have_reached_of_your_goal, animatedValue)
+                }
             }
             start()
         }
@@ -162,9 +178,9 @@ class DaySummaryFragment : Fragment() {
 
         val activeTimeInMinutes = stats.totalActiveTimeMs / 1000.0 / 60.0
         pace = if (activeTimeInMinutes > 0) {
-            String.format(Locale.US, "%.1f", stats.totalPushups / activeTimeInMinutes)
+            String.format(Locale.US, "%.1f", stats.totalPushups / activeTimeInMinutes).toFloat()
         } else {
-            "N/A"
+            0f
         }
 
         ratio = if (stats.totalRestTimeMs > 0) {
@@ -180,7 +196,7 @@ class DaySummaryFragment : Fragment() {
         pushUpCountTextView.text = pushups.toString()
         activeTimeTextView.text = activeTime
         restTimeTextView.text = restTime
-        paceTextView.text = pace
+        paceTextView.text = pace.toString()
         setsTextView.text = stats.totalReps.toString()
         sessionTimeTextView.text = sessionTime
         ratioTextView.text = ratio

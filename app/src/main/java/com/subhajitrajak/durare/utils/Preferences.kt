@@ -19,6 +19,7 @@ class Preferences private constructor(context: Context) {
         const val DOWN_THRESHOLD = "downThreshold" // float
         const val UP_THRESHOLD = "upThreshold" // float
         const val GOAL = "goal" // int
+        const val WEIGHT = "weight" // double
 
         @Volatile private var instance: Preferences? = null
 
@@ -69,6 +70,9 @@ class Preferences private constructor(context: Context) {
 
     fun getGoal(): Int = prefs.getInt(GOAL, 50)
     fun setGoal(value: Int) = prefs.edit { putInt(GOAL, value) }
+
+    fun getWeight(): Float = prefs.getFloat(WEIGHT, 75f)
+    fun setWeight(value: Float) = prefs.edit { putFloat(WEIGHT, value) }
 
     // reset all preferences in personalize screen to defaults
     fun resetPersonalizationsToDefaults() {
