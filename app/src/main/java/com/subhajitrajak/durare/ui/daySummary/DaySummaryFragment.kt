@@ -1,5 +1,7 @@
 package com.subhajitrajak.durare.ui.daySummary
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -7,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.animation.Easing
@@ -84,8 +87,24 @@ class DaySummaryFragment : Fragment() {
         binding.goalTextView.text = getString(R.string.goal, goal)
 
         val progress = pushups * 100 / goal
-        binding.progressTextView.text = getString(R.string.you_have_reached_of_your_goal, progress)
-        binding.progressBar.progress = if (progress > 100) 100 else progress
+        val targetProgress = if (progress > 100) 100 else progress
+
+        ObjectAnimator.ofInt(binding.progressBar, "progress", binding.progressBar.progress, targetProgress).apply {
+            duration = 2000
+            interpolator = DecelerateInterpolator(0.5f)
+            start()
+        }
+
+        ValueAnimator.ofInt(binding.progressBar.progress, targetProgress).apply {
+            duration = 2000
+            interpolator = DecelerateInterpolator(0.5f)
+            addUpdateListener { animator ->
+                val animatedValue = animator.animatedValue as Int
+                binding.progressTextView.text =
+                    getString(R.string.you_have_reached_of_your_goal, animatedValue)
+            }
+            start()
+        }
     }
 
     private fun setUpChart() {
