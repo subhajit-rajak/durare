@@ -122,8 +122,8 @@
         android:label="fragment_on_boarding"
         tools:layout="@layout/fragment_on_boarding" >
         <action
-            android:id="@+id/action_onBoardingFragment_to_cameraAccessFragment"
-            app:destination="@id/cameraAccessFragment"
+            android:id="@+id/action_onBoardingFragment_to_weightSetupFragment"
+            app:destination="@id/weightSetupFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
@@ -156,8 +156,8 @@
             android:id="@+id/action_splashFragment_to_onBoardingFragment"
             app:destination="@id/onBoardingFragment" />
         <action
-            android:id="@+id/action_splashFragment_to_cameraAccessFragment"
-            app:destination="@id/cameraAccessFragment"
+            android:id="@+id/action_splashFragment_to_weightSetupFragment"
+            app:destination="@id/weightSetupFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
@@ -226,4 +226,17 @@
         android:name="com.subhajitrajak.durare.ui.daySummary.DaySummaryFragment"
         android:label="fragment_day_summary"
         tools:layout="@layout/fragment_day_summary" />
+    <fragment
+        android:id="@+id/weightSetupFragment"
+        android:name="com.subhajitrajak.durare.ui.weightSetup.WeightSetupFragment"
+        android:label="fragment_weight_setup"
+        tools:layout="@layout/fragment_weight_setup" >
+        <action
+            android:id="@+id/action_weightSetupFragment_to_cameraAccessFragment"
+            app:destination="@id/cameraAccessFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 </navigation>

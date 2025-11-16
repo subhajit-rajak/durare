@@ -67,7 +67,7 @@ class SplashFragment : Fragment() {
 
             navController.navigate(
                 if (isLoggedIn) {
-                    R.id.action_splashFragment_to_cameraAccessFragment
+                    R.id.action_splashFragment_to_weightSetupFragment
                 } else {
                     R.id.action_splashFragment_to_onBoardingFragment
                 },

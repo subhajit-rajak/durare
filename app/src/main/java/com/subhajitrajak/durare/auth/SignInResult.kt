@@ -10,5 +10,6 @@ data class UserData(
     val username: String? = null,
     val userEmail: String? = null,
     val profilePictureUrl: String? = null,
-    val isAnonymous: Boolean = false
+    val isAnonymous: Boolean = false,
+    val userWeight: Float = 0f
 )

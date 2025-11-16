@@ -54,7 +54,7 @@ class OnBoardingFragment : Fragment() {
                         signInViewModel.saveUserData(signInResult.data).observe(viewLifecycleOwner,
                             Observer { result ->
                                 result.onSuccess {
-                                    navigateToDashboard()
+                                    navigateToNextScreen()
                                 }
                                 result.onFailure { e ->
                                     binding.loadingIndicator.removeWithAnim()
@@ -206,7 +206,7 @@ class OnBoardingFragment : Fragment() {
         }
     }
 
-    private fun navigateToDashboard() {
+    private fun navigateToNextScreen() {
         try {
             val navController = findNavController()
             val navOptions = NavOptions.Builder()
@@ -214,7 +214,7 @@ class OnBoardingFragment : Fragment() {
                 .build()
 
             navController.navigate(
-                R.id.action_onBoardingFragment_to_cameraAccessFragment,
+                R.id.action_onBoardingFragment_to_weightSetupFragment,
                 null,
                 navOptions
             )
