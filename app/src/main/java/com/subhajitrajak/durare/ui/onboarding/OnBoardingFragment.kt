@@ -20,7 +20,6 @@ import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.auth.GoogleAuthUiClient
 import com.subhajitrajak.durare.databinding.FragmentOnBoardingBinding
 import com.subhajitrajak.durare.utils.log
-import com.subhajitrajak.durare.utils.remove
 import com.subhajitrajak.durare.utils.removeWithAnim
 import com.subhajitrajak.durare.utils.show
 import com.subhajitrajak.durare.utils.showToast
@@ -55,9 +54,6 @@ class OnBoardingFragment : Fragment() {
                         signInViewModel.saveUserData(signInResult.data).observe(viewLifecycleOwner,
                             Observer { result ->
                                 result.onSuccess {
-                                    val username = signInResult.data.username
-                                    val firstName = username?.substring(0, username.indexOf(' '))
-                                    showToast(requireContext(), "Welcome, $firstName")
                                     navigateToDashboard()
                                 }
                                 result.onFailure { e ->
@@ -73,7 +69,6 @@ class OnBoardingFragment : Fragment() {
             }
         } else {
             binding.loadingIndicator.removeWithAnim()
-            showToast(requireContext(), "Sign-in cancelled")
         }
     }
 
