@@ -34,13 +34,6 @@ class WeightSetupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.checkSavedData()
-        viewModel.isDataSaved.observe(viewLifecycleOwner) { isDataSaved ->
-            if (isDataSaved) {
-                navigateToNextScreen()
-            }
-        }
-
         binding.apply {
             nextButton.setOnClickListener {
                 val input = weightInputField.text.toString().trim()

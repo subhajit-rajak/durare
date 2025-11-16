@@ -162,6 +162,13 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_splashFragment_to_cameraAccessFragment"
+            app:destination="@id/cameraAccessFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/cameraAccessFragment"
