@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.subhajitrajak.durare.auth.UserData
+import com.subhajitrajak.durare.utils.Constants
 import com.subhajitrajak.durare.utils.Constants.PROFILE
 import com.subhajitrajak.durare.utils.Constants.USERS
 import com.subhajitrajak.durare.utils.Constants.USER_DATA
@@ -26,7 +27,20 @@ class OnBoardingRepository(
 
     // Save or update user profile
     suspend fun saveUserData(userData: UserData) {
-        profileDoc().set(userData, SetOptions.merge()).await()
+        val dataToSave = mutableMapOf<String, Any?>()
+
+        if (userData.userId.isNotEmpty()) dataToSave["userId"] = userData.userId
+        if (!userData.username.isNullOrEmpty()) dataToSave["username"] = userData.username
+        if (!userData.userEmail.isNullOrEmpty()) dataToSave["userEmail"] = userData.userEmail
+        if (!userData.profilePictureUrl.isNullOrEmpty()) dataToSave["profilePictureUrl"] = userData.profilePictureUrl
+        if (userData.isAnonymous) dataToSave["isAnonymous"] = true
+        if (userData.userWeight != null && userData.userWeight != 0.0) {
+            dataToSave[Constants.USER_WEIGHT] = userData.userWeight
+        }
+
+        if (dataToSave.isNotEmpty()) {
+            profileDoc().set(dataToSave, SetOptions.merge()).await()
+        }
     }
 
     // Fetch user profile

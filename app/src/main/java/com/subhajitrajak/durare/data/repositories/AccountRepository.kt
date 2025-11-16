@@ -16,7 +16,7 @@ class AccountRepository (val context: Context) {
     val userDoc = uid?.let { db.collection(Constants.USERS).document(it) }
     val profileDoc = userDoc?.collection(Constants.USER_DATA)?.document(Constants.PROFILE)
 
-    suspend fun updateWeight(weight: Float) {
+    suspend fun updateWeight(weight: Double) {
         pref.setWeight(weight)
         profileDoc?.update(Constants.USER_WEIGHT, weight)?.await()
     }

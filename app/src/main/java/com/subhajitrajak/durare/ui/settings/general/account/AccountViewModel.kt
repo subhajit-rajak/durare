@@ -32,7 +32,7 @@ class AccountViewModel(
         }
     }
 
-    fun updateWeight(weight: Float) {
+    fun updateWeight(weight: Double) {
         viewModelScope.launch {
             try {
                 repository.updateWeight(weight)

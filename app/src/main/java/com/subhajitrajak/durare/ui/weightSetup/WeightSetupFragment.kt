@@ -21,7 +21,7 @@ class WeightSetupFragment : Fragment() {
         WeightSetupViewModelFactory(requireContext())
     }
 
-    var weight: Float = 0f
+    var weight: Double = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +34,13 @@ class WeightSetupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.checkSavedData()
+        viewModel.isDataSaved.observe(viewLifecycleOwner) { isDataSaved ->
+            if (isDataSaved) {
+                navigateToNextScreen()
+            }
+        }
+
         binding.apply {
             nextButton.setOnClickListener {
                 val input = weightInputField.text.toString().trim()
@@ -43,14 +50,14 @@ class WeightSetupFragment : Fragment() {
                 }
 
                 try {
-                    val inputValue = input.toFloat()
+                    val inputValue = input.toDouble()
                     val unit = inputTypeField.text.toString()
 
                     weight = if (unit == getString(R.string.pounds)) {
-                        val converted = inputValue * 0.453592f
-                        String.format(Locale.US, "%.2f", converted).toFloat()
+                        val converted = inputValue * 0.453592
+                        String.format(Locale.US, "%.2f", converted).toDouble()
                     } else {
-                        String.format(Locale.US, "%.2f", inputValue).toFloat()
+                        String.format(Locale.US, "%.2f", inputValue).toDouble()
                     }
 
                     viewModel.saveWeightData(weight)

@@ -47,7 +47,7 @@ class AccountFragment : Fragment() {
                     if (isEnabled) {
                         isEnabled = false
                         editWeightButton.setImageResource(R.drawable.edit_pencil)
-                        viewModel.updateWeight(text.toString().toFloat())
+                        viewModel.updateWeight(text.toString().toDouble())
                     } else {
                         isEnabled = true
                         editWeightButton.setImageResource(R.drawable.check)

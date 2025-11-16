@@ -14,7 +14,7 @@ class WeightSetupViewModel(
     private val _isDataSaved = MutableLiveData<Boolean>()
     val isDataSaved: LiveData<Boolean> = _isDataSaved
 
-    fun saveWeightData(value: Float) {
+    fun saveWeightData(value: Double) {
         viewModelScope.launch {
             repository.saveData(value)
         }
