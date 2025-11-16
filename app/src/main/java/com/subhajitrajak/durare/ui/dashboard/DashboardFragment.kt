@@ -1,6 +1,7 @@
 package com.subhajitrajak.durare.ui.dashboard
 
 import android.animation.ValueAnimator
+import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -9,18 +10,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayout
+import com.google.android.material.slider.Slider
 import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.data.models.AiUserStats
 import com.subhajitrajak.durare.data.models.User
+import com.subhajitrajak.durare.databinding.DialogSetGoalBinding
 import com.subhajitrajak.durare.databinding.FragmentDashboardBinding
 import com.subhajitrajak.durare.ui.askAi.AskAiFragment
+import com.subhajitrajak.durare.utils.Preferences
 import com.subhajitrajak.durare.utils.formatToShortNumber
 import com.subhajitrajak.durare.utils.formatWithCommas
 import com.subhajitrajak.durare.utils.log
@@ -28,7 +34,6 @@ import com.subhajitrajak.durare.utils.removeWithAnim
 import com.subhajitrajak.durare.utils.show
 import com.subhajitrajak.durare.utils.showToast
 import com.subhajitrajak.durare.utils.showWithAnim50ms
-import androidx.core.graphics.toColorInt
 
 class DashboardFragment : Fragment() {
 
@@ -40,6 +45,8 @@ class DashboardFragment : Fragment() {
     private val viewModel: DashboardViewModel by viewModels {
         DashboardViewModelFactory(requireContext().applicationContext)
     }
+
+    private lateinit var pref: Preferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +61,8 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setAnimation()
+
+        pref = Preferences.getInstance(requireContext())
 
         viewModel.dashboardStats.observe(viewLifecycleOwner) { stats ->
             // update UI
@@ -152,7 +161,63 @@ class DashboardFragment : Fragment() {
                     findNavController().navigate(R.id.action_dashboardFragment_to_askAiFragment, bundle, null, extras)
                 }
             }
+
+            goalTextView.text = pref.getGoal().toString()
+            goalCard.show()
+            goalCard.setOnClickListener {
+                showGoalDialog(
+                    onPositiveClick = { goal ->
+                        pref.setGoal(goal)
+                        goalTextView.text = goal.toString()
+                    }
+                )
+            }
         }
+    }
+
+    private fun showGoalDialog(
+        onPositiveClick: (Int) -> Unit,
+        onNegativeClick: () -> Unit = {}
+    ) {
+        val dialogBinding = DialogSetGoalBinding.inflate(layoutInflater)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogBinding.root)
+            .create()
+
+        animateSlider(dialogBinding.goalSlider, pref.getGoal().toFloat())
+
+        dialogBinding.dialogCancel.setOnClickListener {
+            dialog.dismiss()
+            onNegativeClick()
+        }
+
+        dialogBinding.dialogOk.setOnClickListener {
+            dialog.dismiss()
+            val goal = dialogBinding.goalSlider.value.toInt()
+            onPositiveClick(goal)
+        }
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+    }
+
+    private fun animateSlider(slider: Slider, targetValue: Float) {
+        val originalStep = slider.stepSize
+        slider.stepSize = 0f
+
+        val animator = ValueAnimator.ofFloat(slider.value, targetValue)
+        animator.duration = 1000
+        animator.addUpdateListener { anim ->
+            slider.value = (anim.animatedValue as Float)
+        }
+
+        animator.doOnEnd {
+            slider.stepSize = originalStep
+            slider.value = targetValue
+        }
+
+        animator.start()
     }
 
     private fun setAnimation() {

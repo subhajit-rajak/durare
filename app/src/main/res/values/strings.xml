@@ -219,4 +219,7 @@
     <string name="pounds">pounds</string>
     <string name="invalid_weight">Invalid Weight</string>
     <string name="weight">Weight</string>
+    <string name="set_goal">Set Daily Goal</string>
+    <string name="save_goal">Save Goal</string>
+    <string name="how_many_pushups_do_you_want_to_aim_for_each_day">How many pushups do you want to aim for each day?</string>
 </resources>
