@@ -1,5 +1,6 @@
 [versions]
 agp = "8.11.1"
+androidchart = "3.1.0.31"
 cameraCore = "1.4.2"
 cameraCamera2 = "1.4.2"
 cameraLifecycle = "1.4.2"
@@ -39,6 +40,7 @@ vico = "2.2.0"
 markwon = "4.6.2"
 
 [libraries]
+androidchart = { module = "com.github.AppDevNext:AndroidChart", version.ref = "androidchart" }
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraView" }
 androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraLifecycle" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCamera2" }

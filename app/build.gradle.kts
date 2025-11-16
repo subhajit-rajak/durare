@@ -14,8 +14,8 @@ android {
         applicationId = "com.subhajitrajak.durare"
         minSdk = 26
         targetSdk = 36
-        versionCode = 10
-        versionName = "0.1.9"
+        versionCode = 11
+        versionName = "0.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -111,7 +111,7 @@ dependencies {
     implementation(libs.vico.views)
 
     // android charts
-    implementation("com.github.AppDevNext:AndroidChart:3.1.0.31")
+    implementation(libs.androidchart)
 
     // room
     implementation(libs.androidx.room.runtime)
