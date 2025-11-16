@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.settings.general.AccountFragment">
+    tools:context=".ui.settings.general.account.AccountFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -101,7 +101,6 @@
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/person_name_1"
                     android:layout_marginStart="24dp"
                     android:textColor="@color/dark_grey"
                     android:textSize="16sp"
@@ -121,13 +120,63 @@
                     android:id="@+id/userEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/person_email_1"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="24dp"
                     android:textColor="@color/dark_grey"
                     android:textSize="16sp"
                     android:fontFamily="@font/special_gothic_expanded_bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/weight"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="24dp"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/special_gothic_expanded_medium"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="24dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="24dp">
+
+                    <EditText
+                        android:id="@+id/userWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:importantForAutofill="no"
+                        android:inputType="numberDecimal"
+                        android:enabled="false"
+                        android:hint="@string/total_push_ups_today_count"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/special_gothic_expanded_bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kilograms"
+                        android:layout_marginStart="4dp"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/special_gothic_expanded_bold"/>
+
+                    <ImageView
+                        android:id="@+id/editWeightButton"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="8dp"
+                        android:contentDescription="@string/enter_your_weight"
+                        android:src="@drawable/edit_pencil"
+                        app:tint="@color/dark_grey"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 

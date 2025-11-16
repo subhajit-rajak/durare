@@ -218,4 +218,5 @@
     <string name="kilograms">kilograms</string>
     <string name="pounds">pounds</string>
     <string name="invalid_weight">Invalid Weight</string>
+    <string name="weight">Weight</string>
 </resources>
