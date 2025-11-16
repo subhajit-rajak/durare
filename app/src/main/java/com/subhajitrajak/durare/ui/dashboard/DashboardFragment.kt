@@ -233,7 +233,7 @@ class DashboardFragment : Fragment() {
         }
 
         borderAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
-            duration = 3000
+            duration = 1000
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
 
