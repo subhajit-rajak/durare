@@ -1,6 +1,8 @@
 package com.subhajitrajak.durare.ui.counter
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.AudioManager
@@ -25,6 +27,8 @@ import androidx.camera.core.resolutionselector.AspectRatioStrategy
 import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -38,7 +42,7 @@ import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.data.models.DailyPushStats
 import com.subhajitrajak.durare.data.repositories.StatsRepository
 import com.subhajitrajak.durare.databinding.ActivityCounterBinding
-import com.subhajitrajak.durare.services.RestTimerService
+import com.subhajitrajak.durare.utils.reminderUtils.RestAlarmReceiver
 import com.subhajitrajak.durare.ui.shareStats.ShareStatsActivity
 import com.subhajitrajak.durare.utils.Constants.DATE_FORMAT
 import com.subhajitrajak.durare.utils.Preferences
@@ -56,6 +60,10 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
 
     private val binding: ActivityCounterBinding by lazy {
         ActivityCounterBinding.inflate(layoutInflater)
+    }
+    
+    private val prefs: Preferences by lazy { 
+        Preferences.getInstance(this) 
     }
 
     private lateinit var cameraExecutor: ExecutorService
@@ -97,7 +105,11 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
                 val delta = now - lastTickStartMs
                 if (isResting) {
                     restAccumulatedMs += delta
-                    restRemainingMs = max(0, restRemainingMs - delta)
+                    val endTs = Preferences.getInstance(this@CounterActivity).getRestEndTimestamp()
+                    if (isResting && endTs > 0) {
+                        restRemainingMs = max(0, endTs - System.currentTimeMillis())
+                        updateCountdownNotification(restRemainingMs)
+                    }
                     if (restRemainingMs <= 0) {
                         exitRestAndStartNextRep()
                     }
@@ -150,7 +162,7 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         }
 
         // Detector
-        pushUpDetector = PushUpDetector(this, preferences = Preferences.getInstance(this))
+        pushUpDetector = PushUpDetector(this, preferences = prefs)
 
         // Face detector
         val options = FaceDetectorOptions.Builder()
@@ -165,7 +177,6 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         // initializing preferences
-        val prefs = Preferences.getInstance(this)
         showCameraCardSwitch = prefs.isCameraCardEnabled()
         isSoundFeedbackEnabled = prefs.isSoundFeedbackEnabled()
         isVibrationFeedbackEnabled = prefs.isVibrationFeedbackEnabled()
@@ -286,14 +297,77 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         binding.done.visibility = View.GONE
         binding.exitRest.visibility = View.VISIBLE
 
-        startNotificationForRestTimer()
+        scheduleRestAlarm(restRemainingMs)
     }
 
-    private fun startNotificationForRestTimer() {
-        val intent = Intent(this, RestTimerService::class.java).apply {
-            putExtra(RestTimerService.EXTRA_REST_DURATION_MS, customRestMs)
+    private fun scheduleRestAlarm(durationMs: Long) {
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!alarmManager.canScheduleExactAlarms()) {
+                // Do NOT crash; just fallback to normal alarm
+                alarmManager.set(
+                    AlarmManager.RTC_WAKEUP,
+                    System.currentTimeMillis() + durationMs,
+                    PendingIntent.getBroadcast(
+                        this,
+                        RestAlarmReceiver.REST_ALARM_REQUEST_CODE,
+                        Intent(this, RestAlarmReceiver::class.java),
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+                )
+                return
+            }
         }
-        ContextCompat.startForegroundService(this, intent)
+
+        val intent = Intent(this, RestAlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+            this,
+            RestAlarmReceiver.REST_ALARM_REQUEST_CODE,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val triggerAtMillis = System.currentTimeMillis() + durationMs
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            triggerAtMillis,
+            pendingIntent
+        )
+
+        prefs.setRestEndTimestamp(triggerAtMillis)
+    }
+
+    private fun updateCountdownNotification(ms: Long) {
+        val hasPermission =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED
+            } else true
+
+        if (!hasPermission) return
+
+        val text = formatDuration(ms)
+
+        val notif = NotificationCompat.Builder(this, RestAlarmReceiver.CHANNEL_ID)
+            .setSmallIcon(R.drawable.timer)
+            .setContentTitle("Resting...")
+            .setContentText("Time remaining: $text")
+            .setColor(getColor(R.color.primary))
+            .setOngoing(true)
+            .setOnlyAlertOnce(true)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .build()
+
+        NotificationManagerCompat.from(this).notify(RestAlarmReceiver.REST_COUNTDOWN_NOTIFICATION_ID, notif)
+    }
+
+    private fun clearCountdownNotification() {
+        val nm = NotificationManagerCompat.from(this)
+        nm.cancel(RestAlarmReceiver.REST_COUNTDOWN_NOTIFICATION_ID)
     }
 
     private fun onExitRestClick() {
@@ -308,7 +382,9 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
     }
 
     private fun exitRestAndStartNextRep() {
-        stopService(Intent(this, RestTimerService::class.java))
+        cancelRestAlarm()
+        prefs.setRestEndTimestamp(0)
+        clearCountdownNotification()
 
         if (isSoundFeedbackEnabled) {
             try { toneGenerator?.startTone(ToneGenerator.TONE_PROP_BEEP, 200) } catch (_: Exception) {}
@@ -333,6 +409,19 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         pushUpDetector.reset()
         updateRepTitle()
         updateTotalCount()
+    }
+
+    private fun cancelRestAlarm() {
+        val intent = Intent(this, RestAlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+            this,
+            RestAlarmReceiver.REST_ALARM_REQUEST_CODE,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or
+                    PendingIntent.FLAG_IMMUTABLE
+        )
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel(pendingIntent)
     }
 
     private fun completeSessionAndExit() {
@@ -456,6 +545,7 @@ class CounterActivity : AppCompatActivity(), PushUpDetector.Listener {
         toneGenerator?.release()
         window.decorView.keepScreenOn = false
         uiHandler.removeCallbacksAndMessages(null)
-        stopService(Intent(this, RestTimerService::class.java))
+        cancelRestAlarm()
+        clearCountdownNotification()
     }
 }

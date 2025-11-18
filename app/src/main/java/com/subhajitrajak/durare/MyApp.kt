@@ -5,9 +5,9 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import com.google.firebase.Firebase
 import com.google.firebase.initialize
-import com.subhajitrajak.durare.services.RestTimerService.Companion.CHANNEL_ID
-import com.subhajitrajak.durare.utils.reminderUtils.PushupReminderManager
 import com.subhajitrajak.durare.utils.ThemeManager
+import com.subhajitrajak.durare.utils.reminderUtils.PushupReminderManager
+import com.subhajitrajak.durare.utils.reminderUtils.RestAlarmReceiver
 
 class MyApp : Application() {
     override fun onCreate() {
@@ -27,7 +27,7 @@ class MyApp : Application() {
             NotificationManager.IMPORTANCE_HIGH
         )
         val restTimerChannel = NotificationChannel(
-            CHANNEL_ID,
+            RestAlarmReceiver.CHANNEL_ID,
             "Rest Timer",
             NotificationManager.IMPORTANCE_LOW,
         ).apply {

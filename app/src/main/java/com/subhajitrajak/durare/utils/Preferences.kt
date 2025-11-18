@@ -20,6 +20,7 @@ class Preferences private constructor(context: Context) {
         const val UP_THRESHOLD = "upThreshold" // float
         const val GOAL = "goal" // int
         const val WEIGHT = "weight" // double
+        const val REST_END_TIME = "rest_end_ts" // long
 
         @Volatile private var instance: Preferences? = null
 
@@ -73,6 +74,9 @@ class Preferences private constructor(context: Context) {
 
     fun getWeight(): Double = prefs.getFloat(WEIGHT, 0f).toDouble()
     fun setWeight(value: Double) = prefs.edit { putFloat(WEIGHT, value.toFloat()) }
+
+    fun setRestEndTimestamp(value: Long) { prefs.edit { putLong(REST_END_TIME, value) } }
+    fun getRestEndTimestamp(): Long { return prefs.getLong(REST_END_TIME, 0L) }
 
     // reset all preferences in personalize screen to defaults
     fun resetPersonalizationsToDefaults() {
