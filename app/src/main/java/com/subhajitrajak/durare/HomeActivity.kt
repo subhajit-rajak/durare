@@ -55,7 +55,7 @@ class HomeActivity : AppCompatActivity() {
         dialog.onStartClick = { totalReps, restTimeMs ->
             dialog.binding.apply {
                 // set preferences
-                val prefs = Preferences.Companion.getInstance(this@HomeActivity)
+                val prefs = Preferences.getInstance(this@HomeActivity)
                 prefs.setTotalReps(totalReps)
                 prefs.setRestTime(restTimeMs)
 
@@ -64,14 +64,14 @@ class HomeActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
         }
-        dialog.show(supportFragmentManager, WorkoutSetupDialog.Companion.TAG)
+        dialog.show(supportFragmentManager, WorkoutSetupDialog.TAG)
     }
 
     // navigates to the counter activity with the specified parameters
     private fun startWorkout(totalReps: Int, restTimeMs: Long) {
         val intent = Intent(this, CounterActivity::class.java).apply {
-            putExtra(Preferences.Companion.KEY_TOTAL_REPS, totalReps)
-            putExtra(Preferences.Companion.KEY_REST_TIME, restTimeMs)
+            putExtra(Preferences.KEY_TOTAL_REPS, totalReps)
+            putExtra(Preferences.KEY_REST_TIME, restTimeMs)
         }
         startActivity(intent)
     }
