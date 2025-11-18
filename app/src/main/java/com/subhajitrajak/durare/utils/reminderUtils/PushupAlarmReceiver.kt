@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import com.subhajitrajak.durare.R
-import com.subhajitrajak.durare.ui.dashboard.HomeActivity
+import com.subhajitrajak.durare.HomeActivity
 
 // Receiver to show notification
 class PushupAlarmReceiver : BroadcastReceiver() {

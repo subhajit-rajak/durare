@@ -48,7 +48,7 @@
             android:name=".ui.shareStats.ShareStatsActivity"
             android:exported="false"/>
         <activity
-            android:name=".ui.dashboard.HomeActivity"
+            android:name=".HomeActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.EmptySplash">

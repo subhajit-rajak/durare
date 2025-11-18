@@ -1,4 +1,4 @@
-package com.subhajitrajak.durare.ui.dashboard
+package com.subhajitrajak.durare
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,9 +10,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.databinding.ActivityHomeBinding
 import com.subhajitrajak.durare.ui.counter.CounterActivity
+import com.subhajitrajak.durare.ui.dashboard.WorkoutSetupDialog
 import com.subhajitrajak.durare.utils.Preferences
 
 class HomeActivity : AppCompatActivity() {
@@ -55,7 +55,7 @@ class HomeActivity : AppCompatActivity() {
         dialog.onStartClick = { totalReps, restTimeMs ->
             dialog.binding.apply {
                 // set preferences
-                val prefs = Preferences.getInstance(this@HomeActivity)
+                val prefs = Preferences.Companion.getInstance(this@HomeActivity)
                 prefs.setTotalReps(totalReps)
                 prefs.setRestTime(restTimeMs)
 
@@ -64,14 +64,14 @@ class HomeActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
         }
-        dialog.show(supportFragmentManager, WorkoutSetupDialog.TAG)
+        dialog.show(supportFragmentManager, WorkoutSetupDialog.Companion.TAG)
     }
 
     // navigates to the counter activity with the specified parameters
     private fun startWorkout(totalReps: Int, restTimeMs: Long) {
         val intent = Intent(this, CounterActivity::class.java).apply {
-            putExtra(Preferences.KEY_TOTAL_REPS, totalReps)
-            putExtra(Preferences.KEY_REST_TIME, restTimeMs)
+            putExtra(Preferences.Companion.KEY_TOTAL_REPS, totalReps)
+            putExtra(Preferences.Companion.KEY_REST_TIME, restTimeMs)
         }
         startActivity(intent)
     }
