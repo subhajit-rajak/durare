@@ -18,6 +18,7 @@ import com.subhajitrajak.durare.databinding.ActivityHomeBinding
 import com.subhajitrajak.durare.ui.counter.CounterActivity
 import com.subhajitrajak.durare.ui.dashboard.WorkoutSetupDialog
 import com.subhajitrajak.durare.utils.Preferences
+import com.subhajitrajak.durare.utils.ThemeSwitcher
 import com.subhajitrajak.durare.utils.remove
 import com.subhajitrajak.durare.utils.show
 
@@ -47,6 +48,8 @@ class HomeActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        ThemeSwitcher.animateActivity(this)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController

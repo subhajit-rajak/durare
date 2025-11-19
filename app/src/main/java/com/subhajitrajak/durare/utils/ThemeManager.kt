@@ -16,6 +16,5 @@ object ThemeManager {
     fun setDarkMode(context: Context, enabled: Boolean) {
         val prefs = Preferences.getInstance(context)
         prefs.setDarkTheme(enabled)
-        applyTheme(context)
     }
 }
