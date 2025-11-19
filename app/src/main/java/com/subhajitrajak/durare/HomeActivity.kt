@@ -1,6 +1,10 @@
 package com.subhajitrajak.durare
 
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -14,6 +18,8 @@ import com.subhajitrajak.durare.databinding.ActivityHomeBinding
 import com.subhajitrajak.durare.ui.counter.CounterActivity
 import com.subhajitrajak.durare.ui.dashboard.WorkoutSetupDialog
 import com.subhajitrajak.durare.utils.Preferences
+import com.subhajitrajak.durare.utils.remove
+import com.subhajitrajak.durare.utils.show
 
 class HomeActivity : AppCompatActivity() {
 
@@ -21,11 +27,20 @@ class HomeActivity : AppCompatActivity() {
         ActivityHomeBinding.inflate(layoutInflater)
     }
 
+    private var isOffline = false
+    private var lastDestinationIsNavScreen = false
+    private fun currentFragmentIsNavigationScreen(): Boolean = lastDestinationIsNavScreen
+
+    private lateinit var connectivityManager: ConnectivityManager
+    private lateinit var networkCallback: ConnectivityManager.NetworkCallback
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         enableEdgeToEdge()
         setContentView(binding.root)
+
+        setupNetworkCheck()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -38,10 +53,15 @@ class HomeActivity : AppCompatActivity() {
         binding.bottomNav.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            val shouldShow = (destination.id == R.id.dashboardFragment) || (destination.id == R.id.leaderboardFragment) || (destination.id == R.id.analyticsFragment)
-            binding.bottomNav.visibility = if (shouldShow) View.VISIBLE else View.GONE
-            binding.view.visibility = if (shouldShow) View.VISIBLE else View.GONE
-            binding.startButton.visibility = if (shouldShow) View.VISIBLE else View.GONE
+            val areNavigationScreens = (destination.id == R.id.dashboardFragment) || (destination.id == R.id.leaderboardFragment) || (destination.id == R.id.analyticsFragment)
+            binding.bottomNav.visibility = if (areNavigationScreens) View.VISIBLE else View.GONE
+            binding.view.visibility = if (areNavigationScreens) View.VISIBLE else View.GONE
+            binding.startButton.visibility = if (areNavigationScreens) View.VISIBLE else View.GONE
+
+            lastDestinationIsNavScreen = destination.id == R.id.dashboardFragment ||
+                    destination.id == R.id.leaderboardFragment ||
+                    destination.id == R.id.analyticsFragment
+            maybeShowOrHideBanner()
         }
 
         binding.startButton.setOnClickListener {
@@ -74,5 +94,55 @@ class HomeActivity : AppCompatActivity() {
             putExtra(Preferences.KEY_REST_TIME, restTimeMs)
         }
         startActivity(intent)
+    }
+
+    private fun setupNetworkCheck() {
+        connectivityManager = getSystemService(ConnectivityManager::class.java)
+
+        networkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                isOffline = false
+                maybeShowOrHideBanner()
+            }
+
+            override fun onLost(network: Network) {
+                isOffline = true
+                maybeShowOrHideBanner()
+            }
+        }
+
+        val request = NetworkRequest.Builder()
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            .build()
+
+        connectivityManager.registerNetworkCallback(request, networkCallback)
+
+        // initial state
+        isOffline = !isInternetAvailable()
+    }
+
+    private fun maybeShowOrHideBanner() {
+        val isNavScreen = currentFragmentIsNavigationScreen()
+
+        runOnUiThread {
+            if (isNavScreen && isOffline) {
+                binding.offlineBanner.show()
+            } else {
+                binding.offlineBanner.remove()
+            }
+        }
+    }
+
+    private fun isInternetAvailable(): Boolean {
+        val cm = getSystemService(ConnectivityManager::class.java)
+        val network = cm.activeNetwork ?: return false
+        val caps = cm.getNetworkCapabilities(network) ?: return false
+        return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        connectivityManager.unregisterNetworkCallback(networkCallback)
     }
 }
