@@ -25,4 +25,10 @@ class WeightSetupViewModel(
             _isDataSaved.value = repository.isDataSaved()
         }
     }
+
+    fun updateLocal() {
+        viewModelScope.launch {
+            repository.updateLocalFromRemote()
+        }
+    }
 }

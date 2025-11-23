@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:animateLayoutChanges="true"
     android:padding="32dp"
     tools:context=".ui.weightSetup.WeightSetupFragment">
 
@@ -16,6 +17,7 @@
         android:text="@string/weight_setup_title"
         android:textColor="@color/black"
         android:textSize="24sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,6 +31,7 @@
         android:text="@string/weight_setup_subtitle"
         android:textColor="@color/grey"
         android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/onboardingTitle" />
@@ -41,6 +44,7 @@
         app:cardBackgroundColor="@color/very_light_grey"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/onboardingBody"
         app:strokeColor="@color/light_grey"
@@ -72,6 +76,7 @@
         app:cardBackgroundColor="@color/very_light_grey"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/weightInputCard"
         app:layout_constraintTop_toTopOf="@+id/weightInputCard"
         app:strokeColor="@color/light_grey"
@@ -98,6 +103,7 @@
         app:cardBackgroundColor="@color/black"
         app:cardCornerRadius="32dp"
         app:cardElevation="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -112,5 +118,35 @@
             android:textSize="18sp" />
 
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/settingUpText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/special_gothic_semiexpanded_medium"
+        android:text="Setting up your account"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="24dp"
+        android:indeterminate="true"
+        android:progressBackgroundTint="@color/black"
+        app:indicatorColor="@color/primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingUpText"
+        app:trackColor="@color/light_grey"
+        app:trackThickness="4dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.subhajitrajak.durare.R
 import com.subhajitrajak.durare.databinding.FragmentWeightSetupBinding
 import com.subhajitrajak.durare.utils.log
+import com.subhajitrajak.durare.utils.remove
+import com.subhajitrajak.durare.utils.show
 import java.util.Locale
 
 class WeightSetupFragment : Fragment() {
@@ -34,10 +36,13 @@ class WeightSetupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.updateLocal()
         viewModel.checkSavedData()
         viewModel.isDataSaved.observe(viewLifecycleOwner) { isDataSaved ->
             if (isDataSaved) {
                 navigateToNextScreen()
+            } else {
+                showContent()
             }
         }
 
@@ -75,6 +80,18 @@ class WeightSetupFragment : Fragment() {
                     inputTypeField.text = getString(R.string.kilograms)
                 }
             }
+        }
+    }
+
+    private fun showContent() {
+        binding.apply {
+            onboardingTitle.show()
+            onboardingBody.show()
+            weightInputCard.show()
+            inputTypeCard.show()
+            nextButton.show()
+            settingUpText.remove()
+            progressBar.remove()
         }
     }
 

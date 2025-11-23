@@ -28,4 +28,14 @@ class WeightSetupRepository (val context: Context) {
         }
         return false
     }
+
+    suspend fun updateLocalFromRemote() {
+        val profileSnapshot = profileDoc?.get()?.await()
+        if (profileSnapshot!=null && profileSnapshot.exists()) {
+            val weight = profileSnapshot.getDouble(Constants.USER_WEIGHT)
+            if (weight != null) {
+                pref.setWeight(weight)
+            }
+        }
+    }
 }
