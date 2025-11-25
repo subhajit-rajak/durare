@@ -7,6 +7,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("config") {
+            storeFile = file("changeThis")
+            storePassword = "changeThis"
+            keyAlias = "changeThis"
+            keyPassword = "changeThis"
+        }
+    }
     namespace = "com.subhajitrajak.durare"
     compileSdk = 36
 
@@ -28,11 +36,14 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            isDebuggable = false
+            signingConfig = signingConfigs.getByName("config")
         }
     }
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     compileOptions {
@@ -82,6 +93,9 @@ dependencies {
     // dots indicator
     implementation(libs.dotsindicator)
 
+    // Firebase Bom
+    implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
+
     // firebase auth
     implementation(libs.firebase.auth)
     implementation(libs.androidx.credentials)
@@ -122,4 +136,9 @@ dependencies {
 
     // firebase ai
     implementation(libs.firebase.ai)
+
+    // play integrity
+    implementation("com.google.android.play:integrity:1.6.0")
+    implementation("com.google.firebase:firebase-appcheck-playintegrity")
+    implementation("com.google.firebase:firebase-appcheck-debug")
 }

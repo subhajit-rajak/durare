@@ -4,6 +4,9 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import com.google.firebase.Firebase
+import com.google.firebase.appcheck.appCheck
+import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory
+import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import com.google.firebase.initialize
 import com.subhajitrajak.durare.utils.ThemeManager
 import com.subhajitrajak.durare.utils.reminderUtils.PushupReminderManager
@@ -14,6 +17,14 @@ class MyApp : Application() {
         super.onCreate()
         ThemeManager.applyTheme(this)
         Firebase.initialize(this)
+
+        val factory = if (BuildConfig.DEBUG) {
+            DebugAppCheckProviderFactory.getInstance()
+        } else {
+            PlayIntegrityAppCheckProviderFactory.getInstance()
+        }
+
+        Firebase.appCheck.installAppCheckProviderFactory(factory)
 
         createNotificationChannels()
     }
