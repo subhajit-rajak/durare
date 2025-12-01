@@ -102,6 +102,22 @@ The app uses the following logic to detect push-ups:
 
 This project is open source and available under the MIT License.
 
+## Screenshots
+
+<p align="center">
+   <img alt="a" src="https://github.com/user-attachments/assets/668e631c-9e3e-4199-a060-df93df8706fb" width="24%%"/>
+   <img alt="b" src="https://github.com/user-attachments/assets/cafea59d-132c-4a89-892d-0c09b78eb17a" width="24%%"/>
+   <img alt="c" src="https://github.com/user-attachments/assets/d463e523-75e7-459f-8ae6-ab42d7e19427" width="24%%"/>
+   <img alt="d" src="https://github.com/user-attachments/assets/bb8a83a8-dee9-4c3c-8ab9-093b8fbddf1b" width="24%%"/>
+</p>
+
+<p align="center">
+   <img alt="e" src="https://github.com/user-attachments/assets/72a1c230-22f6-4d7c-8db2-f91280b376b2" width="24%%"/>
+   <img alt="f" src="https://github.com/user-attachments/assets/d294b55e-70fc-4d25-b147-1e518ffa1aec" width="24%%"/>
+   <img alt="g" src="https://github.com/user-attachments/assets/78cbc23f-fa34-4c6b-83c2-70909327afd8" width="24%%"/>
+   <img alt="h" src="https://github.com/user-attachments/assets/3fd7c2b4-489a-4e53-84d0-87b83653fa44" width="24%%"/>
+</p>
+
 ## Share stats to social media stories
 
 <p align="center">
