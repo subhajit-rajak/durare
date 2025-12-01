@@ -223,4 +223,5 @@
     <string name="save_goal">Save Goal</string>
     <string name="how_many_pushups_do_you_want_to_aim_for_each_day">How many pushups do you want to aim for each day?</string>
     <string name="offline_status">Offline • Couldn’t refresh feed</string>
+    <string name="refresh">Refresh</string>
 </resources>

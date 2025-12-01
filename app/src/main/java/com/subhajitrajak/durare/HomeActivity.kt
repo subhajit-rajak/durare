@@ -49,6 +49,10 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNav) { v, insets ->
+            insets
+        }
+
         ThemeSwitcher.animateActivity(this)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -69,6 +73,11 @@ class HomeActivity : AppCompatActivity() {
 
         binding.startButton.setOnClickListener {
             showWorkoutSetupDialog()
+        }
+
+        binding.offlineBanner.setOnClickListener {
+            isOffline = !isInternetAvailable()
+            maybeShowOrHideBanner()
         }
     }
 

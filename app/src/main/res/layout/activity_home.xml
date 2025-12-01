@@ -26,9 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="8dp"
         android:visibility="gone"
-        app:cardBackgroundColor="@color/light_grey_85"
+        app:cardBackgroundColor="@color/very_light_grey"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toTopOf="@+id/view"
@@ -46,8 +45,10 @@
             android:text="@string/offline_status"
             android:textColor="@color/primary"
             android:textSize="14sp"
+            app:drawableEndCompat="@drawable/refresh"
             app:drawableStartCompat="@drawable/wifi_off"
             app:drawableTint="@color/primary" />
+
     </androidx.cardview.widget.CardView>
 
     <View
