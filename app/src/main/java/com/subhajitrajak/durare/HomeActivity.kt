@@ -49,7 +49,8 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNav) { v, insets ->
+        // makes sure bottom nav doesn't allocates extra bottom padding
+        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNav) { _, insets ->
             insets
         }
 
