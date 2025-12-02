@@ -215,8 +215,8 @@
     <string name="weight_setup_title">personalize your experience</string>
     <string name="weight_setup_subtitle">Your weight helps us calculate more accurate calorie loss during pushup workouts.</string>
     <string name="enter_your_weight">Enter your weight</string>
-    <string name="kilograms">kilograms</string>
-    <string name="pounds">pounds</string>
+    <string name="kilograms">kgs</string>
+    <string name="pounds">lbs</string>
     <string name="invalid_weight">Invalid Weight</string>
     <string name="weight">Weight</string>
     <string name="set_goal">Set Daily Goal</string>

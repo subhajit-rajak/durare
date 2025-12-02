@@ -77,6 +77,8 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/weightInputCard"
         app:layout_constraintTop_toTopOf="@+id/weightInputCard"
         app:strokeColor="@color/light_grey"
