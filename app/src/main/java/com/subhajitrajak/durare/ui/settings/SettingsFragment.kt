@@ -25,6 +25,8 @@ class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var prefs: Preferences
+
     private val googleAuthUiClient: GoogleAuthUiClient by lazy {
         GoogleAuthUiClient(
             context = requireContext(),
@@ -37,6 +39,7 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        prefs = Preferences.getInstance(requireContext())
         return binding.root
     }
 
@@ -116,6 +119,10 @@ class SettingsFragment : Fragment() {
         personalize.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_personalizeFragment) }
         appearance.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_appearanceFragment) }
         notifications.setOnClickListener { findNavController().navigate(R.id.action_settingsFragment_to_notificationsFragment) }
+
+        val isDark = prefs.isDarkTheme()
+        val themeText = if (isDark) getString(R.string.dark) else getString(R.string.light)
+        currentThemeProfile.text = themeText
     }
 
     private fun setupSupportSettings() = with(binding) {

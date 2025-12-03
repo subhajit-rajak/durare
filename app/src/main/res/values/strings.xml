@@ -48,9 +48,9 @@
     <string name="export_stats">Export stats</string>
     <string name="person_email_1">davianallen1997@yahoo.com</string>
     <string name="general">General</string>
-    <string name="account_information">Account Information</string>
-    <string name="personalize">Personalize</string>
-    <string name="appearance">Appearance</string>
+    <string name="manage_profiles">Manage Profiles</string>
+    <string name="workout_settings">Workout Settings</string>
+    <string name="themes">Themes</string>
     <string name="notifications">Notifications</string>
     <string name="support">Support</string>
     <string name="report_an_issue">Report an issue</string>
@@ -58,7 +58,7 @@
     <string name="privacy_policy">Privacy policy</string>
     <string name="terms_conditions"><![CDATA[Terms & conditions]]></string>
     <string name="logout">logout</string>
-    <string name="personalize1">personalize</string>
+    <string name="workout_settings1">workout settings</string>
     <string name="show_camera_card">Show camera card</string>
     <string name="a_camera_preview_to_just_n_make_sure_your_pushups_nare_getting_counted_correctly">A camera preview to just\n“make sure” your pushups\nare getting counted correctly.</string>
     <string name="turn_this_on_to_get_vibration_feedback_on_each_push_up_counts">Turn this “On” to get vibration feedback on each push-up counts</string>
@@ -70,11 +70,11 @@
     <string name="all_notifications">All notifications</string>
     <string name="turn_this_on_to_receive_all_types_of_notifications">Turn this “On” to receive all types of notifications</string>
     <string name="version_x_x_x_x">Version - x.x.x(x)</string>
-    <string name="appearance1">appearance</string>
+    <string name="themes1">themes</string>
     <string name="choose_a_theme">Choose a theme</string>
     <string name="light">Light</string>
     <string name="dark">Dark</string>
-    <string name="account_information1">account information</string>
+    <string name="manage_profiles1">manage profiles</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="skip">Skip</string>

@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/special_gothic_expanded_bold"
-            android:text="@string/appearance1"
+            android:text="@string/themes1"
             android:textColor="@color/black"
             android:textSize="24sp" />
 
