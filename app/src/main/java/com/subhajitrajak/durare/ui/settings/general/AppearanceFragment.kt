@@ -32,7 +32,7 @@ class AppearanceFragment : Fragment() {
             }
 
             // Load current theme and set checked state
-            val prefs = Preferences.Companion.getInstance(requireContext())
+            val prefs = Preferences.getInstance(requireContext())
             val isDark = prefs.isDarkTheme()
             lightMode.isChecked = !isDark
             darkMode.isChecked = isDark

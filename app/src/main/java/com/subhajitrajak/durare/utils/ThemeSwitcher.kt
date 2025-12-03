@@ -62,9 +62,9 @@ object ThemeSwitcher {
             val h = contentView.height
             val finalRadius = hypot(w.toDouble(), h.toDouble()).toFloat()
 
-            // Center of screen
+            // animation start position
             val cx = w / 2
-            val cy = h / 2
+            val cy = 0
 
             try {
                 val anim = ViewAnimationUtils.createCircularReveal(

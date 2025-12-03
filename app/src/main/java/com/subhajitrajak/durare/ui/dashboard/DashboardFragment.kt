@@ -27,6 +27,8 @@ import com.subhajitrajak.durare.databinding.DialogSetGoalBinding
 import com.subhajitrajak.durare.databinding.FragmentDashboardBinding
 import com.subhajitrajak.durare.ui.askAi.AskAiFragment
 import com.subhajitrajak.durare.utils.Preferences
+import com.subhajitrajak.durare.utils.ThemeManager
+import com.subhajitrajak.durare.utils.ThemeSwitcher
 import com.subhajitrajak.durare.utils.formatToShortNumber
 import com.subhajitrajak.durare.utils.formatWithCommas
 import com.subhajitrajak.durare.utils.log
@@ -45,6 +47,7 @@ class DashboardFragment : Fragment() {
     private val viewModel: DashboardViewModel by viewModels {
         DashboardViewModelFactory(requireContext().applicationContext)
     }
+    private var isDark: Boolean = false
 
     private lateinit var pref: Preferences
 
@@ -118,6 +121,23 @@ class DashboardFragment : Fragment() {
         viewModel.loadLeaderboard()
 
         binding.apply {
+
+            val prefs = Preferences.getInstance(requireContext())
+            isDark = prefs.isDarkTheme()
+            switchThemesButton.setImageResource(if (isDark) R.drawable.moon else R.drawable.sun)
+
+            switchThemesButton.setOnClickListener {
+                if (isDark) {
+                    switchThemesButton.setImageResource(R.drawable.sun)
+                    ThemeManager.setDarkMode(requireContext(), false)
+                    ThemeSwitcher.switchThemeWithAnimation(requireActivity(), false)
+                } else {
+                    switchThemesButton.setImageResource(R.drawable.moon)
+                    ThemeManager.setDarkMode(requireContext(), true)
+                    ThemeSwitcher.switchThemeWithAnimation(requireActivity(), true)
+                }
+                isDark = !isDark
+            }
 
             settingsButton.setOnClickListener {
                 findNavController().navigate(R.id.action_dashboardFragment_to_settingsFragment)
