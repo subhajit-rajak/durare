@@ -46,8 +46,24 @@ class AppearanceFragment : Fragment() {
                 darkMode.isChecked = false
             }
 
+            lightModeImage.setOnClickListener {
+                if (!isDark) return@setOnClickListener
+                ThemeManager.setDarkMode(requireContext(), false)
+                ThemeSwitcher.switchThemeWithAnimation(requireActivity(), false)
+                darkMode.isChecked = false
+                lightMode.isChecked = true
+            }
+
             // Listener for Dark mode
             darkMode.setOnClickListener {
+                if (isDark) return@setOnClickListener
+                ThemeManager.setDarkMode(requireContext(), true)
+                ThemeSwitcher.switchThemeWithAnimation(requireActivity(), true)
+                darkMode.isChecked = true
+                lightMode.isChecked = false
+            }
+
+            darkModeImage.setOnClickListener {
                 if (isDark) return@setOnClickListener
                 ThemeManager.setDarkMode(requireContext(), true)
                 ThemeSwitcher.switchThemeWithAnimation(requireActivity(), true)
