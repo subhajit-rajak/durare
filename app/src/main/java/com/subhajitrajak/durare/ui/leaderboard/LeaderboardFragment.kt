@@ -16,9 +16,8 @@ import com.subhajitrajak.durare.ui.dashboard.DashboardViewModelFactory
 import com.subhajitrajak.durare.utils.formatToShortNumber
 import com.subhajitrajak.durare.utils.hideWithAnim
 import com.subhajitrajak.durare.utils.log
-import com.subhajitrajak.durare.utils.showToast
-import com.subhajitrajak.durare.utils.showWithAnim50ms
 import com.subhajitrajak.durare.utils.show
+import com.subhajitrajak.durare.utils.showWithAnim50ms
 
 class LeaderboardFragment : Fragment() {
 
@@ -77,7 +76,6 @@ class LeaderboardFragment : Fragment() {
             binding.loadingIndicator.hideWithAnim()
             if (errorMsg != null) {
                 log(errorMsg)
-                showToast(requireContext(), errorMsg)
             }
         }
     }

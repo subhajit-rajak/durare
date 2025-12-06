@@ -34,7 +34,6 @@ import com.subhajitrajak.durare.utils.formatWithCommas
 import com.subhajitrajak.durare.utils.log
 import com.subhajitrajak.durare.utils.removeWithAnim
 import com.subhajitrajak.durare.utils.show
-import com.subhajitrajak.durare.utils.showToast
 import com.subhajitrajak.durare.utils.showWithAnim50ms
 
 class DashboardFragment : Fragment() {
@@ -110,7 +109,6 @@ class DashboardFragment : Fragment() {
             binding.loadingIndicator.removeWithAnim()
             if (errorMsg != null) {
                 log(errorMsg)
-                showToast(requireContext(), errorMsg)
             }
         }
 
