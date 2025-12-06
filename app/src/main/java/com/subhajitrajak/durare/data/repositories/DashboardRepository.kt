@@ -3,6 +3,8 @@ package com.subhajitrajak.durare.data.repositories
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.Source
 import com.subhajitrajak.durare.auth.UserData
 import com.subhajitrajak.durare.data.models.DailyPushStats
 import com.subhajitrajak.durare.data.models.DashboardStats
@@ -11,12 +13,17 @@ import com.subhajitrajak.durare.utils.Constants.DAILY_PUSHUP_STATS
 import com.subhajitrajak.durare.utils.Constants.DATE
 import com.subhajitrajak.durare.utils.Constants.DATE_FORMAT
 import com.subhajitrajak.durare.utils.Constants.LIFETIME_TOTAL_PUSHUPS
-import com.subhajitrajak.durare.utils.Constants.PROFILE
+import com.subhajitrajak.durare.utils.Constants.PROFILE_PICTURE_URL
 import com.subhajitrajak.durare.utils.Constants.USERS
-import com.subhajitrajak.durare.utils.Constants.USER_DATA
+import com.subhajitrajak.durare.utils.Constants.USER_ID
+import com.subhajitrajak.durare.utils.Constants.USER_NAME
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class DashboardRepository(context: Context) {
     private val db: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
@@ -163,21 +170,47 @@ class DashboardRepository(context: Context) {
         return currentStreak to highestStreak
     }
 
-    // fetch all users for leaderboard
-    suspend fun fetchLeaderboard(): List<User> {
-        val docRef = db.collection(USERS)
+    fun fetchLeaderboard(): Flow<List<User>> = flow {
+        // sending cached data first
+        try {
+            val cachedUsers = fetchUsersFromSource(Source.CACHE)
+            if (cachedUsers.isNotEmpty()) {
+                emit(cachedUsers)
+            }
+        } catch (_: Exception) {}
 
-        val querySnapshot = docRef.get().await()
-        val users = mutableListOf<User>()
-        for (document in querySnapshot.documents) {
-            val uid = document.id
-            val userDataDocRef = docRef.document(uid).collection(USER_DATA).document(PROFILE)
-            val userDataDoc = userDataDocRef.get().await()
-            val userData = userDataDoc.toObject(UserData::class.java) ?: continue
-            val pushups = document.getLong(LIFETIME_TOTAL_PUSHUPS) ?: 0L
-
-            users.add(User(uid, userData, pushups))
+        // fetch from SERVER and send fresh data
+        try {
+            val serverUsers = fetchUsersFromSource(Source.SERVER)
+            emit(serverUsers)
+        } catch (e: Exception) {
+            throw e
         }
-        return users.sortedByDescending { it.pushups }
+    }
+
+    private suspend fun fetchUsersFromSource(source: Source): List<User> {
+        val snapshot = db.collection(USERS)
+            .orderBy(LIFETIME_TOTAL_PUSHUPS, Query.Direction.DESCENDING) // server-side sort
+            .limit(100) // limited to 100 for speed & cost savings
+            .get(source)
+            .await()
+
+        return snapshot.documents.mapNotNull { doc ->
+            val userId = doc.getString(USER_ID) ?: doc.id
+            val username = doc.getString(USER_NAME)
+            val photoUrl = doc.getString(PROFILE_PICTURE_URL)
+            val pushups = doc.getLong(LIFETIME_TOTAL_PUSHUPS) ?: 0L
+
+            if (username != null) {
+                val userData = UserData(
+                    userId = userId,
+                    username = username,
+                    profilePictureUrl = photoUrl ?: ""
+                )
+                User(userId, userData, pushups)
+            } else {
+                null
+            }
+        }
     }
 }

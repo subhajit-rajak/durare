@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.subhajitrajak.durare.data.models.DashboardStats
 import com.subhajitrajak.durare.data.models.User
 import com.subhajitrajak.durare.data.repositories.DashboardRepository
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class DashboardViewModel(private val repository: DashboardRepository) : ViewModel() {
@@ -70,13 +71,17 @@ class DashboardViewModel(private val repository: DashboardRepository) : ViewMode
 
     fun loadLeaderboard() {
         viewModelScope.launch {
-            try {
-                val users = repository.fetchLeaderboard()
-                _leaderboard.value = users
-                _error.value = null
-            } catch (e: Exception) {
-                _error.value = e.message
-            }
+            _loading.value = true
+            repository.fetchLeaderboard()
+                .catch { e ->
+                    _error.value = e.message
+                    _loading.value = false
+                }
+                .collect { users ->
+                    _leaderboard.value = users
+                    _loading.value = false
+                    _error.value = null
+                }
         }
     }
 }
