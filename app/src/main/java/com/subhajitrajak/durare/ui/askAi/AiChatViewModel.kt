@@ -36,10 +36,4 @@ class AiChatViewModel(
             }
         }
     }
-
-    fun clearChat() {
-        viewModelScope.launch {
-            repository.clearChat()
-        }
-    }
 }
