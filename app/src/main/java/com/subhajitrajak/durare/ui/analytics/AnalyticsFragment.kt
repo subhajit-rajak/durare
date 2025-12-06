@@ -22,7 +22,6 @@ import com.subhajitrajak.durare.ui.daySummary.DaySummaryFragment
 import com.subhajitrajak.durare.utils.getMarker
 import com.subhajitrajak.durare.utils.log
 import com.subhajitrajak.durare.utils.removeWithAnim
-import com.subhajitrajak.durare.utils.showToast
 import com.subhajitrajak.durare.utils.showWithAnim50ms
 
 class AnalyticsFragment : Fragment() {
@@ -83,7 +82,6 @@ class AnalyticsFragment : Fragment() {
             binding.loadingIndicator.removeWithAnim()
             if (errorMsg != null) {
                 log(errorMsg)
-                showToast(requireContext(), errorMsg)
             }
         }
     }
