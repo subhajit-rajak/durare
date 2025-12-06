@@ -523,21 +523,31 @@
 
                         <TextView
                             android:id="@+id/firstName"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/special_gothic_semibold"
-                            android:paddingHorizontal="11dp"
+                            android:fontFamily="@font/special_gothic_semiexpanded_medium"
+                            android:paddingStart="11dp"
+                            android:paddingEnd="8dp"
                             android:text="@string/person_name_1"
                             android:textColor="@color/dark_grey"
                             android:textSize="16sp"
                             android:visibility="visible" />
 
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/crown"
+                            android:layout_gravity="center_vertical"
+                            android:elevation="1dp"/>
+
                         <TextView
                             android:id="@+id/firstCount"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
                             android:layout_gravity="center_vertical"
                             android:fontFamily="@font/special_gothic_expanded_semibold"
                             android:text="@string/score_1"
@@ -565,7 +575,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:fontFamily="@font/special_gothic_semibold"
+                            android:fontFamily="@font/special_gothic_semiexpanded_medium"
                             android:paddingHorizontal="11dp"
                             android:text="@string/person_name_2"
                             android:textColor="@color/dark_grey"
@@ -602,7 +612,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:fontFamily="@font/special_gothic_semibold"
+                            android:fontFamily="@font/special_gothic_semiexpanded_medium"
                             android:paddingHorizontal="11dp"
                             android:text="@string/person_name_3"
                             android:textColor="@color/dark_grey"
