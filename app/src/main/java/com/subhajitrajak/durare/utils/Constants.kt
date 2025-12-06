@@ -12,7 +12,9 @@ object Constants {
     // user data
     const val USER_ID = "userId"
     const val USER_NAME = "username"
+    const val USER_EMAIL = "userEmail"
     const val PROFILE_PICTURE_URL = "profilePictureUrl"
     const val USER_WEIGHT = "userWeight"
+    const val IS_ANONYMOUS = "isAnonymous"
     const val LIFETIME_TOTAL_PUSHUPS = "lifetimeTotalPushups"
 }

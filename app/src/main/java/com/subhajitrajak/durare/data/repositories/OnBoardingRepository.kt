@@ -19,33 +19,49 @@ class OnBoardingRepository(
         return auth.currentUser?.uid ?: throw Exception("User not logged in")
     }
 
-    private fun profileDoc() =
+    private fun parentDocRef() =
         db.collection(USERS)
             .document(getUid())
-            .collection(USER_DATA)
+
+    private fun profileDocRef() =
+        parentDocRef().collection(USER_DATA)
             .document(PROFILE)
 
     // Save or update user profile
     suspend fun saveUserData(userData: UserData) {
+        // profile data
         val dataToSave = mutableMapOf<String, Any?>()
-
-        if (userData.userId.isNotEmpty()) dataToSave["userId"] = userData.userId
-        if (!userData.username.isNullOrEmpty()) dataToSave["username"] = userData.username
-        if (!userData.userEmail.isNullOrEmpty()) dataToSave["userEmail"] = userData.userEmail
-        if (!userData.profilePictureUrl.isNullOrEmpty()) dataToSave["profilePictureUrl"] = userData.profilePictureUrl
-        if (userData.isAnonymous) dataToSave["isAnonymous"] = true
+        if (userData.userId.isNotEmpty()) dataToSave[Constants.USER_ID] = userData.userId
+        if (!userData.username.isNullOrEmpty()) dataToSave[Constants.USER_NAME] = userData.username
+        if (!userData.userEmail.isNullOrEmpty()) dataToSave[Constants.USER_EMAIL] = userData.userEmail
+        if (!userData.profilePictureUrl.isNullOrEmpty()) dataToSave[Constants.PROFILE_PICTURE_URL] = userData.profilePictureUrl
+        if (userData.isAnonymous) dataToSave[Constants.IS_ANONYMOUS] = true
         if (userData.userWeight != null && userData.userWeight != 0.0) {
             dataToSave[Constants.USER_WEIGHT] = userData.userWeight
         }
 
+        // parent data
+        val parentUpdates = mutableMapOf<String, Any?>()
+        if (userData.userId.isNotEmpty()) parentUpdates[Constants.USER_ID] = userData.userId
+        if (!userData.username.isNullOrEmpty()) parentUpdates[Constants.USER_NAME] = userData.username
+        if (!userData.profilePictureUrl.isNullOrEmpty()) parentUpdates[Constants.PROFILE_PICTURE_URL] = userData.profilePictureUrl
+
         if (dataToSave.isNotEmpty()) {
-            profileDoc().set(dataToSave, SetOptions.merge()).await()
+            db.runBatch { batch ->
+                // Update detailed profile
+                batch.set(profileDocRef(), dataToSave, SetOptions.merge())
+
+                // Update parent doc
+                if (parentUpdates.isNotEmpty()) {
+                    batch.set(parentDocRef(), parentUpdates, SetOptions.merge())
+                }
+            }.await()
         }
     }
 
     // Fetch user profile
     suspend fun getUserData(): UserData? {
-        val snapshot = profileDoc().get().await()
+        val snapshot = profileDocRef().get().await()
         return snapshot.toObject(UserData::class.java)
     }
 }
