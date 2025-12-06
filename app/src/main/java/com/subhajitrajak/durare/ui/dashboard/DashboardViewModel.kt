@@ -32,40 +32,43 @@ class DashboardViewModel(private val repository: DashboardRepository) : ViewMode
 
     fun loadDashboardStats() {
         viewModelScope.launch {
-            _loading.value = true
-            try {
-                val stats = repository.fetchDashboardStats()
-                _dashboardStats.value = stats
-                _error.value = null
-            } catch (e: Exception) {
-                _error.value = e.message
-            } finally {
-                _loading.value = false
-            }
+            if (_dashboardStats.value == null) _loading.value = true
+
+            repository.fetchDashboardStats()
+                .catch { e ->
+                    _error.value = e.message
+                    _loading.value = false
+                }
+                .collect { stats ->
+                    _dashboardStats.value = stats
+                    _loading.value = false
+                    _error.value = null
+                }
         }
     }
 
     fun fetchLast30DaysPushupCounts() {
         viewModelScope.launch {
-            try {
-                val counts = repository.fetchLast30DaysPushupCounts()
-                _monthlyPushupCounts.value = counts
-                _error.value = null
-            } catch (e: Exception) {
-                _error.value = e.message
-            }
+            repository.fetchLast30DaysPushupCounts()
+                .catch { e ->
+                    // Log error but maybe don't show toast for chart failure to avoid annoyance
+                    android.util.Log.e("DashboardVM", "Chart Error: ${e.message}")
+                }
+                .collect { counts ->
+                    _monthlyPushupCounts.value = counts
+                }
         }
     }
 
     fun loadCurrentStreak() {
         viewModelScope.launch {
-            try {
-                val streak = repository.fetchStreak()
-                _currentStreak.value = streak
-                _error.value = null
-            } catch (e: Exception) {
-                _error.value = e.message
-            }
+            repository.fetchStreak()
+                .catch { e ->
+                    android.util.Log.e("DashboardVM", "Streak Error: ${e.message}")
+                }
+                .collect { streak ->
+                    _currentStreak.value = streak
+                }
         }
     }
 

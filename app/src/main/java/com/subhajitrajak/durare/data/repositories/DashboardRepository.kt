@@ -17,6 +17,8 @@ import com.subhajitrajak.durare.utils.Constants.PROFILE_PICTURE_URL
 import com.subhajitrajak.durare.utils.Constants.USERS
 import com.subhajitrajak.durare.utils.Constants.USER_ID
 import com.subhajitrajak.durare.utils.Constants.USER_NAME
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
@@ -35,7 +37,21 @@ class DashboardRepository(context: Context) {
 
     private fun todayString() = dateFormat.format(Date())
 
-    suspend fun fetchDashboardStats(): DashboardStats {
+    fun fetchDashboardStats(): Flow<DashboardStats> = flow {
+        try {
+            val cached = fetchDashboardStatsFromSource(Source.CACHE)
+            emit(cached)
+        } catch (_: Exception) {}
+
+        try {
+            val server = fetchDashboardStatsFromSource(Source.SERVER)
+            emit(server)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    private suspend fun fetchDashboardStatsFromSource(source: Source): DashboardStats = coroutineScope {
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
 
         val today = todayString()
@@ -50,8 +66,11 @@ class DashboardRepository(context: Context) {
         cal.add(Calendar.DAY_OF_YEAR, -29) // last 30 days
         val last30Date = dateFormat.format(cal.time)
 
-        // Fetch all user docs once
-        val allDocs = dailyStatsRef(uid).get().await()
+        // Run user stats and global stats in parallel to be faster
+        val userStatsDeferred = async { dailyStatsRef(uid).get(source).await() }
+        val globalStatsDeferred = async { db.collection(USERS).get(source).await() }
+
+        val allDocs = userStatsDeferred.await()
         val statsByDate = allDocs.documents.mapNotNull { doc ->
             val dateStr = doc.getString(DATE)
             val stats = doc.toObject(DailyPushStats::class.java)
@@ -59,16 +78,14 @@ class DashboardRepository(context: Context) {
         }.toMap()
 
         val todayPushups = statsByDate[today] ?: 0
-
         val last7Pushups = statsByDate.filterKeys { it >= last7Date }.values.sum()
         val last30Pushups = statsByDate.filterKeys { it >= last30Date }.values.sum()
         val lifetimePushups = statsByDate.values.sum()
 
-        // For all users lifetime (optional optimization: store this separately)
-        val allUsersTotal = db.collection(USERS).get().await()
+        val allUsersTotal = globalStatsDeferred.await()
             .documents.sumOf { it.getLong(LIFETIME_TOTAL_PUSHUPS)?.toInt() ?: 0 }
 
-        return DashboardStats(
+        DashboardStats(
             todayPushups,
             last7Pushups,
             last30Pushups,
@@ -77,20 +94,34 @@ class DashboardRepository(context: Context) {
         )
     }
 
-    suspend fun fetchLast30DaysPushupCounts(): List<Int> {
+    fun fetchLast30DaysPushupCounts(): Flow<List<Int>> = flow {
+        try {
+            val cached = fetchLast30DaysFromSource(Source.CACHE)
+            if (cached.isNotEmpty()) emit(cached)
+        } catch (_: Exception) {}
+
+        try {
+            val server = fetchLast30DaysFromSource(Source.SERVER)
+            emit(server)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    private suspend fun fetchLast30DaysFromSource(source: Source): List<Int> {
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
 
         val cal = Calendar.getInstance()
         val today = cal.time
-        cal.add(Calendar.DAY_OF_YEAR, -29) // last 30 days includes today
+        cal.add(Calendar.DAY_OF_YEAR, -29)
         val startDate = dateFormat.format(cal.time)
         val endDate = dateFormat.format(today)
 
-        // Fetch stats from Firestore
         val query = dailyStatsRef(uid)
             .whereGreaterThanOrEqualTo(DATE, startDate)
             .whereLessThanOrEqualTo(DATE, endDate)
-            .get().await()
+            .get(source) // Use source
+            .await()
 
         val pushupMap = query.documents.mapNotNull { doc ->
             val dateStr = doc.getString(DATE)
@@ -98,7 +129,6 @@ class DashboardRepository(context: Context) {
             if (dateStr != null && stats != null) dateStr to stats.totalPushups else null
         }.toMap()
 
-        // Build result list
         val result = MutableList(30) { 0 }
         cal.time = today
         for (i in 29 downTo 0) {
@@ -108,14 +138,27 @@ class DashboardRepository(context: Context) {
             val key = dateFormat.format(dayCal.time)
             result[29 - i] = pushupMap[key] ?: 0
         }
-
         return result
     }
 
-    suspend fun fetchStreak(): Pair<Int, Int> {
+    fun fetchStreak(): Flow<Pair<Int, Int>> = flow {
+        try {
+            val cached = fetchStreakFromSource(Source.CACHE)
+            emit(cached)
+        } catch (_: Exception) {}
+
+        try {
+            val server = fetchStreakFromSource(Source.SERVER)
+            emit(server)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    private suspend fun fetchStreakFromSource(source: Source): Pair<Int, Int> {
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
 
-        val allDocs = dailyStatsRef(uid).get().await()
+        val allDocs = dailyStatsRef(uid).get(source).await()
         if (allDocs.isEmpty) return 0 to 0
 
         val datePushups = allDocs.documents.mapNotNull { doc ->
@@ -158,13 +201,20 @@ class DashboardRepository(context: Context) {
         // Current streak
         val cal = Calendar.getInstance()
         var currentStreak = 0
-        while (true) {
+        // Safety Break loop to prevent infinite loop in case of logic error (though unlikely)
+        var daysChecked = 0
+        while (daysChecked < 3650) {
             val dateStr = dateFormat.format(cal.time)
             val pushups = dateMap[dateStr] ?: 0
             if (pushups > 0) {
                 currentStreak++
                 cal.add(Calendar.DAY_OF_YEAR, -1)
-            } else break
+            } else if (daysChecked == 0 && pushups == 0) {
+                break
+            } else {
+                break
+            }
+            daysChecked++
         }
 
         return currentStreak to highestStreak
