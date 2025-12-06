@@ -3,11 +3,14 @@ package com.subhajitrajak.durare.data.repositories
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.Source
 import com.subhajitrajak.durare.data.models.DailyPushStats
 import com.subhajitrajak.durare.utils.Constants.DAILY_PUSHUP_STATS
 import com.subhajitrajak.durare.utils.Constants.DATE
 import com.subhajitrajak.durare.utils.Constants.DATE_FORMAT
 import com.subhajitrajak.durare.utils.Constants.USERS
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -19,20 +22,52 @@ class AnalyticsRepository {
     private val dateFormat = SimpleDateFormat(DATE_FORMAT, Locale.US)
 
     private fun dailyStatsRef(uid: String) =
-        db.collection(USERS).document(uid).collection(DAILY_PUSHUP_STATS)
+        db.collection(USERS)
+            .document(uid)
+            .collection(DAILY_PUSHUP_STATS)
 
-    suspend fun fetchAllDailyStats(): List<DailyPushStats> {
+    fun fetchAllDailyStats(): Flow<List<DailyPushStats>> = flow {
+        // cache data
+        try {
+            val cached = fetchAllDailyStatsFromSource(Source.CACHE)
+            if (cached.isNotEmpty()) emit(cached)
+        } catch (_: Exception) {}
+
+        // server data
+        try {
+            val server = fetchAllDailyStatsFromSource(Source.SERVER)
+            emit(server)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    private suspend fun fetchAllDailyStatsFromSource(source: Source): List<DailyPushStats> {
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
 
         val snapshot = dailyStatsRef(uid)
             .orderBy("date", Query.Direction.DESCENDING)
-            .get()
+            .get(source)
             .await()
 
         return snapshot.documents.mapNotNull { it.toObject(DailyPushStats::class.java) }
     }
 
-    suspend fun fetchThisMonthPushupCounts(): List<Int> {
+    fun fetchThisMonthPushupCounts(): Flow<List<Int>> = flow {
+        try {
+            val cached = fetchThisMonthFromSource(Source.CACHE)
+            if (cached.isNotEmpty()) emit(cached)
+        } catch (_: Exception) {}
+
+        try {
+            val server = fetchThisMonthFromSource(Source.SERVER)
+            emit(server)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    private suspend fun fetchThisMonthFromSource(source: Source): List<Int> {
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
 
         val cal = Calendar.getInstance()
@@ -47,7 +82,8 @@ class AnalyticsRepository {
         val query = dailyStatsRef(uid)
             .whereGreaterThanOrEqualTo(DATE, startOfMonth)
             .whereLessThanOrEqualTo(DATE, endOfMonth)
-            .get().await()
+            .get(source)
+            .await()
 
         val pushupMap = query.documents.mapNotNull { doc ->
             val dateStr = doc.getString(DATE)
