@@ -201,20 +201,29 @@ class DashboardRepository(context: Context) {
         // Current streak
         val cal = Calendar.getInstance()
         var currentStreak = 0
-        // Safety Break loop to prevent infinite loop in case of logic error (though unlikely)
-        var daysChecked = 0
-        while (daysChecked < 3650) {
+
+        // check TODAY specifically
+        val todayStr = dateFormat.format(cal.time)
+        val todayPushups = dateMap[todayStr] ?: 0
+
+        if (todayPushups > 0) {
+            currentStreak++
+        }
+
+        // move pointer to YESTERDAY to start checking history
+        cal.add(Calendar.DAY_OF_YEAR, -1)
+
+        // check backwards until a gap is found
+        while (true) {
             val dateStr = dateFormat.format(cal.time)
             val pushups = dateMap[dateStr] ?: 0
             if (pushups > 0) {
                 currentStreak++
-                cal.add(Calendar.DAY_OF_YEAR, -1)
-            } else if (daysChecked == 0 && pushups == 0) {
-                break
+                cal.add(Calendar.DAY_OF_YEAR, -1) // go back one more day
             } else {
+                // gap found! stop counting
                 break
             }
-            daysChecked++
         }
 
         return currentStreak to highestStreak
