@@ -248,13 +248,31 @@ class DashboardRepository(context: Context) {
     }
 
     private suspend fun fetchUsersFromSource(source: Source): List<User> {
-        val snapshot = db.collection(USERS)
-            .orderBy(LIFETIME_TOTAL_PUSHUPS, Query.Direction.DESCENDING) // server-side sort
-            .limit(100) // limited to 100 for speed & cost savings
+        val highScoresSnapshot = db.collection(USERS)
+            .orderBy(LIFETIME_TOTAL_PUSHUPS, Query.Direction.DESCENDING)
+            .limit(100)
             .get(source)
             .await()
 
-        return snapshot.documents.mapNotNull { doc ->
+        val highScoreUsers = mapDocumentsToUsers(highScoresSnapshot.documents)
+
+        if (highScoreUsers.size < 100) {
+            val othersSnapshot = db.collection(USERS)
+                .limit(100)
+                .get(source)
+                .await()
+
+            val otherUsers = mapDocumentsToUsers(othersSnapshot.documents)
+            val existingIds = highScoreUsers.map { it.userData.userId }.toSet()
+            val uniqueNewUsers = otherUsers.filter { it.userData.userId !in existingIds }
+            return (highScoreUsers + uniqueNewUsers).take(100)
+        }
+
+        return highScoreUsers
+    }
+
+    private fun mapDocumentsToUsers(documents: List<com.google.firebase.firestore.DocumentSnapshot>): List<User> {
+        return documents.mapNotNull { doc ->
             val userId = doc.getString(USER_ID) ?: doc.id
             val username = doc.getString(USER_NAME)
             val photoUrl = doc.getString(PROFILE_PICTURE_URL)
