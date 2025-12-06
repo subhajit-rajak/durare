@@ -2,6 +2,7 @@ package com.subhajitrajak.durare.data.repositories
 
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.Source
@@ -271,7 +272,7 @@ class DashboardRepository(context: Context) {
         return highScoreUsers
     }
 
-    private fun mapDocumentsToUsers(documents: List<com.google.firebase.firestore.DocumentSnapshot>): List<User> {
+    private fun mapDocumentsToUsers(documents: List<DocumentSnapshot>): List<User> {
         return documents.mapNotNull { doc ->
             val userId = doc.getString(USER_ID) ?: doc.id
             val username = doc.getString(USER_NAME)
