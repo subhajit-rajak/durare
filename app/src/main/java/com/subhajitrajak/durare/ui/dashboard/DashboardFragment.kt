@@ -121,20 +121,22 @@ class DashboardFragment : Fragment() {
         viewModel.loadLeaderboard()
 
         binding.apply {
-
-            val prefs = Preferences.getInstance(requireContext())
-            isDark = prefs.isDarkTheme()
+            isDark = pref.isDarkTheme()
             switchThemesButton.setImageResource(if (isDark) R.drawable.moon else R.drawable.sun)
 
             switchThemesButton.setOnClickListener {
                 if (isDark) {
-                    switchThemesButton.setImageResource(R.drawable.sun)
                     ThemeManager.setDarkMode(requireContext(), false)
                     ThemeSwitcher.switchThemeWithAnimation(requireActivity(), false)
+                    switchThemesButton.postDelayed({
+                        switchThemesButton.setImageResource(R.drawable.sun)
+                    }, ThemeSwitcher.DURATION)
                 } else {
-                    switchThemesButton.setImageResource(R.drawable.moon)
                     ThemeManager.setDarkMode(requireContext(), true)
                     ThemeSwitcher.switchThemeWithAnimation(requireActivity(), true)
+                    switchThemesButton.postDelayed({
+                        switchThemesButton.setImageResource(R.drawable.moon)
+                    }, ThemeSwitcher.DURATION)
                 }
                 isDark = !isDark
             }
