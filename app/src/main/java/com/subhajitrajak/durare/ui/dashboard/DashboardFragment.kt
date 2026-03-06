@@ -10,11 +10,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -38,9 +43,6 @@ import com.subhajitrajak.durare.utils.showWithAnim50ms
 
 class DashboardFragment : Fragment() {
 
-    private var _binding: FragmentDashboardBinding? = null
-    private val binding get() = _binding!!
-
     private var borderAnimator: ValueAnimator? = null
     private var animator: ValueAnimator? = null
 
@@ -56,16 +58,52 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        return binding.root
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                val dashboardStats by viewModel.dashboardStats.collectAsStateWithLifecycle()
+                val monthlyPushupCounts by viewModel.monthlyPushupCounts.collectAsStateWithLifecycle()
+                val currentStreak by viewModel.currentStreak.collectAsStateWithLifecycle()
+                val isLoading by viewModel.loading.collectAsStateWithLifecycle()
+
+                LaunchedEffect(Unit) {
+                    viewModel.loadAll()
+                }
+
+                DashboardScreen(
+                    dashboardStats = dashboardStats,
+                    monthlyPushupCounts = monthlyPushupCounts,
+                    currentStreak = currentStreak,
+                    isLoading = isLoading,
+                    onRefresh = { viewModel.loadAll() },
+                    isDark = isDark,
+                    onThemeToggle = { switchThemes() }
+                )
+            }
+        }
     }
+
+    private fun switchThemes() {
+        isDark = pref.isDarkTheme()
+
+        if (isDark) {
+            ThemeManager.setDarkMode(requireContext(), false)
+            ThemeSwitcher.switchThemeWithAnimation(requireActivity(), false)
+        } else {
+            ThemeManager.setDarkMode(requireContext(), true)
+            ThemeSwitcher.switchThemeWithAnimation(requireActivity(), true)
+        }
+        isDark = !isDark
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setAnimation()
-
         pref = Preferences.getInstance(requireContext())
+
+        /*
+        setAnimation()
 
         viewModel.dashboardStats.observe(viewLifecycleOwner) { stats ->
             // update UI
@@ -198,8 +236,11 @@ class DashboardFragment : Fragment() {
                 )
             }
         }
+
+         */
     }
 
+    /*
     private fun showGoalDialog(
         onPositiveClick: (Int) -> Unit,
         onNegativeClick: () -> Unit = {}
@@ -372,4 +413,6 @@ class DashboardFragment : Fragment() {
         animator = null
         _binding = null
     }
+
+     */
 }

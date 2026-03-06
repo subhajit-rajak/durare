@@ -36,6 +36,8 @@ swiperefreshlayout = "1.2.0"
 vico = "2.3.6"
 markwon = "4.6.2"
 poseDetection = "18.0.0-beta5"
+activityCompose = "1.12.4"
+composeBom = "2026.02.01"
 
 [libraries]
 androidchart = { module = "com.github.AppDevNext:AndroidChart", version.ref = "androidchart" }
@@ -75,6 +77,17 @@ androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefre
 vico-views = { group = "com.patrykandpatrick.vico", name = "views", version.ref = "vico" }
 noties-markwon-core = { module = "io.noties.markwon:core", version.ref = "markwon" }
 
+#compose
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+
 #firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
@@ -93,3 +106,4 @@ play-services-auth = { group = "com.google.android.gms", name = "play-services-a
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

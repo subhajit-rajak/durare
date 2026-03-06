@@ -1,34 +1,35 @@
 package com.subhajitrajak.durare.ui.dashboard
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.subhajitrajak.durare.data.models.DashboardStats
 import com.subhajitrajak.durare.data.models.User
 import com.subhajitrajak.durare.data.repositories.DashboardRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class DashboardViewModel(private val repository: DashboardRepository) : ViewModel() {
 
-    private val _dashboardStats = MutableLiveData<DashboardStats>()
-    val dashboardStats: LiveData<DashboardStats> get() = _dashboardStats
+    private val _dashboardStats = MutableStateFlow<DashboardStats?>(null)
+    val dashboardStats: StateFlow<DashboardStats?> = _dashboardStats.asStateFlow()
 
-    private val _monthlyPushupCounts = MutableLiveData<List<Int>>()
-    val monthlyPushupCounts: LiveData<List<Int>> get() = _monthlyPushupCounts
+    private val _monthlyPushupCounts = MutableStateFlow<List<Int>>(emptyList())
+    val monthlyPushupCounts: StateFlow<List<Int>> = _monthlyPushupCounts.asStateFlow()
 
-    private val _currentStreak = MutableLiveData<Pair<Int, Int>>()
-    val currentStreak: LiveData<Pair<Int, Int>> get() = _currentStreak
+    private val _currentStreak = MutableStateFlow<Pair<Int, Int>>(0 to 0)
+    val currentStreak: StateFlow<Pair<Int, Int>> = _currentStreak.asStateFlow()
 
-    private val _leaderboard = MutableLiveData<List<User>>()
-    val leaderboard: LiveData<List<User>> get() = _leaderboard
+    private val _leaderboard = MutableStateFlow<List<User>>(emptyList())
+    val leaderboard: StateFlow<List<User>> = _leaderboard.asStateFlow()
 
-    private val _loading = MutableLiveData<Boolean>()
-    val loading: LiveData<Boolean> get() = _loading
+    private val _loading = MutableStateFlow(false)
+    val loading: StateFlow<Boolean> = _loading.asStateFlow()
 
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> get() = _error
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = _error.asStateFlow()
 
     fun loadDashboardStats() {
         viewModelScope.launch {
@@ -86,5 +87,12 @@ class DashboardViewModel(private val repository: DashboardRepository) : ViewMode
                     _error.value = null
                 }
         }
+    }
+
+    fun loadAll() {
+        loadDashboardStats()
+        fetchLast30DaysPushupCounts()
+        loadCurrentStreak()
+        loadLeaderboard()
     }
 }

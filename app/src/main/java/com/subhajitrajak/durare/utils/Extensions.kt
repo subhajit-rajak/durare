@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 fun Int.formatTwoDigits(): String {
-    return if (this < 10 && this >= 0) {
+    return if (this in 0..<10) {
         "0$this"
     } else {
         this.toString()
